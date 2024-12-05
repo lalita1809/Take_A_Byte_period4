@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Dishpire
+title: Take A Byte
 search_exclude: true
 hide: true
 menu: nav/home.html
