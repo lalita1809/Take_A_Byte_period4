@@ -91,12 +91,12 @@ menu: nav/home.html
     <div class="wheel-container">
         <div class="pointer"></div>
         <div class="wheel" id="wheel">
-            <div class="slice">Cuisine 1</div>
-            <div class="slice">Cuisine 2</div>
-            <div class="slice">Cuisine 3</div>
-            <div class="slice">Cuisine 4</div>
-            <div class="slice">Cuisine 5</div>
-            <div class="slice">Cuisine 6</div>
+            <div class="slice">Chinese food</div>
+            <div class="slice">Indian food</div>
+            <div class="slice">American food</div>
+            <div class="slice">Mexican food</div>
+            <div class="slice">Thai food</div>
+            <div class="slice">Italian food</div>
         </div>
     </div>
     <button id="spinButton" onclick="spinWheel()">Spin the Wheel</button>
