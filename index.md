@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Dishpire
+title: Take A Byte
 search_exclude: true
 hide: true
 menu: nav/home.html
@@ -91,12 +91,12 @@ menu: nav/home.html
     <div class="wheel-container">
         <div class="pointer"></div>
         <div class="wheel" id="wheel">
-            <div class="slice">Cuisine 1</div>
-            <div class="slice">Cuisine 2</div>
-            <div class="slice">Cuisine 3</div>
-            <div class="slice">Cuisine 4</div>
-            <div class="slice">Cuisine 5</div>
-            <div class="slice">Cuisine 6</div>
+            <div class="slice">Chinese food</div>
+            <div class="slice">Indian food</div>
+            <div class="slice">American food</div>
+            <div class="slice">Mexican food</div>
+            <div class="slice">Thai food</div>
+            <div class="slice">Italian food</div>
         </div>
     </div>
     <button id="spinButton" onclick="spinWheel()">Spin the Wheel</button>
@@ -138,46 +138,3 @@ menu: nav/home.html
     </script>
 </body>
 </html>
-
-
-<style>
-/*sidebar container*/
-.sidebar {
-    position: fixed;
-    top: 0;
-    right: 75px;
-    height: 175px;
-    width: 150px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-    border-radius: 20px; 
-    padding-top: 20px;
-    margin-top: 150px; 
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.sidebar-button {
-    display: block;
-    padding: 10px 20px;
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.sidebar-button:hover {
-    background-color: #62a1a1;
-    color: #fff;
-}
-.sidebar::-webkit-scrollbar-thumb {
-    background-color: transparent;
-    }
-</style>
-
-<div class = "sidebar">
-  <a href = "" class="sidebar-button">Your Profile</a>
-  <a href = "" class="sidebar-button">About Us</a>
-  <a href = "" class="sidebar-button">Intro to Cuisine</a>
-</div>
