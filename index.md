@@ -3,8 +3,10 @@ layout: post
 title: Take A Byte
 search_exclude: true
 hide: true
-menu: nav/home.html
 ---
+
+<!--menu: nav/home.html-->
+
 
 <html lang="en">
 <head>
@@ -36,6 +38,7 @@ menu: nav/home.html
             position: absolute;
             transform-origin: center;
             transition: transform 5s cubic-bezier(0.33, 1, 0.68, 1);
+            a
         }
         .slice {
             position: absolute;
