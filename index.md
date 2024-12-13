@@ -71,14 +71,14 @@ hide: true
             <!-- Search results will appear here -->
         </div>
     </div>
-
+    
     <script>
         // List of pages with keywords
         const pages = [
             { url: 'navigation/about', keywords: ['about', 'team', 'company'] },
-            { url: 'cuisines/Thai', keywords: ['thai', 'asia', 'thia'] },
-            { url: 'cuisine/Indian', keywords: ['india', 'indian', 'India'] },
-            { url: 'cuisine/Italian', keywords: ['Italian', 'italy', 'Italy'] }
+            { url: 'navigation/cuisine/thai', keywords: ['thai', 'asia', 'thia'] },
+            { url: 'navigation/cuisine/indian', keywords: ['india', 'indian', 'India'] },
+            { url: 'navigation/cuisine/italian', keywords: ['Italian', 'italy', 'Italy'] }
         ];
 
         function performSearch() {
