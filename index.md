@@ -8,6 +8,10 @@ hide: true
 <!--menu: nav/home.html-->
 
 
+<h3><a href="{{site.baseurl}}/navigation/about">About page</a></h3>
+
+
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -105,7 +109,7 @@ hide: true
     <button id="spinButton" onclick="spinWheel()">Spin the Wheel</button>
     <div id="result"></div>
 
-    <script>
+<script>
         let currentRotation = 0; // Track the current rotation of the wheel
         const spinButton = document.getElementById('spinButton');
         const resultDiv = document.getElementById('result');
