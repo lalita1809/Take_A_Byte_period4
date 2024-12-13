@@ -5,13 +5,11 @@ search_exclude: true
 hide: true
 permalink: /navigation/about
 ---
+<div style="text-align: center;" class="header">
 <h3>Need a bite? Take A Byte! We are an online cookbook with recipies from different cuisines around the world 🌍️ </h3>
 
 <br>
-
-<div style="text-align: center;" class="header">
-    <h2> Spin a wheel and get recipes of cuisines from different places in the world! </h2>
-   
+  
 
 
 <style>

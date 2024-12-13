@@ -7,12 +7,114 @@ hide: true
 
 <!--menu: nav/home.html-->
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .search-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+        }
+        .search-container input[type="text"] {
+            width: calc(100% - 90px);
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .search-container button:hover {
+            background-color: #45a049;
+        }
+        .results {
+            margin-top: 10px;
+            background: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .results a {
+            display: block;
+            margin: 5px 0;
+            color: blue;
+            text-decoration: none;
+        }
+        .results a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for content...">
+        <button onclick="performSearch()">Search</button>
+        <div class="results" id="results">
+            <!-- Search results will appear here -->
+        </div>
+    </div>
+
+    <script>
+        // List of pages with keywords
+        const pages = [
+            { url: 'about.html', keywords: ['about', 'team', 'company'] },
+            { url: 'food.html', keywords: ['food', 'recipes', 'cooking'] },
+            { url: 'contact.html', keywords: ['contact', 'email', 'support'] },
+            { url: 'blog.html', keywords: ['blog', 'news', 'updates'] }
+        ];
+
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = ''; // Clear previous results
+
+            if (!query) {
+                resultsContainer.innerHTML = '<p>Please enter a search term.</p>';
+                return;
+            }
+
+            const matchingPages = pages.filter(page => 
+                page.keywords.some(keyword => keyword.includes(query))
+            );
+
+            if (matchingPages.length === 0) {
+                resultsContainer.innerHTML = '<p>No results found.</p>';
+                return;
+            }
+
+            matchingPages.forEach(page => {
+                const link = document.createElement('a');
+                link.href = page.url;
+                link.textContent = `Visit ${page.url}`;
+                resultsContainer.appendChild(link);
+            });
+        }
+    </script>
+</body>
+</html>
 
 <h3><a href="{{site.baseurl}}/navigation/about">About page</a></h3>
 
 
-
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -114,6 +216,41 @@ hide: true
         const spinButton = document.getElementById('spinButton');
         const resultDiv = document.getElementById('result');
 
+        // Function to create a button and set its link based on the selected cuisine
+        function createDynamicButton(selectedCuisine) {
+            // Clear any existing button
+            const existingButton = document.querySelector(".dynamic-link");
+            if (existingButton) existingButton.remove();
+
+            // Get the link associated with the selected cuisine
+            const link = cuisinePages[selectedCuisine];
+
+            if (link) {
+                // Create a button element
+                const button = document.createElement("button");
+                button.textContent = `Go to ${selectedCuisine.charAt(0).toUpperCase() + selectedCuisine.slice(1)} Cuisine`;
+                button.classList.add("dynamic-link");
+
+                // Add a click event to redirect to the page
+                button.addEventListener("click", () => {
+                    window.location.href = link;
+                });
+
+                // Append the button to the document body (or another container)
+                document.body.appendChild(button);
+            }
+        }
+
+        // Object mapping variable values to URLs
+        const cuisinePages = {
+        Chinese: "{{site.baseurl}}/navigation/cuisine/chinese",
+        Indian: "{{site.baseurl}}/navigation/cuisine/indian",
+        American: "{{site.baseurl}}/navigation/cuisine/american",
+        Mexican: "{{site.baseurl}}/navigation/cuisine/mexican",
+        Thai: "{{site.baseurl}}/navigation/cuisine/thai",
+        Italian: "{{site.baseurl}}/navigation/cuisine/italian", 
+        }
+
         function spinWheel() {
             // Disable the spin button
             spinButton.disabled = true;
@@ -135,13 +272,16 @@ hide: true
                 const sliceIndex = Math.floor((360 - normalizedRotation) / 60) % 6;
 
                 // Get the selected cuisine
-                const cuisines = ["Cuisine 1", "Cuisine 2", "Cuisine 3", "Cuisine 4", "Cuisine 5", "Cuisine 6"];
+                const cuisines = ["Chinese", "Indian", "American", "Mexican", "Thai", "Italian"];
                 const selectedCuisine = cuisines[sliceIndex];
 
                 // Display the result
                 resultDiv.textContent = `The Spinner Chose: ${selectedCuisine}`;
+                // Call the function with the variable
+                createDynamicButton(selectedCuisine);
             }, 5000); // Matches the transition duration (5s)
         }
+
+
     </script>
 </body>
-</html>
