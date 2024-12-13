@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Chinese cuisines
+title: Mexican cuisines
 search_exclude: true
 hide: true
 permalink: /navigation/cuisine/mexican

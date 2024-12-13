@@ -9,7 +9,7 @@ permalink: /navigation/about
 <h3>Need a bite? Take A Byte! We are an online cookbook with recipies from different cuisines around the world 🌍️ </h3>
 
 <br>
-  
+  <img src="{{site.baseurl}}/images/about/about_cuisine.png" alt="food food food"/>
 
 
 <style>

@@ -75,10 +75,10 @@ hide: true
     <script>
         // List of pages with keywords
         const pages = [
-            { url: 'about.md', keywords: ['about', 'team', 'company'] },
-            { url: 'food.html', keywords: ['food', 'recipes', 'cooking'] },
-            { url: 'contact.html', keywords: ['contact', 'email', 'support'] },
-            { url: 'blog.html', keywords: ['blog', 'news', 'updates'] }
+            { url: 'navigation/about', keywords: ['about', 'team', 'company'] },
+            { url: 'cuisines/Thai', keywords: ['thai', 'asia', 'thia'] },
+            { url: 'cuisine/Indian', keywords: ['india', 'indian', 'India'] },
+            { url: 'cuisine/Italian', keywords: ['Italian', 'italy', 'Italy'] }
         ];
 
         function performSearch() {
@@ -201,7 +201,7 @@ hide: true
         <div class="wheel" id="wheel">
             <div class="slice">Chinese food</div>
             <div class="slice">Indian food</div>
-            <div class="slice">American food</div>
+            <div class="slice">Japanese food</div>
             <div class="slice">Mexican food</div>
             <div class="slice">Thai food</div>
             <div class="slice">Italian food</div>
@@ -244,7 +244,7 @@ hide: true
         const cuisinePages = {
         Chinese: "{{site.baseurl}}/navigation/cuisine/chinese",
         Indian: "{{site.baseurl}}/navigation/cuisine/indian",
-        American: "{{site.baseurl}}/navigation/cuisine/american",
+        American: "{{site.baseurl}}/navigation/cuisine/japanese",
         Mexican: "{{site.baseurl}}/navigation/cuisine/mexican",
         Thai: "{{site.baseurl}}/navigation/cuisine/thai",
         Italian: "{{site.baseurl}}/navigation/cuisine/italian", 
@@ -271,7 +271,7 @@ hide: true
                 const sliceIndex = Math.floor((360 - normalizedRotation) / 60) % 6;
 
                 // Get the selected cuisine
-                const cuisines = ["Chinese", "Indian", "American", "Mexican", "Thai", "Italian"];
+                const cuisines = ["Chinese", "Indian", "Japanese", "Mexican", "Thai", "Italian"];
                 const selectedCuisine = cuisines[sliceIndex];
 
                 // Display the result
