@@ -7,7 +7,6 @@ hide: true
 
 <!--menu: nav/home.html-->
 
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -76,7 +75,7 @@ hide: true
     <script>
         // List of pages with keywords
         const pages = [
-            { url: 'about.html', keywords: ['about', 'team', 'company'] },
+            { url: 'about.md', keywords: ['about', 'team', 'company'] },
             { url: 'food.html', keywords: ['food', 'recipes', 'cooking'] },
             { url: 'contact.html', keywords: ['contact', 'email', 'support'] },
             { url: 'blog.html', keywords: ['blog', 'news', 'updates'] }
