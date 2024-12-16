@@ -154,6 +154,13 @@ hide: true
             box-sizing: border-box;
             clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
             transform-origin: 100% 100%;
+               display: flex; 
+            justify-content: center;  
+            align-items: center; 
+            color: white;  
+            font-size: 12px;  
+           text-align: center; 
+            padding: 5px;  
         }
         .slice:nth-child(1) { background: #f94144; transform: rotate(0deg); }
         .slice:nth-child(2) { background: #f3722c; transform: rotate(60deg); }
