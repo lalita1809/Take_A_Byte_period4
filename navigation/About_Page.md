@@ -52,24 +52,26 @@ permalink: /navigation/about
             background-color: #0056b3;
         }
         #student-data {
-            margin-top: 20px;
-            padding: 10px;
+            position: absolute; /* Allows positioning relative to the clicked button */
+            display: none; /* Initially hidden */
             border: 1px solid #ddd;
             border-radius: 5px;
             background: #f9f9f9;
-            max-width: 400px;
+            padding: 10px;
             text-align: center;
+            max-width: 400px;
+            z-index: 10;
         }
     </style>
 </head>
 <body>
     <h1>About The Chefs</h1>
     <button onclick="fetchStudentData('lalita', event)">Lalita</button>
-    <button onclick="fetchStudentData('bailey')">Bailey</button>
-    <button onclick="fetchStudentData('yuva')">Yuva</button>
-    <button onclick="fetchStudentData('joanna')">Joanna</button>
-    <button onclick="fetchStudentData('ahmad')">Ahmad</button>
-    <button onclick="fetchStudentData('nathan')">Nathan</button>
+    <button onclick="fetchStudentData('bailey', event)">Bailey</button>
+    <button onclick="fetchStudentData('yuva', event)">Yuva</button>
+    <button onclick="fetchStudentData('joanna', event)">Joanna</button>
+    <button onclick="fetchStudentData('ahmad', event)">Ahmad</button>
+    <button onclick="fetchStudentData('nathan', event)">Nathan</button>
 
 <div id="student-data">
       Click a button to learn about each of us.
