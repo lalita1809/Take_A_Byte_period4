@@ -76,9 +76,9 @@ hide: true
         // List of pages with keywords
         const pages = [
             { url: 'navigation/about', keywords: ['about', 'team', 'company'] },
-            { url: 'cuisines/Thai', keywords: ['thai', 'asia', 'thia'] },
-            { url: 'cuisine/Indian', keywords: ['india', 'indian', 'India'] },
-            { url: 'cuisine/Italian', keywords: ['Italian', 'italy', 'Italy'] }
+            { url: 'navigation/cuisines/Thai', keywords: ['thai', 'asia', 'thia'] },
+            { url: 'navigation/cuisine/Indian', keywords: ['india', 'indian', 'India'] },
+            { url: 'navigation/cuisine/Italian', keywords: ['Italian', 'italy', 'Italy'] }
         ];
 
         function performSearch() {
@@ -154,6 +154,14 @@ hide: true
             box-sizing: border-box;
             clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
             transform-origin: 100% 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+            padding: 10px;
         }
         .slice:nth-child(1) { background: #f94144; transform: rotate(0deg); }
         .slice:nth-child(2) { background: #f3722c; transform: rotate(60deg); }
@@ -199,12 +207,12 @@ hide: true
     <div class="wheel-container">
         <div class="pointer"></div>
         <div class="wheel" id="wheel">
-            <div class="slice">Chinese food</div>
-            <div class="slice">Indian food</div>
-            <div class="slice">Japanese food</div>
-            <div class="slice">Mexican food</div>
-            <div class="slice">Thai food</div>
-            <div class="slice">Italian food</div>
+            <div class="slice">Chinese</div>
+            <div class="slice">Indian</div>
+            <div class="slice">Japanese</div>
+            <div class="slice">Mexican</div>
+            <div class="slice">Thai</div>
+            <div class="slice">Italian</div>
         </div>
     </div>
     <button id="spinButton" onclick="spinWheel()">Spin the Wheel</button>
