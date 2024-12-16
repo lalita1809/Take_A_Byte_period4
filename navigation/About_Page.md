@@ -64,41 +64,50 @@ permalink: /navigation/about
 </head>
 <body>
     <h1>About The Chefs</h1>
-    <button onclick="fetchStudentData('lalita')">Lalita</button>
+    <button onclick="fetchStudentData('lalita', event)">Lalita</button>
     <button onclick="fetchStudentData('bailey')">Bailey</button>
     <button onclick="fetchStudentData('yuva')">Yuva</button>
     <button onclick="fetchStudentData('joanna')">Joanna</button>
     <button onclick="fetchStudentData('ahmad')">Ahmad</button>
     <button onclick="fetchStudentData('nathan')">Nathan</button>
 
-    <div id="student-data">
+<div id="student-data">
       Click a button to learn about each of us.
     </div>
 
-    <script>
-        async function fetchStudentData(studentName) {
-            const apiUrl = `http://127.0.0.1:8887/api/student/${studentName}`;
+<script>
+        async function fetchStudentData(studentName, event) {
+    const apiUrl = `http://127.0.0.1:8887/api/student/${studentName}`;
 
-            try {
-                const response = await fetch(apiUrl);
+    try {
+        const response = await fetch(apiUrl);
 
-                if (response.ok) {
-                    const data = await response.json();
+        if (response.ok) {
+            const data = await response.json();
 
-                    // Display data on the page
-                    document.getElementById('student-data').innerHTML = `
-                        <h2>${data.name}</h2>
-                        <p><strong>Age:</strong> ${data.age}</p>
-                        <p><strong>Grade:</strong> ${data.grade}</p>
-                        <p><strong>Favorite Color:</strong> ${data.favorite_color}</p>
-                    `;
-                } else {
-                    document.getElementById('student-data').innerText = `Error: Could not fetch data for ${studentName}`;
-                }
-            } catch (error) {
-                document.getElementById('student-data').innerText = `Error: ${error.message}`;
-            }
+            // Display data on the page
+            const studentDataDiv = document.getElementById('student-data');
+            studentDataDiv.innerHTML = `
+                <h2>${data.name}</h2>
+                <p><strong>Age:</strong> ${data.age}</p>
+                <p><strong>Grade:</strong> ${data.grade}</p>
+                <p><strong>Favorite Color:</strong> ${data.favorite_color}</p>
+            `;
+
+            // Position the div under the clicked button
+            const buttonRect = event.target.getBoundingClientRect();
+            studentDataDiv.style.position = 'absolute';
+            studentDataDiv.style.top = `${buttonRect.bottom + window.scrollY}px`;
+            studentDataDiv.style.left = `${buttonRect.left + window.scrollX}px`;
+            studentDataDiv.style.textAlign = 'left'; // Optional styling for better readability
+            studentDataDiv.style.display = 'block'; // Make sure the div is visible
+        } else {
+            document.getElementById('student-data').innerText = `Error: Could not fetch data for ${studentName}`;
         }
+    } catch (error) {
+        document.getElementById('student-data').innerText = `Error: ${error.message}`;
+    }
+}
     </script>
 </body>
 </html>
