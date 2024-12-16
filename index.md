@@ -71,14 +71,14 @@ hide: true
             <!-- Search results will appear here -->
         </div>
     </div>
-
+    
     <script>
         // List of pages with keywords
         const pages = [
             { url: 'navigation/about', keywords: ['about', 'team', 'company'] },
-            { url: 'navigation/cuisines/Thai', keywords: ['thai', 'asia', 'thia'] },
-            { url: 'navigation/cuisine/Indian', keywords: ['india', 'indian', 'India'] },
-            { url: 'navigation/cuisine/Italian', keywords: ['Italian', 'italy', 'Italy'] }
+            { url: 'navigation/cuisine/thai', keywords: ['thai', 'asia', 'thia'] },
+            { url: 'navigation/cuisine/indian', keywords: ['india', 'indian', 'India'] },
+            { url: 'navigation/cuisine/italian', keywords: ['Italian', 'italy', 'Italy'] }
         ];
 
         function performSearch() {
@@ -154,14 +154,13 @@ hide: true
             box-sizing: border-box;
             clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
             transform-origin: 100% 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            font-size: 14px;
-            font-weight: bold;
-            color: #fff;
-            padding: 10px;
+               display: flex; 
+            justify-content: center;  
+            align-items: center; 
+            color: white;  
+            font-size: 12px;  
+           text-align: center; 
+            padding: 5px;  
         }
         .slice:nth-child(1) { background: #f94144; transform: rotate(0deg); }
         .slice:nth-child(2) { background: #f3722c; transform: rotate(60deg); }
