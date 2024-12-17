@@ -249,13 +249,14 @@ hide: true
 
         // Object mapping variable values to URLs
         const cuisinePages = {
-        Chinese: "{{site.baseurl}}/navigation/cuisine/chinese",
-        Indian: "{{site.baseurl}}/navigation/cuisine/indian",
-        American: "{{site.baseurl}}/navigation/cuisine/japanese",
-        Mexican: "{{site.baseurl}}/navigation/cuisine/mexican",
-        Thai: "{{site.baseurl}}/navigation/cuisine/thai",
-        Italian: "{{site.baseurl}}/navigation/cuisine/italian", 
-        }
+            Chinese: "{{site.baseurl}}/navigation/cuisine/chinese",
+            Indian: "{{site.baseurl}}/navigation/cuisine/indian",
+            Japanese: "{{site.baseurl}}/navigation/cuisine/japanese",
+            Mexican: "{{site.baseurl}}/navigation/cuisine/mexican",
+            Thai: "{{site.baseurl}}/navigation/cuisine/thai",
+            Italian: "{{site.baseurl}}/navigation/cuisine/italian",
+};
+
 
         function spinWheel() {
             // Disable the spin button
