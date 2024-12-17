@@ -206,12 +206,12 @@ hide: true
     <div class="wheel-container">
         <div class="pointer"></div>
         <div class="wheel" id="wheel">
-            <div class="slice">Chinese</div>
-            <div class="slice">Indian</div>
-            <div class="slice">Japanese</div>
-            <div class="slice">Mexican</div>
-            <div class="slice">Thai</div>
-            <div class="slice">Italian</div>
+            <div class="slice">Italian food</div>
+            <div class="slice">Chinese food</div>
+            <div class="slice">Indian food</div>
+            <div class="slice">Japanese food</div>
+            <div class="slice">Mexican food</div>
+            <div class="slice">Thai food</div>
         </div>
     </div>
     <button id="spinButton" onclick="spinWheel()">Spin the Wheel</button>
