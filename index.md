@@ -405,3 +405,243 @@ hide: true
     `;
     });
   </script>
+
+<!-- Full-Page byte Bot -->
+<div
+  id="byte-bot-container"
+  style="
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full page height */
+    background: linear-gradient(
+      135deg,
+      #66bb6a,
+      #388e3c
+    ); /* Green gradient */
+    font-family: 'Arial', sans-serif;
+    color: white;
+  "
+>
+  <!-- Header -->
+  <div
+    style=" 
+      background-color: #2e7d32; /* Darker green for header */
+      padding: 20px;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    "
+  >
+    Byte Bot
+  </div>
+
+  <!-- Chat Section -->
+  <div
+    id="chat-box"
+    style="
+      flex-grow: 1; /* Take up remaining space */
+      padding: 20px;
+      overflow-y: auto;
+      background-color: rgba(200, 230, 201, 0.85); /* Semi-transparent light green */
+      border-top: 2px solid #2e7d32;
+      border-bottom: 2px solid #2e7d32;
+      box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px; /* Slightly rounded corners */
+    "
+  ></div>
+
+  <!-- Input Section -->
+  <div
+    style=" 
+      display: flex;
+      padding: 20px;
+      background-color: #2e7d32; /* Same dark green as header */
+      box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.3);
+    "
+  >
+    <input
+      type="text"
+      id="question"
+      placeholder="Type your question here"
+      style="
+        flex-grow: 1; /* Take up as much space as possible */
+        padding: 15px;
+        border: none;
+        border-radius: 5px;
+        margin-right: 10px;
+        font-size: 1rem;
+        color: #2e7d32; /* Dark text */
+        background-color: white; /* Input background */
+      "
+    />
+    <button
+      onclick="sendQuestion(document.getElementById('question').value)"
+      style="
+        padding: 15px 20px;
+        background-color: white; /* Contrasting button background */
+        color: #2e7d32; /* Dark green text */
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      "
+    >
+      Ask byte bot
+    </button>
+    <button
+      onclick="recordVoice()"
+      style="
+        padding: 15px 20px;
+        background-color: white; /* Contrasting button background */
+        color: #2e7d32; /* Dark green text */
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 10px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      "
+    >
+      🎙️ Record
+    </button>
+  </div>
+</div>
+
+<!-- JavaScript for Chatbot -->
+<script>
+  var pythonURI;
+  if (location.hostname === "localhost") {
+    pythonURI = "http://localhost:8887";
+  } else if (location.hostname === "127.0.0.1") {
+    pythonURI = "http://127.0.0.1:8887";
+  } else {
+    pythonURI = "https://flocker.nighthawkcodingsociety.com";
+  }
+
+  const fetchOptions = {
+    method: "GET",
+    mode: "cors",
+    cache: "default",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Origin": "client",
+    },
+  };
+
+  // Chatbot Logic
+  async function sendQuestion(question) {
+    const chatBox = document.getElementById("chat-box");
+
+    // Display the user's question
+    chatBox.innerHTML += `
+            <div style="margin-bottom: 20px; background: rgba(232, 244, 200, 0.85); padding: 15px; border-radius: 8px;">
+                <strong style="color: #2e7d32;">You:</strong> 
+                <span style="color: #2e7d32;">${question}</span>
+            </div>`;
+
+    // Send the question to the backend
+    const response = await fetch(`${pythonURI}/api/ai/help`, {
+      ...fetchOptions,
+      method: "POST",
+      body: JSON.stringify({ question }),
+    });
+
+    // Display the AI's response
+    const data = await response.json();
+    const aiResponse = data.response || "Error: Unable to fetch response.";
+
+    chatBox.innerHTML += `
+            <div style="margin-bottom: 20px; background: #388e3c; padding: 15px; border-radius: 8px; color: white;">
+                <strong>byte bot:</strong> ${aiResponse}
+            </div>`;
+    document.getElementById("question").value = ""; // Clear input
+    chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll
+  }
+
+  // Record voice and convert to text
+  function recordVoice() {
+    try {
+      const recognition = new (window.SpeechRecognition ||
+        window.webkitSpeechRecognition)();
+      recognition.lang = "en-US"; // Set language to English (US)
+      recognition.interimResults = false; // Do not display partial results
+      recognition.maxAlternatives = 1; // Limit results to one alternative
+
+      recognition.start();
+
+      recognition.onstart = () => {
+        console.log("Speech recognition started. Please speak...");
+      };
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript; // Get the recognized text
+        console.log(`Voice input: ${transcript}`);
+        sendQuestion(transcript); // Send the recognized text as a question
+      };
+
+      recognition.onend = () => {
+        console.log("Speech recognition ended.");
+      };
+
+      recognition.onerror = (event) => {
+        console.error(`Speech Recognition Error: ${event.error}`);
+        if (event.error === "not-allowed") {
+          alert("Microphone access denied. Please enable permissions.");
+        } else if (event.error === "network") {
+          alert(
+            "Network error occurred. Please check your internet connection."
+          );
+        } else if (event.error === "no-speech") {
+          alert("No speech detected. Please try again.");
+        } else {
+          alert(`An error occurred: ${event.error}`);
+        }
+      };
+    } catch (error) {
+      console.error(
+        "Speech Recognition is not supported in this browser.",
+        error
+      );
+      alert(
+        "Speech Recognition is not supported in this browser. Please try Google Chrome."
+      );
+    }
+  }
+
+  // Attach the sendQuestion function to the "Ask byte bot" button
+  document
+    .querySelector('button[onclick="sendQuestion()"]')
+    .addEventListener("click", () => {
+      const question = document.getElementById("question").value.trim();
+      if (question) {
+        sendQuestion(question);
+      } else {
+        alert("Please enter a question or use the Record feature!");
+      }
+    });
+</script>
+
+<!-- Optional CSS -->
+<style>
+  /* Chatbox Scrollbar Styling */
+  #chat-box::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  #chat-box::-webkit-scrollbar-thumb {
+    background: #388e3c;
+    /* Match header and footer */
+    border-radius: 5px;
+  }
+
+  /* Button Hover Effect */
+  button:hover {
+    background-color: #66bb6a;
+    color: white;
+  }
+</style>
