@@ -292,3 +292,116 @@ hide: true
 
     </script>
 </body>
+
+
+
+
+
+
+
+<head>
+  <title>Recipe Posting System</title>
+  <style>
+        /* Wrapper to isolate the container */
+        .recipe-wrapper {
+        position: absolute; /* Position the container */
+        top: 50%; /* Center vertically */
+        left: 20px; 
+        transform: translateY(-50%); /* Adjust for vertical centering */
+        padding: 30px;
+        max-width: 700px;
+        background-color: #f4f4f9;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        body {
+        margin: 0;
+        padding: 0;
+        background-color: #fdfdfd;
+        }
+        .container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        form label {
+        display: block; /* Labels on their own line */
+        margin-bottom: 5px; /* Small spacing below the label */
+        font-weight: bold;
+        color: #333;
+        }
+  </style>
+</head>
+
+<body>
+  <section class="recipe-wrapper">
+    <div class="container">
+        <h1>Recipe Posting System</h1>
+        <form id="recipeForm">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" placeholder="Enter your name" required>
+        <label for="dish">Dish Name:</label>
+        <input type="text" id="dish" placeholder="Enter the dish name" required>
+        <label for="cuisine">Cuisine:</label>
+        <input type="text" id="cuisine" placeholder="Enter the cuisine type" required>
+        <label for="link">Recipe Link:</label>
+        <input type="url" id="link" placeholder="Enter the recipe URL" required>
+        <label for="comments">Comments:</label>
+        <textarea id="comments" placeholder="Enter your comments" required></textarea>
+        <button type="submit">Post Recipe</button>
+        </form>
+        <div id="postsContainer">
+        </div>
+    </div>
+
+
+<style>
+    .discover-more-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.discover-more-button:hover {
+    background-color: #0056b3;
+}
+</style>
+
+<script>
+    document.getElementById("recipeForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    // Get form inputs
+    const name = document.getElementById("name").value;
+    const dish = document.getElementById("dish").value;
+    const cuisine = document.getElementById("cuisine").value;
+    const link = document.getElementById("link").value;
+    const comments = document.getElementById("comments").value;
+
+    // Create a post object
+    const post = { name, dish, cuisine, link, comments };
+
+    // Retrieve existing posts from localStorage
+    const posts = JSON.parse(localStorage.getItem("posts")) || [];
+
+    // Add the new post
+    posts.push(post);
+
+    // Save back to localStorage
+    localStorage.setItem("posts", JSON.stringify(posts));
+
+    // Display confirmation message
+    const formContainer = document.querySelector(".container");
+    formContainer.innerHTML = `
+        <p>Your recipe has been posted!</p>
+        <p><a href="{{site.baseurl}}/navigation/buttons/posting" class="discover-more-button">Discover More</a></p>
+    `;
+    });
+  </script>

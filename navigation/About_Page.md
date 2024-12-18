@@ -23,8 +23,7 @@ permalink: /navigation/about
         font-family: 'Playfair Display', serif;
         }
 </style>
-
-<!DOCTYPE html>
+<br>
 <html lang="en">
 <head>
     <meta charset="UTF-8">

@@ -6,6 +6,7 @@ hide: true
 permalink: /navigation/cuisine/chinese
 ---
 
+
 <h3>About Chinese cuisine: </h3>
 
 - Chinese cuisine is a diverse and flavorful culinary tradition emphasizing fresh ingredients, balanced tastes, and techniques like stir-frying, steaming, and braising, with regional specialties showcasing unique flavors and ingredients.
@@ -122,31 +123,6 @@ permalink: /navigation/cuisine/chinese
                 "Serve hot."
             ]
         },
-        "Mapo Tofu": {
-            ingredients: [
-                "Tofu (400g, firm)",
-                "Ground pork (100g)",
-                "Doubanjiang (1 tbsp)",
-                "Soy sauce (1 tbsp)",
-                "Rice wine (1 tbsp)",
-                "Chili paste (1 tsp)",
-                "Garlic (2 cloves)",
-                "Ginger (1-inch piece)",
-                "Spring onions (2 stalks)",
-                "Sichuan peppercorns (1 tsp)",
-                "Cornstarch (1 tsp)",
-                "Vegetable oil (2 tbsp)"
-            ],
-            instructions: [
-                "Cut tofu into cubes and blanch in hot water for 2 minutes.",
-                "Heat oil in a pan and fry ground pork until browned.",
-                "Add garlic, ginger, doubanjiang, and chili paste, stir-fry for 1 minute.",
-                "Add soy sauce, rice wine, and a bit of water, bring to a simmer.",
-                "Add tofu cubes and simmer for 10 minutes.",
-                "Mix cornstarch with water and stir into the sauce to thicken.",
-                "Top with spring onions and Sichuan peppercorns before serving."
-            ]
-        },
         "Chow Mein": {
             ingredients: [
                 "Chow mein noodles (200g)",
@@ -170,24 +146,67 @@ permalink: /navigation/cuisine/chinese
                 "Top with spring onions and serve hot."
             ]
         },
-        "Peking Duck": {
+        "Hot and Sour Soup": {
             ingredients: [
-                "Whole duck (1, about 2kg)",
-                "Hoisin sauce (3 tbsp)",
-                "Soy sauce (2 tbsp)",
-                "Chinese five-spice powder (1 tsp)",
-                "Rice vinegar (2 tbsp)",
-                "Honey (2 tbsp)",
-                "Scallions (for garnish)",
-                "Mandarin pancakes (optional)"
+                "Chicken broth (4 cups)",
+                "Shiitake mushrooms (1 cup, sliced)",
+                "Tofu (200g, cubed)",
+                "Bamboo shoots (1/2 cup, sliced)",
+                "Soy sauce (3 tbsp)",
+                "Rice vinegar (3 tbsp)",
+                "Chili paste (1 tsp)",
+                "Cornstarch (2 tbsp)",
+                "Egg (1, beaten)",
+                "Spring onions (for garnish)"
             ],
             instructions: [
-                "Clean and dry the duck, then rub with Chinese five-spice powder and soy sauce.",
-                "Place the duck in a hanging position for 6-12 hours to air-dry.",
-                "Preheat the oven to 180°C (350°F) and roast the duck for about 2 hours.",
-                "Mix hoisin sauce, rice vinegar, and honey to make the glaze.",
-                "During the last 30 minutes, glaze the duck every 10 minutes.",
-                "Serve with thin pancakes, hoisin sauce, and scallions."
+                "Bring chicken broth to a boil in a pot.",
+                "Add mushrooms, tofu, and bamboo shoots. Simmer for 5 minutes.",
+                "Mix soy sauce, rice vinegar, and chili paste into the soup.",
+                "Dissolve cornstarch in water and stir into the soup to thicken.",
+                "Slowly pour in beaten egg while stirring gently.",
+                "Garnish with spring onions and serve hot."
+            ]
+        },
+        "Fried Rice": {
+            ingredients: [
+                "Cooked rice (3 cups, cooled)",
+                "Eggs (2, beaten)",
+                "Carrot (1, diced)",
+                "Green peas (1/2 cup)",
+                "Soy sauce (3 tbsp)",
+                "Sesame oil (1 tsp)",
+                "Garlic (2 cloves, minced)",
+                "Spring onions (2 stalks, chopped)",
+                "Vegetable oil (2 tbsp)"
+            ],
+            instructions: [
+                "Heat oil in a wok, scramble the eggs, and set aside.",
+                "In the same wok, stir-fry garlic, carrot, and peas for 3 minutes.",
+                "Add rice, soy sauce, and sesame oil, stir-fry for 5 minutes.",
+                "Mix in scrambled eggs and spring onions.",
+                "Serve hot."
+            ]
+        },
+        "General Tso's Chicken": {
+            ingredients: [
+                "Chicken breast (500g, cubed)",
+                "Egg (1, beaten)",
+                "Cornstarch (1/2 cup)",
+                "Garlic (2 cloves, minced)",
+                "Ginger (1 tsp, minced)",
+                "Soy sauce (2 tbsp)",
+                "Rice vinegar (2 tbsp)",
+                "Sugar (3 tbsp)",
+                "Chili paste (1 tsp)",
+                "Vegetable oil (for frying)"
+            ],
+            instructions: [
+                "Coat chicken in beaten egg and cornstarch.",
+                "Deep-fry chicken until golden brown and set aside.",
+                "In a pan, stir-fry garlic and ginger for 1 minute.",
+                "Add soy sauce, rice vinegar, sugar, and chili paste. Simmer for 3 minutes.",
+                "Toss fried chicken in the sauce and serve."
             ]
         }
     };
@@ -210,3 +229,172 @@ permalink: /navigation/cuisine/chinese
         recipeContainer.style.display = 'block';
     });
 </script>
+
+<style>
+/* General Container Styling */
+.chat-room-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  font-family: 'Arial', sans-serif;
+}
+
+/* Header Styling */
+.chat-header {
+  font-size: 1.8em;
+  text-align: center;
+  margin-bottom: 20px;
+  color: black; /* Changed text color to black */
+}
+
+/* Chat Box Styling */
+.chat-box {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  height: 300px;
+  overflow-y: scroll;
+  padding: 15px;
+  font-size: 1.2em;
+  background-color: #000;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: black; /* Changed text color to black */
+}
+
+/* Message Styling */
+.message {
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #eef2f7;
+  color: black; /* Changed text color to black */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Feedback Section Styling */
+.feedback-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.feedback-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.feedback-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 2em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.feedback-button:hover {
+  background-color: #3e8e41;
+}
+
+.feedback-button.thumbs-down {
+  background-color: #f44336;
+}
+
+.feedback-button.thumbs-down:hover {
+  background-color: #d32f2f;
+}
+
+.chat-input {
+  display: flex;
+  margin-top: 15px;
+}
+
+.chat-message {
+  flex: 1;
+  padding: 10px;
+  font-size: 1.2em;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-right: 10px;
+  color: black; /* Changed text color to black */
+}
+
+.send-button {
+  padding: 10px 15px;
+  font-size: 1.2em;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.send-button:hover {
+  background-color: #0056b3;
+}
+</style>
+
+<div class="chat-room-container">
+  <h1 class="chat-header">Recipe Feedback</h1>
+  <div class="chat-box" id="feedbackBox">
+    <!-- Submitted feedback will appear here -->
+  </div>
+  
+  <!-- Feedback Section -->
+  <div class="feedback-section">
+    <h2>Share your feedback!</h2>
+    
+    <div class="feedback-buttons">
+      <button class="feedback-button thumbs-up" onclick="submitFeedback('up')">&#128077;</button>
+      <button class="feedback-button thumbs-down" onclick="submitFeedback('down')">&#128078;</button>
+    </div>
+    
+    <div class="chat-input">
+      <input type="text" class="chat-message" id="userMessage" placeholder="Write your feedback here..." />
+      <button class="send-button" onclick="submitMessage()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Function to submit the feedback message
+  function submitMessage() {
+    const message = document.getElementById("userMessage").value;
+    if (message) {
+      const feedbackBox = document.getElementById("feedbackBox");
+      const messageElement = document.createElement("div");
+      messageElement.classList.add("message");
+      messageElement.textContent = message;
+      feedbackBox.appendChild(messageElement);
+      document.getElementById("userMessage").value = ''; // Clear input after submit
+    }
+  }
+
+  // Function to submit thumbs-up or thumbs-down feedback
+  function submitFeedback(type) {
+    const feedbackBox = document.getElementById("feedbackBox");
+    const feedbackElement = document.createElement("div");
+    feedbackElement.classList.add("message");
+
+    if (type === "up") {
+      feedbackElement.innerHTML = '<span style="color: #4CAF50;">👍</span> Thumbs Up';
+    } else {
+      feedbackElement.innerHTML = '<span style="color: #f44336;">👎</span> Thumbs Down';
+    }
+
+    feedbackBox.appendChild(feedbackElement);
+  }
+</script>
+
