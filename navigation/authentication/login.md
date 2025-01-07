@@ -183,6 +183,28 @@ show_reading_time: false
             });
     }
 
+    // Check authentication and redirect if not logged in
+    function checkAuthentication() {
+        const authURL = `${pythonURI}/api/check-auth`; // Endpoint to verify authentication
+
+        fetch(authURL, fetchOptions)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Not authenticated");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (!data.isAuthenticated) {
+                    window.location.href = '{{site.baseurl}}/login';
+                }
+            })
+            .catch(error => {
+                console.error("Authentication Check Error:", error);
+                window.location.href = '{{site.baseurl}}/login'; // Redirect if authentication fails
+            });
+    }
+
     // Call relevant database functions on the page load
     window.onload = function() {
          pythonDatabase();
