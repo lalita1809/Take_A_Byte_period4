@@ -72,7 +72,7 @@ hide: true
         </div>
     </div>
     
-    <script>
+<script>
         // List of pages with keywords
         const pages = [
             { url: 'navigation/about', keywords: ['about', 'team', 'company'] },
