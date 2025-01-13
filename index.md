@@ -491,23 +491,6 @@ hide: true
     >
       Ask byte bot
     </button>
-    <button
-      onclick="recordVoice()"
-      style="
-        padding: 15px 20px;
-        background-color: white; /* Contrasting button background */
-        color: #2e7d32; /* Dark green text */
-        font-size: 1rem;
-        font-weight: bold;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-left: 10px;
-        transition: background-color 0.3s ease, color 0.3s ease;
-      "
-    >
-      🎙️ Record
-    </button>
   </div>
 </div>
 
@@ -563,56 +546,6 @@ hide: true
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll
   }
 
-  // Record voice and convert to text
-  function recordVoice() {
-    try {
-      const recognition = new (window.SpeechRecognition ||
-        window.webkitSpeechRecognition)();
-      recognition.lang = "en-US"; // Set language to English (US)
-      recognition.interimResults = false; // Do not display partial results
-      recognition.maxAlternatives = 1; // Limit results to one alternative
-
-      recognition.start();
-
-      recognition.onstart = () => {
-        console.log("Speech recognition started. Please speak...");
-      };
-
-      recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript; // Get the recognized text
-        console.log(`Voice input: ${transcript}`);
-        sendQuestion(transcript); // Send the recognized text as a question
-      };
-
-      recognition.onend = () => {
-        console.log("Speech recognition ended.");
-      };
-
-      recognition.onerror = (event) => {
-        console.error(`Speech Recognition Error: ${event.error}`);
-        if (event.error === "not-allowed") {
-          alert("Microphone access denied. Please enable permissions.");
-        } else if (event.error === "network") {
-          alert(
-            "Network error occurred. Please check your internet connection."
-          );
-        } else if (event.error === "no-speech") {
-          alert("No speech detected. Please try again.");
-        } else {
-          alert(`An error occurred: ${event.error}`);
-        }
-      };
-    } catch (error) {
-      console.error(
-        "Speech Recognition is not supported in this browser.",
-        error
-      );
-      alert(
-        "Speech Recognition is not supported in this browser. Please try Google Chrome."
-      );
-    }
-  }
-
   // Attach the sendQuestion function to the "Ask byte bot" button
   document
     .querySelector('button[onclick="sendQuestion()"]')
@@ -621,7 +554,7 @@ hide: true
       if (question) {
         sendQuestion(question);
       } else {
-        alert("Please enter a question or use the Record feature!");
+        alert("Please enter a question!");
       }
     });
 </script>
