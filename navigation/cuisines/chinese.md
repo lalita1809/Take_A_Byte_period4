@@ -11,21 +11,6 @@ permalink: /navigation/cuisine/chinese
 
 - Chinese cuisine is a diverse and flavorful culinary tradition emphasizing fresh ingredients, balanced tastes, and techniques like stir-frying, steaming, and braising, with regional specialties showcasing unique flavors and ingredients.
 
-<h1>Random Chinese Recipe Generator</h1>
-<div class="container">
-    <button id="generateRecipeBtn">Generate Random Recipe</button>
-    <div id="recipe" class="recipe">
-        <h2 id="recipeName"></h2>
-        <div class="ingredients">
-            <h3>Ingredients:</h3>
-            <ul id="ingredientsList"></ul>
-        </div>
-        <div class="instructions">
-            <h3>Instructions:</h3>
-            <ol id="instructionsList"></ol>
-        </div>
-    </div>
-</div>
 
 <style>
     body {
@@ -76,159 +61,46 @@ permalink: /navigation/cuisine/chinese
     }
 </style>
 
+<button onclick="fetchRandomRecipe()">Get Random Recipe</button>
+<div id="recipe-data" style="display:none;"></div>
+
 <script>
-    const recipes = {
-        "Kung Pao Chicken": {
-            ingredients: [
-                "Chicken breast (500g)",
-                "Dried red chilies (10-12)",
-                "Peanuts (50g)",
-                "Soy sauce (2 tbsp)",
-                "Rice vinegar (1 tbsp)",
-                "Sugar (1 tsp)",
-                "Cornstarch (1 tsp)",
-                "Garlic (3 cloves)",
-                "Ginger (1-inch piece)",
-                "Spring onions (2 stalks)"
-            ],
-            instructions: [
-                "Cut chicken into small cubes and marinate with soy sauce and cornstarch for 10 minutes.",
-                "Heat oil in a wok, fry dried chilies and peanuts until fragrant.",
-                "Add garlic and ginger, stir-fry for 30 seconds.",
-                "Add chicken and stir-fry until golden brown.",
-                "Mix soy sauce, rice vinegar, sugar, and stir into the wok.",
-                "Add spring onions and stir-fry for 2 more minutes before serving."
-            ]
-        },
-        "Sweet and Sour Pork": {
-            ingredients: [
-                "Pork tenderloin (500g)",
-                "Bell peppers (2, sliced)",
-                "Pineapple chunks (1 cup)",
-                "Soy sauce (2 tbsp)",
-                "Rice vinegar (2 tbsp)",
-                "Ketchup (3 tbsp)",
-                "Sugar (2 tbsp)",
-                "Cornstarch (1 tbsp)",
-                "Garlic (2 cloves)",
-                "Egg (1, beaten)",
-                "Flour (for coating)"
-            ],
-            instructions: [
-                "Cut pork into bite-sized cubes and coat in flour and beaten egg.",
-                "Deep-fry pork until golden and crispy, then set aside.",
-                "In a pan, stir-fry garlic and bell peppers until soft.",
-                "Add pineapple, soy sauce, rice vinegar, ketchup, and sugar, cook until the sauce thickens.",
-                "Add fried pork and stir to coat evenly.",
-                "Serve hot."
-            ]
-        },
-        "Chow Mein": {
-            ingredients: [
-                "Chow mein noodles (200g)",
-                "Chicken breast (200g, sliced)",
-                "Carrot (1, julienned)",
-                "Bell peppers (2, sliced)",
-                "Spring onions (3 stalks)",
-                "Soy sauce (2 tbsp)",
-                "Oyster sauce (2 tbsp)",
-                "Sesame oil (1 tsp)",
-                "Garlic (3 cloves)",
-                "Ginger (1-inch piece)",
-                "Vegetable oil (2 tbsp)"
-            ],
-            instructions: [
-                "Cook noodles according to package instructions and set aside.",
-                "Heat oil in a wok, stir-fry garlic and ginger for 30 seconds.",
-                "Add chicken and cook until browned.",
-                "Add vegetables and stir-fry until tender.",
-                "Add noodles, soy sauce, oyster sauce, and sesame oil, stir well.",
-                "Top with spring onions and serve hot."
-            ]
-        },
-        "Hot and Sour Soup": {
-            ingredients: [
-                "Chicken broth (4 cups)",
-                "Shiitake mushrooms (1 cup, sliced)",
-                "Tofu (200g, cubed)",
-                "Bamboo shoots (1/2 cup, sliced)",
-                "Soy sauce (3 tbsp)",
-                "Rice vinegar (3 tbsp)",
-                "Chili paste (1 tsp)",
-                "Cornstarch (2 tbsp)",
-                "Egg (1, beaten)",
-                "Spring onions (for garnish)"
-            ],
-            instructions: [
-                "Bring chicken broth to a boil in a pot.",
-                "Add mushrooms, tofu, and bamboo shoots. Simmer for 5 minutes.",
-                "Mix soy sauce, rice vinegar, and chili paste into the soup.",
-                "Dissolve cornstarch in water and stir into the soup to thicken.",
-                "Slowly pour in beaten egg while stirring gently.",
-                "Garnish with spring onions and serve hot."
-            ]
-        },
-        "Fried Rice": {
-            ingredients: [
-                "Cooked rice (3 cups, cooled)",
-                "Eggs (2, beaten)",
-                "Carrot (1, diced)",
-                "Green peas (1/2 cup)",
-                "Soy sauce (3 tbsp)",
-                "Sesame oil (1 tsp)",
-                "Garlic (2 cloves, minced)",
-                "Spring onions (2 stalks, chopped)",
-                "Vegetable oil (2 tbsp)"
-            ],
-            instructions: [
-                "Heat oil in a wok, scramble the eggs, and set aside.",
-                "In the same wok, stir-fry garlic, carrot, and peas for 3 minutes.",
-                "Add rice, soy sauce, and sesame oil, stir-fry for 5 minutes.",
-                "Mix in scrambled eggs and spring onions.",
-                "Serve hot."
-            ]
-        },
-        "General Tso's Chicken": {
-            ingredients: [
-                "Chicken breast (500g, cubed)",
-                "Egg (1, beaten)",
-                "Cornstarch (1/2 cup)",
-                "Garlic (2 cloves, minced)",
-                "Ginger (1 tsp, minced)",
-                "Soy sauce (2 tbsp)",
-                "Rice vinegar (2 tbsp)",
-                "Sugar (3 tbsp)",
-                "Chili paste (1 tsp)",
-                "Vegetable oil (for frying)"
-            ],
-            instructions: [
-                "Coat chicken in beaten egg and cornstarch.",
-                "Deep-fry chicken until golden brown and set aside.",
-                "In a pan, stir-fry garlic and ginger for 1 minute.",
-                "Add soy sauce, rice vinegar, sugar, and chili paste. Simmer for 3 minutes.",
-                "Toss fried chicken in the sauce and serve."
-            ]
+    async function fetchRandomRecipe() {
+        const apiUrls = [
+            'http://127.0.0.1:8887/api/chinese_recipe/KungPaoChicken',
+            'http://127.0.0.1:8887/api/chinese_recipe/OrangeChicken',
+            'http://127.0.0.1:8887/api/chinese_recipe/BeefWithBroccoli'
+            // Add more URLs as needed
+        ];
+
+        // Randomly select an API URL from the array
+        const randomIndex = Math.floor(Math.random() * apiUrls.length);
+        const apiUrl = apiUrls[randomIndex];
+
+        try {
+            const response = await fetch(apiUrl);
+
+            if (response.ok) {
+                const recipe = await response.json();
+
+                const recipeDataDiv = document.getElementById('recipe-data');
+                recipeDataDiv.innerHTML = `
+                    <h3>${recipe.dish}</h3>
+                    <p><strong>Time:</strong> ${recipe.time} minutes</p>
+                    <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
+                    <p><strong>Instructions:</strong> ${recipe.instructions}</p>
+                `;
+
+                recipeDataDiv.style.display = 'block';  
+            } else {
+                document.getElementById('recipe-data').innerText = 'Error: Could not fetch a recipe';
+            }
+        } catch (error) {
+            document.getElementById('recipe-data').innerText = `Error: ${error.message}`;
         }
-    };
-
-    const generateRecipeBtn = document.getElementById("generateRecipeBtn");
-    const recipeContainer = document.getElementById("recipe");
-    const recipeNameElement = document.getElementById("recipeName");
-    const ingredientsList = document.getElementById("ingredientsList");
-    const instructionsList = document.getElementById("instructionsList");
-
-    generateRecipeBtn.addEventListener("click", () => {
-        const recipeNames = Object.keys(recipes);
-        const randomRecipeName = recipeNames[Math.floor(Math.random() * recipeNames.length)];
-        const recipe = recipes[randomRecipeName];
-
-        recipeNameElement.textContent = randomRecipeName;
-        ingredientsList.innerHTML = recipe.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('');
-        instructionsList.innerHTML = recipe.instructions.map(instruction => `<li>${instruction}</li>`).join('');
-
-        recipeContainer.style.display = 'block';
-    });
+    }
 </script>
+
 
 <style>
 /* General Container Styling */
