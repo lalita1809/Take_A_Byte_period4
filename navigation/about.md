@@ -45,96 +45,148 @@ search_exclude: true
         button:hover {
             background-color: #45a049;
         }
-        .fridge-list {
-            margin-top: 30px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
-        .fridge-item {
-            padding: 10px;
-            background-color: #f8f8f8;
-            border-radius: 4px;
-            margin-bottom: 10px;
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
 <body>
 <div class="container">
-<h1>Fridge API</h1>
-<div class="form-group">
-    <label for="ingredients">Ingredients:</label>
-    <input type="text" id="ingredients" placeholder="e.g., chicken, garlic, lemon">
-</div>
-<div class="form-group">
-    <label for="user_id">User ID:</label>
-    <input type="number" id="user_id" placeholder="Enter your User ID">
-</div>
-<button id="addFridgeBtn">Add Ingredients to Fridge</button>
+    <h1>Fridge API</h1>
+    <div class="form-group">
+        <label for="grocery">Grocery:</label>
+        <input type="text" id="grocery" placeholder="e.g., chicken, garlic, lemon">
+    </div>
+    <div class="form-group">
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" placeholder="Enter quantity">
+    </div>
+    <button id="addFridgeBtn">Add Grocery to Fridge</button>
 
-<div class="fridge-list" id="fridgeList">
-    <h2>Your Fridge</h2>
-    <!-- Fridge entries will be displayed here -->
-</div>
+    <div id="fridgeTableWrapper">
+        <h2>Your Fridge</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Grocery</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="fridgeTableBody">
+                <!-- Dynamic rows will be inserted here -->
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
-const addFridgeBtn = document.getElementById('addFridgeBtn');
-const ingredientsInput = document.getElementById('ingredients');
-const userIdInput = document.getElementById('user_id');
-const fridgeList = document.getElementById('fridgeList');
+const API_URL = "http://localhost:8887/api/fridge";
 
-const API_URL = "http://localhost:8887/fridge";
+// Add grocery
+document.getElementById('addFridgeBtn').addEventListener('click', async () => {
+    const grocery = document.getElementById('grocery').value;
+    const quantity = parseInt(document.getElementById('quantity').value);
 
-// Add ingredients to fridge
-addFridgeBtn.addEventListener('click', async () => {
     try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(`${API_URL}/add`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                ingredients: ingredientsInput.value,
-                user_id: userIdInput.value,
-            }),
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ grocery, quantity })
         });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+        if (response.ok) {
+            alert("Grocery added!");
+            fetchGrocerys();
+        } else {
+            alert("Failed to add Grocery.");
         }
-
-        const data = await response.json();
-        alert('Ingredients added successfully');
-        displayFridgeItems(userIdInput.value);
-    } catch (error) {
-        console.error('Error:', error);
-        alert(`An error occurred: ${error.message}`);
+    } catch (err) {
+        console.error(err);
     }
 });
 
-// Fetch fridge items for the user
-async function displayFridgeItems(userId) {
+// Fetch Grocerys
+async function fetchGrocerys() {
     try {
-        const response = await fetch(`${API_URL}?user_id=${userId}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+        const response = await fetch(API_URL);
+        if (response.ok) {
+            const data = await response.json();
+            renderTable(data);
         }
-
-        const data = await response.json();
-        fridgeList.innerHTML = '<h2>Your Fridge</h2>'; // Reset fridge list
-        if (data.length > 0) {
-            data.forEach((item) => {
-                const fridgeItem = document.createElement('div');
-                fridgeItem.classList.add('fridge-item');
-                fridgeItem.textContent = `Ingredients: ${item.ingredients}`;
-                fridgeList.appendChild(fridgeItem);
-            });
-        } else {
-            fridgeList.innerHTML += '<p>No items found in your fridge.</p>';
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred while fetching fridge items.');
+    } catch (err) {
+        console.error(err);
     }
 }
+
+// Render table
+function renderTable(data) {
+    const tableBody = document.getElementById('fridgeTableBody');
+    tableBody.innerHTML = '';
+    data.forEach(Grocery => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${Grocery.id}</td>
+            <td>${Grocery.grocery}</td>
+            <td>${Grocery.quantity}</td>
+            <td>
+                <button onclick="updateGrocery(${Grocery.id}, '${Grocery.grocery}', ${Grocery.quantity})">Edit</button>
+                <button onclick="deleteGrocery(${Grocery.id})">Delete</button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+// Update Grocery
+async function updateGrocery(id, grocery, currentQuantity) {
+    const newQuantity = prompt(`Update quantity for ${grocery}:`, currentQuantity);
+    if (newQuantity !== null) {
+        try {
+            const response = await fetch(`${API_URL}/update`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, quantity: parseInt(newQuantity) })
+            });
+            if (response.ok) {
+                alert("Grocery updated!");
+                fetchGrocerys();
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
+}
+
+// Delete Grocery
+async function deleteGrocery(id) {
+    try {
+        const response = await fetch(`${API_URL}/delete`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id })
+        });
+        if (response.ok) {
+            alert("Grocery deleted!");
+            fetchGrocerys();
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+// Fetch Grocerys on page load
+fetchGrocerys();
 </script>
 </body>
 </html>
