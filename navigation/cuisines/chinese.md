@@ -6,12 +6,6 @@ hide: true
 permalink: /navigation/cuisine/chinese
 ---
 
-
-<h3>About Chinese cuisine: </h3>
-
-- Chinese cuisine is a diverse and flavorful culinary tradition emphasizing fresh ingredients, balanced tastes, and techniques like stir-frying, steaming, and braising, with regional specialties showcasing unique flavors and ingredients.
-
-
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -46,6 +40,34 @@ permalink: /navigation/cuisine/chinese
     button:hover {
         background-color: #45a049;
     }
+    .recipe-card {
+        background-color: #fff;
+        margin-bottom: 20px;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .recipe-card h3 {
+        margin-top: 0;
+    }
+    .recipe-card p {
+        margin: 5px 0;
+    }
+    .recipe-card button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    .recipe-card button:hover {
+        background-color: #45a049;
+    }
     .recipe {
         display: none;
         font-size: 16px;
@@ -61,45 +83,155 @@ permalink: /navigation/cuisine/chinese
     }
 </style>
 
-<button onclick="fetchRandomRecipe()">Get Random Recipe</button>
-<div id="recipe-data" style="display:none;"></div>
+<body>
+    <h3>About Chinese cuisine: </h3>
+    <ul>
+        <li>Chinese cuisine is a diverse and flavorful culinary tradition emphasizing fresh ingredients, balanced tastes, and techniques like stir-frying, steaming, and braising, with regional specialties showcasing unique flavors and ingredients.</li>
+    </ul>
 
-<script>
-    async function fetchRandomRecipe() {
-        const apiUrls = [
-            'http://127.0.0.1:8887/api/chinese_recipe/KungPaoChicken',
-            'http://127.0.0.1:8887/api/chinese_recipe/OrangeChicken',
-            'http://127.0.0.1:8887/api/chinese_recipe/BeefWithBroccoli'
-            // Add more URLs as needed
-        ];
+  <button onclick="fetchRandomRecipes()">Shuffle Recipes</button>
+  <button onclick="viewStoredRecipes()">Stored Recipes</button>
+    <div id="recipe-data"></div>
+    <div id="stored-recipes" style="margin-top: 20px;"></div>
 
-        // Randomly select an API URL from the array
-        const randomIndex = Math.floor(Math.random() * apiUrls.length);
-        const apiUrl = apiUrls[randomIndex];
+  <script>
+      async function fetchRandomRecipes() {
+          const apiUrls = {
+                chicken: [
+                    'http://127.0.0.1:8887/api/chinese_recipe/KungPaoChicken',
+                    'http://127.0.0.1:8887/api/chinese_recipe/OrangeChicken',
+                    'http://127.0.0.1:8887/api/chinese_recipe/LemonChicken',
+                    'http://127.0.0.1:8887/api/chinese_recipe/CrispySweetAndSourChicken',
+                    'http://127.0.0.1:8887/api/chinese_recipe/ChickenWithCashews',
+                    'http://127.0.0.1:8887/api/chinese_recipe/SzechuanChicken'
+                ],
+                beef: [
+                    'http://127.0.0.1:8887/api/chinese_recipe/BeefWithBroccoli',
+                    'http://127.0.0.1:8887/api/chinese_recipe/MongolianBeef',
+                    'http://127.0.0.1:8887/api/chinese_recipe/BeefWithBlackBeanSauce',
+                    'http://127.0.0.1:8887/api/chinese_recipe/BeefAndPeppersStirFry',
+                    'http://127.0.0.1:8887/api/chinese_recipe/ChineseSpicyBeef'
+                ],
+                vegan: [
+                    'http://127.0.0.1:8887/api/chinese_recipe/MapoTofu',
+                    'http://127.0.0.1:8887/api/chinese_recipe/VeganKungPaoTofu',
+                    'http://127.0.0.1:8887/api/chinese_recipe/VeganSweetAndSourTofu',
+                    'http://127.0.0.1:8887/api/chinese_recipe/VeganHotAndSourSoup',
+                    'http://127.0.0.1:8887/api/chinese_recipe/VeganFriedRice',
+                    'http://127.0.0.1:8887/api/chinese_recipe/VeganStirFryWithTofu'
+                ],
+                fish: [
+                    'http://127.0.0.1:8887/api/chinese_recipe/FishInBlackBeanSauce',
+                    'http://127.0.0.1:8887/api/chinese_recipe/SteamedFishWithGingerAndSoySauce',
+                    'http://127.0.0.1:8887/api/chinese_recipe/FishTofuSoup',
+                    'http://127.0.0.1:8887/api/chinese_recipe/CrispyFishFillets',
+                    'http://127.0.0.1:8887/api/chinese_recipe/FishWithSoyAndGarlicSauce',
+                    'http://127.0.0.1:8887/api/chinese_recipe/FishAndEggplantStirFry'
+                ],
+                lamb: [
+                    'http://127.0.0.1:8887/api/chinese_recipe/BraisedLambWithSoySauce',
+                    'http://127.0.0.1:8887/api/chinese_recipe/LambStirFryWithPeppers',
+                    'http://127.0.0.1:8887/api/chinese_recipe/LambWithBlackBeanSauce',
+                    'http://127.0.0.1:8887/api/chinese_recipe/SzechuanLamb',
+                    'http://127.0.0.1:8887/api/chinese_recipe/LambWithVegetablesStirFry',
+                    'http://127.0.0.1:8887/api/chinese_recipe/LambCurry'
+                ]
+            };
 
+            const selectedUrls = {
+                chicken: apiUrls.chicken[Math.floor(Math.random() * apiUrls.chicken.length)],
+                beef: apiUrls.beef[Math.floor(Math.random() * apiUrls.beef.length)],
+                vegan: apiUrls.vegan[Math.floor(Math.random() * apiUrls.vegan.length)],
+                fish: apiUrls.fish[Math.floor(Math.random() * apiUrls.fish.length)],
+                lamb: apiUrls.lamb[Math.floor(Math.random() * apiUrls.lamb.length)]
+            };
+
+            try {
+                const recipeDataDiv = document.getElementById('recipe-data');
+                recipeDataDiv.innerHTML = ''; // Clear previous recipes
+
+                const fetchPromises = Object.values(selectedUrls).map(async (url) => {
+                    const response = await fetch(url);
+                    if (response.ok) {
+                        return await response.json();
+                    } else {
+                        throw new Error('Error fetching a recipe');
+                    }
+                });
+
+                const recipes = await Promise.all(fetchPromises);
+
+                recipes.forEach(recipe => {
+                    const recipeDiv = document.createElement('div');
+                    recipeDiv.classList.add('recipe-card');
+                    recipeDiv.innerHTML = `
+                        <h3>${recipe.dish}</h3>
+                        <p><strong>Time:</strong> ${recipe.time} minutes</p>
+                        <p><strong>Ingredients:</strong> ${Array.isArray(recipe.ingredients) ? recipe.ingredients.join(', ') : recipe.ingredients}</p>
+                        <p><strong>Instructions:</strong> ${recipe.instructions}</p>
+                        <button onclick='saveRecipe(${JSON.stringify(recipe)})'>Save Recipe</button>
+                    `;
+                    recipeDataDiv.appendChild(recipeDiv);
+                });
+
+                recipeDataDiv.style.display = 'flex';  
+            } catch (error) {
+                document.getElementById('recipe-data').innerText = `Error: ${error.message}`;
+            }
+        }
+
+       async function saveRecipe(recipe) {
         try {
-            const response = await fetch(apiUrl);
+            const response = await fetch('http://127.0.0.1:8887/save_recipe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "title": recipe.dish,
+                    "ingredients": recipe.ingredients,
+                    "instructions": recipe.instructions,
+                    "time": recipe.time
+                })
+            });
 
-            if (response.ok) {
-                const recipe = await response.json();
+            const result = await response.json();
+            alert(result.message);
+        } catch (error) {
+            alert(`Error: ${error.message}`);
+        }
+    }
+
+    async function viewStoredRecipes() {
+        try {
+            const response = await fetch('http://127.0.0.1:8887/get_recipes');
+            const contentType = response.headers.get("content-type");
+
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                const recipes = await response.json();
 
                 const recipeDataDiv = document.getElementById('recipe-data');
-                recipeDataDiv.innerHTML = `
-                    <h3>${recipe.dish}</h3>
-                    <p><strong>Time:</strong> ${recipe.time} minutes</p>
-                    <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
-                    <p><strong>Instructions:</strong> ${recipe.instructions}</p>
-                `;
+                recipeDataDiv.innerHTML = ''; // Clear previous recipes
 
-                recipeDataDiv.style.display = 'block';  
+                recipes.forEach(recipe => {
+                    const recipeDiv = document.createElement('div');
+                    recipeDiv.classList.add('recipe-card');
+                    recipeDiv.innerHTML = `
+                        <h3>${recipe.title}</h3>
+                        <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
+                        <p><strong>Instructions:</strong> ${recipe.instructions}</p>
+                    `;
+                    recipeDataDiv.appendChild(recipeDiv);
+                });
             } else {
-                document.getElementById('recipe-data').innerText = 'Error: Could not fetch a recipe';
+                throw new Error('Invalid response from server');
             }
         } catch (error) {
             document.getElementById('recipe-data').innerText = `Error: ${error.message}`;
         }
     }
-</script>
+    </script>
+</body>
 
 
 <style>
@@ -228,12 +360,12 @@ permalink: /navigation/cuisine/chinese
   <div class="feedback-section">
     <h2>Share your feedback!</h2>
     
-    <div class="feedback-buttons">
+  <div class="feedback-buttons">
       <button class="feedback-button thumbs-up" onclick="submitFeedback('up')">&#128077;</button>
       <button class="feedback-button thumbs-down" onclick="submitFeedback('down')">&#128078;</button>
     </div>
     
-    <div class="chat-input">
+  <div class="chat-input">
       <input type="text" class="chat-message" id="userMessage" placeholder="Write your feedback here..." />
       <button class="send-button" onclick="submitMessage()">Submit</button>
     </div>
@@ -269,4 +401,3 @@ permalink: /navigation/cuisine/chinese
     feedbackBox.appendChild(feedbackElement);
   }
 </script>
-
