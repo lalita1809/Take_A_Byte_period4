@@ -112,4 +112,3 @@ permalink: /navigation/about
     </script>
 </body>
 </html>
-
