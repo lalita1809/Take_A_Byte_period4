@@ -65,29 +65,36 @@ permalink: /navigation/about
 </head>
 <body>
     <h1>About The Chefs</h1>
-    <button onclick="fetchStudentData('lalita', event)">Lalita</button>
-    <button onclick="fetchStudentData('bailey', event)">Bailey</button>
-    <button onclick="fetchStudentData('yuva', event)">Yuva</button>
-    <button onclick="fetchStudentData('joanna', event)">Joanna</button>
-    <button onclick="fetchStudentData('ahmad', event)">Ahmad</button>
-    <button onclick="fetchStudentData('nathan', event)">Nathan</button>
+    <button onclick="fetchStudentData('Lalita', event)">Generate Buttons</button>
+    <!-- <button onclick="fetchStudentData('Bailey', event)">Bailey</button>
+    <button onclick="fetchStudentData('Yuva', event)">Yuva</button>
+    <button onclick="fetchStudentData('Joanna', event)">Joanna</button>
+    <button onclick="fetchStudentData('Ahmad', event)">Ahmad</button>
+    <button onclick="fetchStudentData('Nathan', event)">Nathan</button> -->
+
+<div id="button-container">
+
+</div>
 
 <div id="student-data">
       Click a button to learn about each of us.
     </div>
 
 <script>
-        async function fetchStudentData(studentName, event) {
-    const apiUrl = `http://127.0.0.1:8887/api/student/${studentName}`;
 
-    try {
-        const response = await fetch(apiUrl);
+    var current_student = "";
 
-        if (response.ok) {
-            const data = await response.json();
+    function display(data, button) {
 
-            // Display data on the page
-            const studentDataDiv = document.getElementById('student-data');
+        const studentDataDiv = document.getElementById('student-data');
+
+        if (current_student == data.name) {
+            studentDataDiv.innerHTML = ''
+            current_student = ""
+        }
+
+        else {
+
             studentDataDiv.innerHTML = `
                 <h2>${data.name}</h2>
                 <p><strong>Age:</strong> ${data.age}</p>
@@ -95,13 +102,48 @@ permalink: /navigation/about
                 <p><strong>Favorite Color:</strong> ${data.favorite_color}</p>
             `;
 
-            // Position the div under the clicked button
+        // Position the div under the clicked button
             const buttonRect = event.target.getBoundingClientRect();
             studentDataDiv.style.position = 'absolute';
             studentDataDiv.style.top = `${buttonRect.bottom + window.scrollY}px`;
             studentDataDiv.style.left = `${buttonRect.left + window.scrollX}px`;
             studentDataDiv.style.textAlign = 'left'; // Optional styling for better readability
             studentDataDiv.style.display = 'block'; // Make sure the div is visible
+
+        current_student = data.name;
+        }
+    }
+
+        async function fetchStudentData(studentName, event) {
+    // const apiUrl = `http://127.0.0.1:8887/api/studentGet/${studentName}`;
+    const apiUrl = `http://127.0.0.1:8887/api/studentGet/`;
+
+    try {
+        const response = await fetch(apiUrl);
+
+        if (response.ok) {
+            const data = await response.json();
+
+
+
+
+            console.log(data.length)
+
+            const container = document.getElementById('button-container');
+            container.innerHTML = '';
+
+            // Check if the input is valid
+
+            // Create buttons dynamically
+            for (let i = 1; i <= data.length; i++) {
+                const button = document.createElement('button');
+                button.textContent = data[i-1].name;
+                button.onclick = () => display(data[i-1], this);
+                container.appendChild(button);
+            }
+            
+            
+
         } else {
             document.getElementById('student-data').innerText = `Error: Could not fetch data for ${studentName}`;
         }
@@ -110,5 +152,118 @@ permalink: /navigation/about
     }
 }
     </script>
-</body>
-</html>
+
+<!-- Form to Add New Student -->
+<form id="add-student-form">
+    <h2>Add a New Chef</h2>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" placeholder="Enter Name" required>
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" placeholder="Enter Age" required>
+
+    <label for="grade">Grade:</label>
+    <input type="text" id="grade" name="grade" placeholder="Enter Grade" required>
+
+    <label for="favorite_color">Favorite Color:</label>
+    <input type="text" id="favorite_color" name="favorite_color" placeholder="Enter Favorite Color" required>
+
+    <button type="button" onclick="addStudent()">Add Chef</button>
+</form>
+
+<script>
+
+    // async function addStudent() {
+    //     const form = document.getElementById('add-student-form');
+    //     const name = form.name.value;
+    //     const age = form.age.value;
+    //     const grade = form.grade.value;
+    //     const favorite_color = form.favorite_color.value;
+
+    //     const addApiUrl = 'http://127.0.0.1:8887/api/student/add';
+
+    //     try {
+    //         const response = await fetch(addApiUrl, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({ name, age, grade, favorite_color }),
+    //         });
+
+    //         if (response.ok) {
+    //             const data = await response.json();
+    //             alert(`Chef ${data.name} added successfully!`);
+    //             form.reset();
+    //         } else {
+    //             const errorData = await response.json();
+    //             alert(`Error: ${errorData.message}`);
+    //         }
+    //     } catch (error) {
+    //         alert(`Error: ${error.message}`);
+    //     }
+    // }
+
+
+  async function addStudent() {
+  const form = document.getElementById('add-student-form');
+  const name = form.name.value.trim(); // Trim spaces to avoid mismatches
+  const age = form.age.value;
+  const grade = form.grade.value;
+  const favorite_color = form.favorite_color.value;
+
+  const getApiUrl = `http://127.0.0.1:8887/api/studentGet/`; // API to fetch existing students
+  const addApiUrl = `http://127.0.0.1:8887/api/student/add`; // API to add a new student
+  const updateApiUrl = `http://127.0.0.1:8887/api/student/update`; // API to update an existing student
+
+  let data = [];
+
+  // Fetch existing students
+  try {
+    const response = await fetch(getApiUrl);
+    if (response.ok) {
+      data = await response.json(); // Assign the fetched data to the `data` variable
+    } else {
+      alert('Failed to fetch student data.');
+      return;
+    }
+  } catch (error) {
+    alert(`Error fetching student data: ${error.message}`);
+    return; // Exit early if fetching data fails
+  }
+
+  // Check if the student already exists
+  const existingStudent = data.find((student) => student.name.toLowerCase() === name.toLowerCase());
+
+  const apiUrl = existingStudent ? updateApiUrl : addApiUrl; // Determine the correct API URL
+  const method = existingStudent ? 'PUT' : 'POST'; // Use PUT for updates, POST for new entries
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, age, grade, favorite_color }),
+    });
+
+    if (response.ok) {
+      const responseData = await response.json();
+      alert(
+        `Student ${responseData.name} ${existingStudent ? 'updated' : 'added'} successfully!`
+      );
+      form.reset();
+    } else {
+      const errorData = await response.json();
+      alert(`Error: ${errorData.message}`);
+    }
+  } catch (error) {
+    alert(`Error: ${error.message}`);
+  }
+}
+
+ </script>
+ </body>
+ </html>
+
+
