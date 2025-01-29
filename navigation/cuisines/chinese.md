@@ -289,33 +289,53 @@ permalink: /navigation/cuisine/chinese
         }
 
         async function viewStoredRecipes() {
-            try {
-                const response = await fetch('http://127.0.0.1:8887/get_recipes');
-                const contentType = response.headers.get("content-type");
+    try {
+        const response = await fetch('http://127.0.0.1:8887/get_recipes');
+        const contentType = response.headers.get("content-type");
 
-                if (contentType && contentType.indexOf("application/json") !== -1) {
-                    const recipes = await response.json();
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+            const recipes = await response.json();
 
-                    const recipeDataDiv = document.getElementById('recipe-data');
-                    recipeDataDiv.innerHTML = ''; // Clear previous recipes
+            const recipeDataDiv = document.getElementById('recipe-data');
+            recipeDataDiv.innerHTML = ''; // Clear previous recipes
 
-                    recipes.forEach(recipe => {
-                        const recipeDiv = document.createElement('div');
-                        recipeDiv.classList.add('recipe-card');
-                        recipeDiv.innerHTML = `
-                            <h3>${recipe.dish}</h3>
-                            <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
-                            <p><strong>Instructions:</strong> ${recipe.instructions}</p>
-                        `;
-                        recipeDataDiv.appendChild(recipeDiv);
-                    });
-                } else {
-                    throw new Error('Invalid response from server');
-                }
-            } catch (error) {
-                document.getElementById('recipe-data').innerText = `Error: ${error.message}`;
-            }
+            recipes.forEach(recipe => {
+                const recipeDiv = document.createElement('div');
+                recipeDiv.classList.add('recipe-card');
+                recipeDiv.innerHTML = `
+                    <h3>${recipe.dish}</h3>
+                    <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
+                    <p><strong>Instructions:</strong> ${recipe.instructions}</p>
+                    <button onclick='deleteRecipe(${recipe.id})'>Delete Recipe</button>  <!-- Add delete button -->
+                `;
+                recipeDataDiv.appendChild(recipeDiv);
+            });
+        } else {
+            throw new Error('Invalid response from server');
         }
+    } catch (error) {
+        document.getElementById('recipe-data').innerText = `Error: ${error.message}`;
+    }
+}
+      async function deleteRecipe(recipeId) {
+    try {
+        const response = await fetch(`http://127.0.0.1:8887/api/chinese_recipe/delete_recipe/${recipeId}`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            alert('Recipe deleted successfully');
+            // Optionally, refresh the list of recipes
+            viewStoredRecipes();
+        } else {
+            const data = await response.json();
+            alert(data.error || 'Error deleting recipe');
+        }
+    } catch (error) {
+        alert(`Error: ${error.message}`);
+    }
+}
+
     </script>
 </body>
 
