@@ -125,3 +125,88 @@ permalink: /navigation/buttons/posting
     renderPosts();
 </script>
 </body>
+
+<br>
+
+<head>
+    <title>Fetch Post Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #posting-data {
+            position: absolute; /* Allows positioning relative to the clicked button */
+            display: none; /* Initially hidden */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f9f9f9;
+            padding: 10px;
+            text-align: center;
+            max-width: 400px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <h1>Recipes</h1>
+    <button onclick="fetchPostingData('martha', event)">Martha</button>
+    <button onclick="fetchPostingData('wayne', event)">Wayne</button>
+
+<div id="posting-data">
+      Click a button to see recipes
+    </div>
+
+<script>
+        async function fetchPostingData(posterName, event) {
+    const apiUrl = `http://127.0.0.1:8887/api/posting/${posterName}`;
+
+    try {
+        const response = await fetch(apiUrl);
+
+        if (response.ok) {
+            const data = await response.json();
+
+            // Display data on the page
+            const postingDataDiv = document.getElementById('posting-data');
+            postingDataDiv.innerHTML = `
+                <h2>${data.name}</h2>
+                <p><strong>Dish:</strong> ${data.dish}</p>
+                <p><strong>Cuisine:</strong> ${data.cuisine}</p>
+                <p><strong>Link:</strong> ${data.link}</p>
+                <p><strong>Comments:</strong> ${data.comments}</p>
+            `;
+
+            // Position the div under the clicked button
+            const buttonRect = event.target.getBoundingClientRect();
+            postingDataDiv.style.position = 'absolute';
+            postingDataDiv.style.top = `${buttonRect.bottom + window.scrollY}px`;
+            postingDataDiv.style.left = `${buttonRect.left + window.scrollX}px`;
+            postingDataDiv.style.textAlign = 'left'; // Optional styling for better readability
+            postingDataDiv.style.display = 'block'; // Make sure the div is visible
+        } else {
+            document.getElementById('posting-data').innerText = `Error: Could not fetch data for ${postingName}`;
+        }
+    } catch (error) {
+        document.getElementById('posting-data').innerText = `Error: ${error.message}`;
+    }
+}
+    </script>
+</body>
+</html>
