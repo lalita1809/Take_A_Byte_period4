@@ -7,6 +7,91 @@ permalink: /navigation/cuisine/chinese
 ---
 
 <style>
+#recipe-data {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: flex-start;  
+    gap: 20px;  
+    padding: 20px;
+}
+
+
+.recipe-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 350px;
+    width: 250px; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px;  
+}
+
+
+#recipe-data .recipe-card:nth-child(3n+1) {
+    margin-left: 30px;
+}
+
+
+#recipe-data .recipe-card:nth-child(3n+2) {
+    margin-left: auto;
+    margin-right: auto; 
+}
+
+
+#recipe-data .recipe-card:nth-child(3n+3) {
+    margin-left: auto;
+}
+
+
+#recipe-data .recipe-card:nth-child(4) {
+    margin-left: 120px; 
+}
+
+
+.recipe-card:hover {
+    transform: translateY(-10px);  
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+.recipe-card h3 {
+    margin-top: 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+
+.recipe-card p {
+    margin: 5px 0;
+    font-size: 1em;
+    line-height: 1.5;
+    flex-grow: 1;  
+}
+
+
+.recipe-card button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.recipe-card button:hover {
+    background-color: #45a049;
+}
+
+  
     body {
         font-family: Arial, sans-serif;
         margin: 0;
@@ -180,56 +265,57 @@ permalink: /navigation/cuisine/chinese
             }
         }
 
-       async function saveRecipe(recipe) {
-        try {
-            const response = await fetch('http://127.0.0.1:8887/save_recipe', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "title": recipe.dish,
-                    "ingredients": recipe.ingredients,
-                    "instructions": recipe.instructions,
-                    "time": recipe.time
-                })
-            });
-
-            const result = await response.json();
-            alert(result.message);
-        } catch (error) {
-            alert(`Error: ${error.message}`);
-        }
-    }
-
-    async function viewStoredRecipes() {
-        try {
-            const response = await fetch('http://127.0.0.1:8887/get_recipes');
-            const contentType = response.headers.get("content-type");
-
-            if (contentType && contentType.indexOf("application/json") !== -1) {
-                const recipes = await response.json();
-
-                const recipeDataDiv = document.getElementById('recipe-data');
-                recipeDataDiv.innerHTML = ''; // Clear previous recipes
-
-                recipes.forEach(recipe => {
-                    const recipeDiv = document.createElement('div');
-                    recipeDiv.classList.add('recipe-card');
-                    recipeDiv.innerHTML = `
-                        <h3>${recipe.title}</h3>
-                        <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
-                        <p><strong>Instructions:</strong> ${recipe.instructions}</p>
-                    `;
-                    recipeDataDiv.appendChild(recipeDiv);
+           async function saveRecipe(recipe) {
+            try {
+                const response = await fetch('http://127.0.0.1:8887/api/chinese_recipe/save_recipe', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "name": recipe.dish,
+                        "dish": recipe.dish,
+                        "time": recipe.time,
+                        "ingredients": recipe.ingredients,
+                        "instructions": recipe.instructions
+                    })
                 });
-            } else {
-                throw new Error('Invalid response from server');
+
+                const result = await response.json();
+                alert(result.message);
+            } catch (error) {
+                alert(`Error: ${error.message}`);
             }
-        } catch (error) {
-            document.getElementById('recipe-data').innerText = `Error: ${error.message}`;
         }
-    }
+
+        async function viewStoredRecipes() {
+            try {
+                const response = await fetch('http://127.0.0.1:8887/get_recipes');
+                const contentType = response.headers.get("content-type");
+
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    const recipes = await response.json();
+
+                    const recipeDataDiv = document.getElementById('recipe-data');
+                    recipeDataDiv.innerHTML = ''; // Clear previous recipes
+
+                    recipes.forEach(recipe => {
+                        const recipeDiv = document.createElement('div');
+                        recipeDiv.classList.add('recipe-card');
+                        recipeDiv.innerHTML = `
+                            <h3>${recipe.dish}</h3>
+                            <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
+                            <p><strong>Instructions:</strong> ${recipe.instructions}</p>
+                        `;
+                        recipeDataDiv.appendChild(recipeDiv);
+                    });
+                } else {
+                    throw new Error('Invalid response from server');
+                }
+            } catch (error) {
+                document.getElementById('recipe-data').innerText = `Error: ${error.message}`;
+            }
+        }
     </script>
 </body>
 
