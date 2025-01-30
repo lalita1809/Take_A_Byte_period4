@@ -267,7 +267,7 @@ permalink: /navigation/cuisine/chinese
 
            async function saveRecipe(recipe) {
             try {
-                const response = await fetch('http://127.0.0.1:8887/api/chinese_recipe/save_recipe', {
+                const response = await fetch('http://127.0.0.1:8887/save_recipe', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
