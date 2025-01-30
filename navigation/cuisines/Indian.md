@@ -7,6 +7,91 @@ permalink: /navigation/cuisine/indian
 ---
 
 <style>
+    #recipe-data {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: flex-start;  
+    gap: 20px;  
+    padding: 20px;
+}
+
+
+.recipe-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 350px;
+    width: 250px; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px;  
+}
+
+
+#recipe-data .recipe-card:nth-child(3n+1) {
+    margin-left: 30px;
+}
+
+
+#recipe-data .recipe-card:nth-child(3n+2) {
+    margin-left: auto;
+    margin-right: auto; 
+}
+
+
+#recipe-data .recipe-card:nth-child(3n+3) {
+    margin-left: auto;
+}
+
+
+#recipe-data .recipe-card:nth-child(4) {
+    margin-left: 120px; 
+}
+
+
+.recipe-card:hover {
+    transform: translateY(-10px);  
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+.recipe-card h3 {
+    margin-top: 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+
+.recipe-card p {
+    margin: 5px 0;
+    font-size: 1em;
+    line-height: 1.5;
+    flex-grow: 1;  
+}
+
+
+.recipe-card button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.recipe-card button:hover {
+    background-color: #45a049;
+}
+
+  
     body {
         font-family: Arial, sans-serif;
         margin: 0;
