@@ -126,33 +126,50 @@ permalink: /navigation/cuisine/chinese
         background-color: #45a049;
     }
     .recipe-card {
-        background-color: #fff;
-        margin-bottom: 20px;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    .recipe-card h3 {
-        margin-top: 0;
-    }
-    .recipe-card p {
-        margin: 5px 0;
-    }
-    .recipe-card button {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        background-color: #4CAF50;
-        color: white;
-        font-size: 16px;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-        margin-top: 10px;
-    }
-    .recipe-card button:hover {
-        background-color: #45a049;
-    }
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 350px;
+    width: 250px; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.recipe-card h3 {
+    margin-top: 0;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: left;  /* Ensures title is aligned to the left */
+}
+
+.recipe-card p {
+    margin: 5px 0;
+    font-size: 1em;
+    line-height: 1.5;
+    text-align: left;  /* Align ingredients and instructions left */
+    flex-grow: 1;
+}
+
+.recipe-card button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.recipe-card button:hover {
+    background-color: #45a049;
+}
     .recipe {
         display: none;
         font-size: 16px;
@@ -306,7 +323,9 @@ permalink: /navigation/cuisine/chinese
                     <h3>${recipe.dish}</h3>
                     <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
                     <p><strong>Instructions:</strong> ${recipe.instructions}</p>
-                    <button onclick='deleteRecipe(${recipe.id})'>Delete Recipe</button>  <!-- Add delete button -->
+                    <button onclick='deleteRecipe(${recipe.id})'>Delete Recipe</button>
+                    <button onclick='editRecipe(${JSON.stringify(recipe)})'>Edit Recipe</button>
+
                 `;
                 recipeDataDiv.appendChild(recipeDiv);
             });
@@ -315,6 +334,55 @@ permalink: /navigation/cuisine/chinese
         }
     } catch (error) {
         document.getElementById('recipe-data').innerText = `Error: ${error.message}`;
+    }
+}
+
+async function editRecipe(recipe) {
+    const formHTML = `
+        <h3>Edit Recipe</h3>
+        <label for="name">Recipe Name:</label>
+        <input type="text" id="name" value="${recipe.dish}" required readonly>
+        <label for="ingredients">Ingredients:</label>
+        <textarea id="ingredients" required>${recipe.ingredients}</textarea>
+        <label for="instructions">Instructions:</label>
+        <textarea id="instructions" required readonly>${recipe.instructions}</textarea>
+        <button onclick="submitEdit(${recipe.id})">Submit Changes</button>
+        <button onclick="closeEditForm()">Cancel</button>
+    `;
+    
+    const formContainer = document.getElementById('stored-recipes');
+    formContainer.innerHTML = formHTML;
+}
+
+function closeEditForm() {
+    const formContainer = document.getElementById('stored-recipes');
+    formContainer.innerHTML = '';  // Close the form
+}
+
+async function submitEdit(recipeId) {
+    const updatedRecipe = {
+        name: document.getElementById('name').value,
+        ingredients: document.getElementById('ingredients').value,
+        instructions: document.getElementById('instructions').value
+    };
+
+    try {
+        const response = await fetch(`http://127.0.0.1:8887/api/chinese_recipe/edit_recipe/${recipeId}`, { 
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedRecipe)
+        });
+
+        if (response.ok) {
+            alert('Recipe updated successfully');
+            viewStoredRecipes();  // Refresh stored recipes
+        } else {
+            alert('Failed to update recipe');
+        }
+    } catch (error) {
+        alert(`Error: ${error.message}`);
     }
 }
       async function deleteRecipe(recipeId) {
