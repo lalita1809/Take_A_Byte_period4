@@ -1,3 +1,10 @@
+---
+layout: base
+title: Natgen
+permalink: /natcountrygen/
+search_exclude: true
+---
+
 
 <style>
     body {
