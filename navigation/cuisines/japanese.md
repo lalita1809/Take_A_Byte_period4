@@ -307,7 +307,9 @@ permalink: /navigation/cuisine/japanese
                     <h3>${recipe.dish}</h3>
                     <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
                     <p><strong>Instructions:</strong> ${recipe.instructions}</p>
-                    <button onclick='deleteRecipe(${recipe.id})'>Delete Recipe</button>  <!-- Add delete button -->
+                    <button onclick='deleteRecipe(${recipe.id})'>Delete Recipe</button>
+                    <button onclick='editRecipe(${JSON.stringify(recipe)})'>Edit Recipe</button>
+
                 `;
                 recipeDataDiv.appendChild(recipeDiv);
             });
@@ -316,6 +318,55 @@ permalink: /navigation/cuisine/japanese
         }
     } catch (error) {
         document.getElementById('recipe-data').innerText = `Error: ${error.message}`;
+    }
+}
+
+async function editRecipe(recipe) {
+    const formHTML = `
+        <h3>Edit Recipe</h3>
+        <label for="name">Recipe Name:</label>
+        <input type="text" id="name" value="${recipe.dish}" required readonly>
+        <label for="ingredients">Ingredients:</label>
+        <textarea id="ingredients" required>${recipe.ingredients}</textarea>
+        <label for="instructions">Instructions:</label>
+        <textarea id="instructions" required readonly>${recipe.instructions}</textarea>
+        <button onclick="submitEdit(${recipe.id})">Submit Changes</button>
+        <button onclick="closeEditForm()">Cancel</button>
+    `;
+    
+    const formContainer = document.getElementById('stored-recipes');
+    formContainer.innerHTML = formHTML;
+}
+
+function closeEditForm() {
+    const formContainer = document.getElementById('stored-recipes');
+    formContainer.innerHTML = '';  // Close the form
+}
+
+async function submitEdit(recipeId) {
+    const updatedRecipe = {
+        name: document.getElementById('name').value,
+        ingredients: document.getElementById('ingredients').value,
+        instructions: document.getElementById('instructions').value
+    };
+
+    try {
+        const response = await fetch(`http://127.0.0.1:8887/api/chinese_recipe/edit_recipe/${recipeId}`, { 
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedRecipe)
+        });
+
+        if (response.ok) {
+            alert('Recipe updated successfully');
+            viewStoredRecipes();  // Refresh stored recipes
+        } else {
+            alert('Failed to update recipe');
+        }
+    } catch (error) {
+        alert(`Error: ${error.message}`);
     }
 }
 
