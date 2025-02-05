@@ -111,7 +111,7 @@ hide: true
 </body>
 </html>
 
-<h3><a href="{{site.baseurl}}/navigation/about">About page</a></h3>
+<h3> <a class="aboutButton" href="{{site.baseurl}}/navigation/about">About page</a></h3>
 
 
 <head>
@@ -199,6 +199,9 @@ hide: true
             font-size: 20px;
             font-weight: bold;
             color: #333;
+        }
+        #spinButton {
+          transform: translateX(50%)
         }
     </style>
 </head>
