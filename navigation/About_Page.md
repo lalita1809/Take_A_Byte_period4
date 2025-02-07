@@ -116,7 +116,7 @@ permalink: /navigation/about
 
         async function fetchStudentData(studentName, event) {
     // const apiUrl = `http://127.0.0.1:8887/api/studentGet/${studentName}`;
-    const apiUrl = `http://127.0.0.1:8887/api/studentGet/`;
+    const apiUrl = `${pythonURI}/api/studentGet/`;
 
     try {
         const response = await fetch(apiUrl);
@@ -197,8 +197,8 @@ async function deleteStudent() {
   const grade = form.grade.value;
   const favorite_color = form.favorite_color.value;
 
-  const getApiUrl = `http://127.0.0.1:8887/api/studentGet/`; // API to fetch existing students
-  const deleteApiUrl = `http://127.0.0.1:8887/api/student/delete`; // API to delete a student
+  const getApiUrl = `${pythonURI}/api/studentGet/`; // API to fetch existing students
+  const deleteApiUrl = `${pythonURI}/api/student/delete`; // API to delete a student
 
   try {
     // Fetch existing students
@@ -251,9 +251,9 @@ async function addOrUpdateStudent() {
   const grade = form.grade.value;
   const favorite_color = form.favorite_color.value;
 
-  const getApiUrl = `http://127.0.0.1:8887/api/studentGet/`; // API to fetch existing students
-  const addApiUrl = `http://127.0.0.1:8887/api/student/add`; // API to add a new student
-  const updateApiUrl = `http://127.0.0.1:8887/api/student/update`; // API to update an existing student
+  const getApiUrl = `${pythonURI}/api/studentGet/`; // API to fetch existing students
+  const addApiUrl = `${pythonURI}/api/student/add`; // API to add a new student
+  const updateApiUrl = `${pythonURI}/api/student/update`; // API to update an existing student
 
   try {
     // Fetch existing students
