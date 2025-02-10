@@ -3,7 +3,7 @@ description: "Social Media for Del Norte High School"
 owner_name: John Mortensen
 github_username: nighthawkcoders
 github_repo: "flocker_frontend" 
-baseurl: "/flocker_frontend"
+baseurl: "/flocker_frontend_period4"
 future: true
 remote_theme: jekyll/minima
 minima:
