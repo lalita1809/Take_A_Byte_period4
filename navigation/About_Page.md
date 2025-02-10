@@ -82,6 +82,8 @@ permalink: /navigation/about
 
 <script>
 
+import {pythonURI} from './config.js';
+        
     var current_student = "";
 
     function display(data, button) {
