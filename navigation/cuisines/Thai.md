@@ -183,41 +183,41 @@ permalink: /navigation/cuisine/thai
     async function fetchRandomRecipes() {
         const apiUrls = {
                 chicken: [
-                    'http://127.0.0.1:8887/api/thai_recipe/PadThaiChicken',
-                    'http://127.0.0.1:8887/api/thai_recipe/ThaiGreenCurryChicken',
-                    'http://127.0.0.1:8887/api/thai_recipe/ThaiBasilChicken',
-                    'http://127.0.0.1:8887/api/thai_recipe/ThaiRedCurryChicken',
-                    'http://127.0.0.1:8887/api/thai_recipe/ThaiLemonChicken',
-                    'http://127.0.0.1:8887/api/thai_recipe/ThaiChickenSatay'
+                    `${pythonURI}/api/thai_recipe/PadThaiChicken`,
+                    `${pythonURI}/api/thai_recipe/ThaiGreenCurryChicken`,
+                    `${pythonURI}/api/thai_recipe/ThaiBasilChicken`,
+                    `${pythonURI}/api/thai_recipe/ThaiRedCurryChicken`,
+                    `${pythonURI}/api/thai_recipe/ThaiLemonChicken`,
+                    `${pythonURI}/api/thai_recipe/ThaiChickenSatay`
                 ],
                 beef: [
-                    'http://127.0.0.1:8887/api/thai_recipe/PadThaiBeef',
-                    'http://127.0.0.1:8887/api/thai_recipe/ThaiBeefSalad',
-                    'http://127.0.0.1:8887/api/thai_recipe/ThaiRedCurryBeef',
-                    'http://127.0.0.1:8887/api/thai_recipe/ThaiBasilBeef',
-                    'http://127.0.0.1:8887/api/thai_recipe/ThaiBeefSkewers'
+                    `${pythonURI}/api/thai_recipe/PadThaiBeef`,
+                    `${pythonURI}/api/thai_recipe/ThaiBeefSalad`,
+                    `${pythonURI}/api/thai_recipe/ThaiRedCurryBeef`,
+                    `${pythonURI}/api/thai_recipe/ThaiBasilBeef`,
+                    `${pythonURI}/api/thai_recipe/ThaiBeefSkewers`
                 ],
                 vegan: [
-                    'http://127.0.0.1:8887/api/thai_recipe/VeganPadThai',
-                    'http://127.0.0.1:8887/api/thai_recipe/VeganThaiGreenCurry',
-                    'http://127.0.0.1:8887/api/thai_recipe/VeganThaiBasilStirfry',
-                    'http://127.0.0.1:8887/api/thai_recipe/VeganThaiRedCurry',
-                    'http://127.0.0.1:8887/api/thai_recipe/VeganThaiSalad'
+                    `${pythonURI}/api/thai_recipe/VeganPadThai`,
+                    `${pythonURI}/api/thai_recipe/VeganThaiGreenCurry`,
+                    `${pythonURI}/api/thai_recipe/VeganThaiBasilStirfry`,
+                    `${pythonURI}/api/thai_recipe/VeganThaiRedCurry`,
+                    `${pythonURI}/api/thai_recipe/VeganThaiSalad`
                 ],
                 fish: [
-                    'http://127.0.0.1:8887/api/thai_recipe/ThaiFishCurry',
-                    'http://127.0.0.1:8887/api/thai_recipe/ThaiSteamedFish',
-                    'http://127.0.0.1:8887/api/thai_recipe/ThaiFishCakes',
-                    'http://127.0.0.1:8887/api/thai_recipe/CrispyThaiFishFillets',
-                    'http://127.0.0.1:8887/api/thai_recipe/GrilledThaiFishSkewers'
+                    `${pythonURI}/api/thai_recipe/ThaiFishCurry`,
+                    `${pythonURI}/api/thai_recipe/ThaiSteamedFish`,
+                    `${pythonURI}/api/thai_recipe/ThaiFishCakes`,
+                    `${pythonURI}/api/thai_recipe/CrispyThaiFishFillets`,
+                    `${pythonURI}/api/thai_recipe/GrilledThaiFishSkewers`
                 ],
                 lamb: [
-                    'http://127.0.0.1:8887/api/thai_recipe/ThaiBraisedLamb',
-                    'http://127.0.0.1:8887/api/thai_recipe/ThaiLambSkewers',
-                    'http://127.0.0.1:8887/api/thai_recipe/ThaiLambRedCurry',
-                    'http://127.0.0.1:8887/api/thai_recipe/CryingTigerLamb',
-                    'http://127.0.0.1:8887/api/thai_recipe/ThaiMassamanLambCurry',
-                    'http://127.0.0.1:8887/api/thai_recipe/ThaiBasilAndLemongrassRackofLamb'
+                    `${pythonURI}/api/thai_recipe/ThaiBraisedLamb`,
+                    `${pythonURI}/api/thai_recipe/ThaiLambSkewers`,
+                    `${pythonURI}/api/thai_recipe/ThaiLambRedCurry`,
+                    `${pythonURI}/api/thai_recipe/CryingTigerLamb`,
+                    `${pythonURI}/api/thai_recipe/ThaiMassamanLambCurry`,
+                    `${pythonURI}/api/thai_recipe/ThaiBasilAndLemongrassRackofLamb`
                 ]
             };
 
@@ -265,7 +265,7 @@ permalink: /navigation/cuisine/thai
 
         async function saveRecipe(recipe) {
             try {
-                const response = await fetch('http://127.0.0.1:8887/save_recipe', {
+                const response = await fetch(`${pythonURI}/save_recipe`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -289,7 +289,7 @@ permalink: /navigation/cuisine/thai
 
        async function viewStoredRecipes() {
     try {
-        const response = await fetch('http://127.0.0.1:8887/get_recipes');
+        const response = await fetch(`${pythonURI}/get_recipes`);
         const contentType = response.headers.get("content-type");
 
         if (contentType && contentType.indexOf("application/json") !== -1) {
@@ -349,7 +349,7 @@ async function submitEdit(recipeId) {
     };
 
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/chinese_recipe/edit_recipe/${recipeId}`, { 
+        const response = await fetch(`${pythonURI}/api/chinese_recipe/edit_recipe/${recipeId}`, { 
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -370,7 +370,7 @@ async function submitEdit(recipeId) {
 
     async function deleteRecipe(recipeId) {
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/chinese_recipe/delete_recipe/${recipeId}`, {
+        const response = await fetch(`${pythonURI}/api/chinese_recipe/delete_recipe/${recipeId}`, {
             method: 'DELETE',
         });
 

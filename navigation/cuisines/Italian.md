@@ -183,44 +183,44 @@ permalink: /navigation/cuisine/italian
     async function fetchRandomRecipes() {
         const apiUrls = {
                 chicken: [
-                    'http://127.0.0.1:8887/api/italian_recipe/ChickenParmesan',
-                    'http://127.0.0.1:8887/api/italian_recipe/ChickenAlfredo',
-                    'http://127.0.0.1:8887/api/italian_recipe/ChickenMarsala',
-                    'http://127.0.0.1:8887/api/italian_recipe/ChickenPiccata',
-                    'http://127.0.0.1:8887/api/italian_recipe/ChickenCacciatore',
-                    'http://127.0.0.1:8887/api/italian_recipe/ChickenRisotto'
+                    `${pythonURI}/api/italian_recipe/ChickenParmesan`,
+                    `${pythonURI}/api/italian_recipe/ChickenAlfredo`,
+                    `${pythonURI}/api/italian_recipe/ChickenMarsala`,
+                    `${pythonURI}/api/italian_recipe/ChickenPiccata`,
+                    `${pythonURI}/api/italian_recipe/ChickenCacciatore`,
+                    `${pythonURI}/api/italian_recipe/ChickenRisotto`
                 ],
                 beef: [
-                    'http://127.0.0.1:8887/api/italian_recipe/BeefLasagna',
-                    'http://127.0.0.1:8887/api/italian_recipe/SpaghettiBolognese',
-                    'http://127.0.0.1:8887/api/italian_recipe/BeefBraciole',
-                    'http://127.0.0.1:8887/api/italian_recipe/BeefFlorentine',
-                    'http://127.0.0.1:8887/api/italian_recipe/BeefOssobuco',
-                    'http://127.0.0.1:8887/api/italian_recipe/BeefRisotto'
+                    `${pythonURI}/api/italian_recipe/BeefLasagna`,
+                    `${pythonURI}/api/italian_recipe/SpaghettiBolognese`,
+                    `${pythonURI}/api/italian_recipe/BeefBraciole`,
+                    `${pythonURI}/api/italian_recipe/BeefFlorentine`,
+                    `${pythonURI}/api/italian_recipe/BeefOssobuco`,
+                    `${pythonURI}/api/italian_recipe/BeefRisotto`
                 ],
                 vegan: [
-                    'http://127.0.0.1:8887/api/italian_recipe/VeganSpaghetti',
-                    'http://127.0.0.1:8887/api/italian_recipe/VeganLasagna',
-                    'http://127.0.0.1:8887/api/italian_recipe/VeganRisotto',
-                    'http://127.0.0.1:8887/api/italian_recipe/VeganPizza',
-                    'http://127.0.0.1:8887/api/italian_recipe/VeganGnocchi',
-                    'http://127.0.0.1:8887/api/italian_recipe/VeganMinestrone'
+                    `${pythonURI}/api/italian_recipe/VeganSpaghetti`,
+                    `${pythonURI}/api/italian_recipe/VeganLasagna`,
+                    `${pythonURI}/api/italian_recipe/VeganRisotto`,
+                    `${pythonURI}/api/italian_recipe/VeganPizza`,
+                    `${pythonURI}/api/italian_recipe/VeganGnocchi`,
+                    `${pythonURI}/api/italian_recipe/VeganMinestrone`
                 ],
                 fish: [
-                    'http://127.0.0.1:8887/api/italian_recipe/ShrimpScampi',
-                    'http://127.0.0.1:8887/api/italian_recipe/LinguineWithClams',
-                    'http://127.0.0.1:8887/api/italian_recipe/Cioppino',
-                    'http://127.0.0.1:8887/api/italian_recipe/GrilledSalmon',
-                    'http://127.0.0.1:8887/api/italian_recipe/TunaCarpaccio',
-                    'http://127.0.0.1:8887/api/italian_recipe/FishRisotto'
+                    `${pythonURI}/api/italian_recipe/ShrimpScampi`,
+                    `${pythonURI}/api/italian_recipe/LinguineWithClams`,
+                    `${pythonURI}/api/italian_recipe/Cioppino`,
+                    `${pythonURI}/api/italian_recipe/GrilledSalmon`,
+                    `${pythonURI}/api/italian_recipe/TunaCarpaccio`,
+                    `${pythonURI}/api/italian_recipe/FishRisotto`
                 ],
                 lamb: [
-                    'http://127.0.0.1:8887/api/italian_recipe/LambRagu',
-                    'http://127.0.0.1:8887/api/italian_recipe/LambChops',
-                    'http://127.0.0.1:8887/api/italian_recipe/LambRisotto',
-                    'http://127.0.0.1:8887/api/italian_recipe/LambOssoBuco',
-                    'http://127.0.0.1:8887/api/italian_recipe/LambMeatballs',
-                    'http://127.0.0.1:8887/api/italian_recipe/LambLasagna'
+                    `${pythonURI}/api/italian_recipe/LambRagu`,
+                    `${pythonURI}/api/italian_recipe/LambChops`,
+                    `${pythonURI}/api/italian_recipe/LambRisotto`,
+                    `${pythonURI}/api/italian_recipe/LambOssoBuco`,
+                    `${pythonURI}/api/italian_recipe/LambMeatballs`,
+                    `${pythonURI}/api/italian_recipe/LambLasagna`
                 ]
             };
 
@@ -268,7 +268,7 @@ permalink: /navigation/cuisine/italian
 
         async function saveRecipe(recipe) {
             try {
-                const response = await fetch('http://127.0.0.1:8887/save_recipe', {
+                const response = await fetch(`${pythonURI}/save_recipe`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -291,7 +291,7 @@ permalink: /navigation/cuisine/italian
 
         async function viewStoredRecipes() {
     try {
-        const response = await fetch('http://127.0.0.1:8887/get_recipes');
+        const response = await fetch(`${pythonURI}/get_recipes`);
         const contentType = response.headers.get("content-type");
 
         if (contentType && contentType.indexOf("application/json") !== -1) {
@@ -351,7 +351,7 @@ async function submitEdit(recipeId) {
     };
 
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/chinese_recipe/edit_recipe/${recipeId}`, { 
+        const response = await fetch(`${pythonURI}/api/chinese_recipe/edit_recipe/${recipeId}`, { 
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -374,7 +374,7 @@ async function submitEdit(recipeId) {
 
         async function deleteRecipe(recipeId) {
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/chinese_recipe/delete_recipe/${recipeId}`, {
+        const response = await fetch(`${pythonURI}/api/chinese_recipe/delete_recipe/${recipeId}`, {
             method: 'DELETE',
         });
 

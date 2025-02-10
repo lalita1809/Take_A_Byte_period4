@@ -182,40 +182,40 @@ permalink: /navigation/cuisine/indian
     async function fetchRandomRecipes() {
         const apiUrls = {
                 chicken: [
-                    'http://127.0.0.1:8887/api/indian_recipe/ButterChicken',
-                    'http://127.0.0.1:8887/api/indian_recipe/ChickenTikkaMasala',
-                    'http://127.0.0.1:8887/api/indian_recipe/ChickenKorma',
-                    'http://127.0.0.1:8887/api/indian_recipe/ChickenVindaloo',
-                    'http://127.0.0.1:8887/api/indian_recipe/ChickenSaag',
-                    'http://127.0.0.1:8887/api/indian_recipe/ChickenBiryani'
+                    `${pythonURI}/api/indian_recipe/ButterChicken`,
+                    `${pythonURI}/api/indian_recipe/ChickenTikkaMasala`,
+                    `${pythonURI}/api/indian_recipe/ChickenKorma`,
+                    `${pythonURI}/api/indian_recipe/ChickenVindaloo`,
+                    `${pythonURI}/api/indian_recipe/ChickenSaag`,
+                    `${pythonURI}/api/indian_recipe/ChickenBiryani`
                 ],
                 beef: [
-                    'http://127.0.0.1:8887/api/indian_recipe/BeefCurry',
-                    'http://127.0.0.1:8887/api/indian_recipe/BeefVindaloo',
-                    'http://127.0.0.1:8887/api/indian_recipe/BeefKeema',
-                    'http://127.0.0.1:8887/api/indian_recipe/BeefRoganJosh',
-                    'http://127.0.0.1:8887/api/indian_recipe/BeefBiryani'
+                    `${pythonURI}/api/indian_recipe/BeefCurry`,
+                    `${pythonURI}/api/indian_recipe/BeefVindaloo`,
+                    `${pythonURI}/api/indian_recipe/BeefKeema`,
+                    `${pythonURI}/api/indian_recipe/BeefRoganJosh`,
+                    `${pythonURI}/api/indian_recipe/BeefBiryani`
                 ],
                 vegan: [
-                    'http://127.0.0.1:8887/api/indian_recipe/ChanaMasala',
-                    'http://127.0.0.1:8887/api/indian_recipe/AlooGobi',
-                    'http://127.0.0.1:8887/api/indian_recipe/BainganBharta',
-                    'http://127.0.0.1:8887/api/indian_recipe/VeganTikkaMasala',
-                    'http://127.0.0.1:8887/api/indian_recipe/VeganBiryani'
+                    `${pythonURI}/api/indian_recipe/ChanaMasala`,
+                    `${pythonURI}/api/indian_recipe/AlooGobi`,
+                    `${pythonURI}/api/indian_recipe/BainganBharta`,
+                    `${pythonURI}/api/indian_recipe/VeganTikkaMasala`,
+                    `${pythonURI}/api/indian_recipe/VeganBiryani`
                 ],
                 fish: [
-                    'http://127.0.0.1:8887/api/indian_recipe/FishCurry',
-                    'http://127.0.0.1:8887/api/indian_recipe/GoanFishCurry',
-                    'http://127.0.0.1:8887/api/indian_recipe/FishTikka',
-                    'http://127.0.0.1:8887/api/indian_recipe/FishFry',
-                    'http://127.0.0.1:8887/api/indian_recipe/MasalaFish'
+                    `${pythonURI}/api/indian_recipe/FishCurry`,
+                    `${pythonURI}/api/indian_recipe/GoanFishCurry`,
+                    `${pythonURI}/api/indian_recipe/FishTikka`,
+                    `${pythonURI}/api/indian_recipe/FishFry`,
+                    `${pythonURI}/api/indian_recipe/MasalaFish`
                 ],
                 lamb: [
-                    'http://127.0.0.1:8887/api/indian_recipe/LambCurry',
-                    'http://127.0.0.1:8887/api/indian_recipe/LambRoganJosh',
-                    'http://127.0.0.1:8887/api/indian_recipe/LambKorma',
-                    'http://127.0.0.1:8887/api/indian_recipe/LambKeema',
-                    'http://127.0.0.1:8887/api/indian_recipe/LambBiryani'
+                    `${pythonURI}/api/indian_recipe/LambCurry`,
+                    `${pythonURI}/api/indian_recipe/LambRoganJosh`,
+                    `${pythonURI}/api/indian_recipe/LambKorma`,
+                    `${pythonURI}/api/indian_recipe/LambKeema`,
+                    `${pythonURI}/api/indian_recipe/LambBiryani`
                 ]
             };
 
@@ -262,7 +262,7 @@ permalink: /navigation/cuisine/indian
         }
             async function saveRecipe(recipe) {
             try {
-                const response = await fetch('http://127.0.0.1:8887/save_recipe', {
+                const response = await fetch(`${pythonURI}/save_recipe`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -285,7 +285,7 @@ permalink: /navigation/cuisine/indian
 
         async function viewStoredRecipes() {
     try {
-        const response = await fetch('http://127.0.0.1:8887/get_recipes');
+        const response = await fetch(`${pythonURI}/get_recipes`);
         const contentType = response.headers.get("content-type");
 
         if (contentType && contentType.indexOf("application/json") !== -1) {
@@ -354,7 +354,7 @@ async function submitEdit(recipeId) {
     };
 
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/chinese_recipe/edit_recipe/${recipeId}`, { 
+        const response = await fetch(`${pythonURI}/api/chinese_recipe/edit_recipe/${recipeId}`, { 
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -375,7 +375,7 @@ async function submitEdit(recipeId) {
 
         async function deleteRecipe(recipeId) {
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/chinese_recipe/delete_recipe/${recipeId}`, {
+        const response = await fetch(`${pythonURI}/api/chinese_recipe/delete_recipe/${recipeId}`, {
             method: 'DELETE',
         });
 
