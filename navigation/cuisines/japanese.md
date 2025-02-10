@@ -183,46 +183,46 @@ permalink: /navigation/cuisine/japanese
      async function fetchRandomRecipes() {
         const apiUrls = {
                 chicken: [
-                    'http://127.0.0.1:8887/api/japanese_recipe/ChickenTeriyaki',
-                    'http://127.0.0.1:8887/api/japanese_recipe/ChickenKatsu',
-                    'http://127.0.0.1:8887/api/japanese_recipe/ChickenYakitori',
-                    'http://127.0.0.1:8887/api/japanese_recipe/ChickenRamen',
-                    'http://127.0.0.1:8887/api/japanese_recipe/ChickenKaraage',
-                    'http://127.0.0.1:8887/api/japanese_recipe/ChickenDonburi'
-                ],
-                beef: [
-                    'http://127.0.0.1:8887/api/japanese_recipe/BeefTeriyaki',
-                    'http://127.0.0.1:8887/api/japanese_recipe/BeefSukiyaki',
-                    'http://127.0.0.1:8887/api/japanese_recipe/Gyudon',
-                    'http://127.0.0.1:8887/api/japanese_recipe/BeefYakiniku',
-                    'http://127.0.0.1:8887/api/japanese_recipe/BeefShabuShabu',
-                    'http://127.0.0.1:8887/api/japanese_recipe/BeefTataki'
-                ],
-                vegan: [
-                    'http://127.0.0.1:8887/api/japanese_recipe/VeganRamen',
-                    'http://127.0.0.1:8887/api/japanese_recipe/VeganSushi',
-                    'http://127.0.0.1:8887/api/japanese_recipe/VeganTempura',
-                    'http://127.0.0.1:8887/api/japanese_recipe/VeganGyoza',
-                    'http://127.0.0.1:8887/api/japanese_recipe/VeganDonburi',
-                    'http://127.0.0.1:8887/api/japanese_recipe/VeganMisoSoup'
-                ],
-                fish: [
-                    'http://127.0.0.1:8887/api/japanese_recipe/GrilledSalmon',
-                    'http://127.0.0.1:8887/api/japanese_recipe/SabaShioyaki',
-                    'http://127.0.0.1:8887/api/japanese_recipe/UnagiDonburi',
-                    'http://127.0.0.1:8887/api/japanese_recipe/TunaTataki',
-                    'http://127.0.0.1:8887/api/japanese_recipe/FishKaraage',
-                    'http://127.0.0.1:8887/api/japanese_recipe/FishMisoSoup'
-                ],
-                lamb: [
-                    'http://127.0.0.1:8887/api/japanese_recipe/BraisedLambShanks',
-                    'http://127.0.0.1:8887/api/japanese_recipe/LambKatsu',
-                    'http://127.0.0.1:8887/api/japanese_recipe/LambTeriyaki',
-                    'http://127.0.0.1:8887/api/japanese_recipe/LambDonburi',
-                    'http://127.0.0.1:8887/api/japanese_recipe/LambRamen',
-                    'http://127.0.0.1:8887/api/japanese_recipe/LambYakiniku'
-                ]
-            };
+                `${pythonURI}/api/japanese_recipe/ChickenTeriyaki`,
+                `${pythonURI}/api/japanese_recipe/ChickenKatsu`,
+                `${pythonURI}/api/japanese_recipe/ChickenYakitori`,
+                `${pythonURI}/api/japanese_recipe/ChickenRamen`,
+                `${pythonURI}/api/japanese_recipe/ChickenKaraage`,
+                `${pythonURI}/api/japanese_recipe/ChickenDonburi`
+            ],
+            beef: [
+                `${pythonURI}/api/japanese_recipe/BeefTeriyaki`,
+                `${pythonURI}/api/japanese_recipe/BeefSukiyaki`,
+                `${pythonURI}/api/japanese_recipe/Gyudon`,
+                `${pythonURI}/api/japanese_recipe/BeefYakiniku`,
+                `${pythonURI}/api/japanese_recipe/BeefShabuShabu`,
+                `${pythonURI}/api/japanese_recipe/BeefTataki`
+            ],
+            vegan: [
+                `${pythonURI}/api/japanese_recipe/VeganRamen`,
+                `${pythonURI}/api/japanese_recipe/VeganSushi`,
+                `${pythonURI}/api/japanese_recipe/VeganTempura`,
+                `${pythonURI}/api/japanese_recipe/VeganGyoza`,
+                `${pythonURI}/api/japanese_recipe/VeganDonburi`,
+                `${pythonURI}/api/japanese_recipe/VeganMisoSoup`
+            ],
+            fish: [
+                `${pythonURI}/api/japanese_recipe/GrilledSalmon`,
+                `${pythonURI}/api/japanese_recipe/SabaShioyaki`,
+                `${pythonURI}/api/japanese_recipe/UnagiDonburi`,
+                `${pythonURI}/api/japanese_recipe/TunaTataki`,
+                `${pythonURI}/api/japanese_recipe/FishKaraage`,
+                `${pythonURI}/api/japanese_recipe/FishMisoSoup`
+            ],
+            lamb: [
+                `${pythonURI}/api/japanese_recipe/BraisedLambShanks`,
+                `${pythonURI}/api/japanese_recipe/LambKatsu`,
+                `${pythonURI}/api/japanese_recipe/LambTeriyaki`,
+                `${pythonURI}/api/japanese_recipe/LambDonburi`,
+                `${pythonURI}/api/japanese_recipe/LambRamen`,
+                `${pythonURI}/api/japanese_recipe/LambYakiniku`
+            ]
+        };
 
             const selectedUrls = {
                 chicken: apiUrls.chicken[Math.floor(Math.random() * apiUrls.chicken.length)],
@@ -268,7 +268,7 @@ permalink: /navigation/cuisine/japanese
 
         async function saveRecipe(recipe) {
             try {
-                const response = await fetch('http://127.0.0.1:8887/save_recipe', {
+                const response = await fetch(`${pythonURI}/save_recipe`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -291,7 +291,7 @@ permalink: /navigation/cuisine/japanese
 
         async function viewStoredRecipes() {
     try {
-        const response = await fetch('http://127.0.0.1:8887/get_recipes');
+        const response = await fetch(`${pythonURI}/get_recipes`);
         const contentType = response.headers.get("content-type");
 
         if (contentType && contentType.indexOf("application/json") !== -1) {
@@ -351,7 +351,7 @@ async function submitEdit(recipeId) {
     };
 
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/chinese_recipe/edit_recipe/${recipeId}`, { 
+        const response = await fetch(`${pythonURI}/api/chinese_recipe/edit_recipe/${recipeId}`, { 
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -372,7 +372,7 @@ async function submitEdit(recipeId) {
 
     async function deleteRecipe(recipeId) {
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/chinese_recipe/delete_recipe/${recipeId}`, {
+        const response = await fetch(`${pythonURI}/api/chinese_recipe/delete_recipe/${recipeId}`, {
             method: 'DELETE',
         });
 

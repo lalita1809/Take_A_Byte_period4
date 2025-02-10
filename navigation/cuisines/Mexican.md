@@ -182,44 +182,44 @@ permalink: /navigation/cuisine/mexican
         async function fetchRandomRecipes() {
             const apiUrls = {
                 chicken: [
-                    'http://127.0.0.1:8887/api/mexican_recipe/ChickenEnchiladas',
-                    'http://127.0.0.1:8887/api/mexican_recipe/ChickenTacos',
-                    'http://127.0.0.1:8887/api/mexican_recipe/ChickenFajitas',
-                    'http://127.0.0.1:8887/api/mexican_recipe/PolloAsado',
-                    'http://127.0.0.1:8887/api/mexican_recipe/ChickenQuesadillas',
-                    'http://127.0.0.1:8887/api/mexican_recipe/ChickenTamales'
+                    `${pythonURI}/api/mexican_recipe/ChickenEnchiladas`,
+                    `${pythonURI}/api/mexican_recipe/ChickenTacos`,
+                    `${pythonURI}/api/mexican_recipe/ChickenFajitas'`
+                    `${pythonURI}/api/mexican_recipe/PolloAsado`,
+                    `${pythonURI}/api/mexican_recipe/ChickenQuesadillas`,
+                    `${pythonURI}/api/mexican_recipe/ChickenTamales`
                 ],
                 beef: [
-                    'http://127.0.0.1:8887/api/mexican_recipe/BeefEnchiladas',
-                    'http://127.0.0.1:8887/api/mexican_recipe/BeefTacos',
-                    'http://127.0.0.1:8887/api/mexican_recipe/BeefFajitas',
-                    'http://127.0.0.1:8887/api/mexican_recipe/BeefBurritos',
-                    'http://127.0.0.1:8887/api/mexican_recipe/BeefTostadas',
-                    'http://127.0.0.1:8887/api/mexican_recipe/CarneAsada'
+                    `${pythonURI}/api/mexican_recipe/BeefEnchiladas`,
+                    `${pythonURI}/api/mexican_recipe/BeefTacos`,
+                    `${pythonURI}/api/mexican_recipe/BeefFajitas`,
+                    `${pythonURI}/api/mexican_recipe/BeefBurritos`,
+                    `${pythonURI}/api/mexican_recipe/BeefTostadas`,
+                    `${pythonURI}/api/mexican_recipe/CarneAsada`
                 ],
                 vegan: [
-                    'http://127.0.0.1:8887/api/mexican_recipe/VeganTacos',
-                    'http://127.0.0.1:8887/api/mexican_recipe/VeganBurritos',
-                    'http://127.0.0.1:8887/api/mexican_recipe/VeganEnchiladas',
-                    'http://127.0.0.1:8887/api/mexican_recipe/VeganQuesadillas',
-                    'http://127.0.0.1:8887/api/mexican_recipe/VeganFajitas',
-                    'http://127.0.0.1:8887/api/mexican_recipe/VeganTamales'
+                    `${pythonURI}/api/mexican_recipe/VeganTacos`,
+                    `${pythonURI}/api/mexican_recipe/VeganBurritos`,
+                    `${pythonURI}/api/mexican_recipe/VeganEnchiladas`,
+                    `${pythonURI}/api/mexican_recipe/VeganQuesadillas`,
+                    `${pythonURI}/api/mexican_recipe/VeganFajitas`,
+                    `${pythonURI}/api/mexican_recipe/VeganTamales`
                 ],
                 fish: [
-                    'http://127.0.0.1:8887/api/mexican_recipe/FishTacos',
-                    'http://127.0.0.1:8887/api/mexican_recipe/CrispyFishTacos',
-                    'http://127.0.0.1:8887/api/mexican_recipe/GrilledFishBurritos',
-                    'http://127.0.0.1:8887/api/mexican_recipe/FishVeracruz',
-                    'http://127.0.0.1:8887/api/mexican_recipe/FishCeviche',
-                    'http://127.0.0.1:8887/api/mexican_recipe/FishFajitas'
+                    `${pythonURI}/api/mexican_recipe/FishTacos`,
+                    `${pythonURI}/api/mexican_recipe/CrispyFishTacos`,
+                    `${pythonURI}/api/mexican_recipe/GrilledFishBurritos`,
+                    `${pythonURI}/api/mexican_recipe/FishVeracruz`,
+                    `${pythonURI}/api/mexican_recipe/FishCeviche`,
+                    `${pythonURI}/api/mexican_recipe/FishFajitas`
                 ],
                 lamb: [
-                    'http://127.0.0.1:8887/api/mexican_recipe/LambTacos',
-                    'http://127.0.0.1:8887/api/mexican_recipe/LambBurritos',
-                    'http://127.0.0.1:8887/api/mexican_recipe/LambFajitas',
-                    'http://127.0.0.1:8887/api/mexican_recipe/LambEnchiladas',
-                    'http://127.0.0.1:8887/api/mexican_recipe/BraisedLambShank',
-                    'http://127.0.0.1:8887/api/mexican_recipe/LambQuesadillas'
+                    `${pythonURI}/api/mexican_recipe/LambTacos`,
+                    `${pythonURI}/api/mexican_recipe/LambBurritos`,
+                    `${pythonURI}/api/mexican_recipe/LambFajitas`,
+                    `${pythonURI}/api/mexican_recipe/LambEnchiladas`,
+                    `${pythonURI}/api/mexican_recipe/BraisedLambShank`,
+                    `${pythonURI}/api/mexican_recipe/LambQuesadillas`
                 ]
             };
 
@@ -267,7 +267,7 @@ permalink: /navigation/cuisine/mexican
 
         async function saveRecipe(recipe) {
             try {
-                const response = await fetch('http://127.0.0.1:8887/save_recipe', {
+                const response = await fetch(`${pythonURI}/api/save_recipe/`;, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -290,7 +290,7 @@ permalink: /navigation/cuisine/mexican
 
         async function viewStoredRecipes() {
     try {
-        const response = await fetch('http://127.0.0.1:8887/get_recipes');
+        const response = await fetch(`${pythonURI}/api/get_recipes/`;);
         const contentType = response.headers.get("content-type");
 
         if (contentType && contentType.indexOf("application/json") !== -1) {
@@ -359,7 +359,7 @@ async function submitEdit(recipeId) {
     };
 
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/chinese_recipe/edit_recipe/${recipeId}`, { 
+        const response = await fetch(`/api/chinese_recipe/edit_recipe/${recipeId}`, { 
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -380,7 +380,7 @@ async function submitEdit(recipeId) {
 
     async function deleteRecipe(recipeId) {
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/chinese_recipe/delete_recipe/${recipeId}`, {
+        const response = await fetch(`${pythonURI}/api/chinese_recipe/delete_recipe/${recipeId}`, {
             method: 'DELETE',
         });
 

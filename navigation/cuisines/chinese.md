@@ -200,45 +200,46 @@ permalink: /navigation/cuisine/chinese
       async function fetchRandomRecipes() {
           const apiUrls = {
                 chicken: [
-                    'http://127.0.0.1:8887/api/chinese_recipe/KungPaoChicken',
-                    'http://127.0.0.1:8887/api/chinese_recipe/OrangeChicken',
-                    'http://127.0.0.1:8887/api/chinese_recipe/LemonChicken',
-                    'http://127.0.0.1:8887/api/chinese_recipe/CrispySweetAndSourChicken',
-                    'http://127.0.0.1:8887/api/chinese_recipe/ChickenWithCashews',
-                    'http://127.0.0.1:8887/api/chinese_recipe/SzechuanChicken'
+                    `${pythonURI}/api/chinese_recipe/KungPaoChicken`,
+                    `${pythonURI}/api/chinese_recipe/OrangeChicken`,
+                    `${pythonURI}/api/chinese_recipe/LemonChicken`,
+                    `${pythonURI}/api/chinese_recipe/CrispySweetAndSourChicken`,
+                    `${pythonURI}/api/chinese_recipe/ChickenWithCashews`,
+                    `${pythonURI}/api/chinese_recipe/SzechuanChicken`
                 ],
                 beef: [
-                    'http://127.0.0.1:8887/api/chinese_recipe/BeefWithBroccoli',
-                    'http://127.0.0.1:8887/api/chinese_recipe/MongolianBeef',
-                    'http://127.0.0.1:8887/api/chinese_recipe/BeefWithBlackBeanSauce',
-                    'http://127.0.0.1:8887/api/chinese_recipe/BeefAndPeppersStirFry',
-                    'http://127.0.0.1:8887/api/chinese_recipe/ChineseSpicyBeef'
+                    `${pythonURI}/api/chinese_recipe/BeefWithBroccoli`,
+                    `${pythonURI}/api/chinese_recipe/MongolianBeef`,
+                    `${pythonURI}/api/chinese_recipe/BeefWithBlackBeanSauce`,
+                    `${pythonURI}/api/chinese_recipe/BeefAndPeppersStirFry`,
+                    `${pythonURI}/api/chinese_recipe/ChineseSpicyBeef`
                 ],
                 vegan: [
-                    'http://127.0.0.1:8887/api/chinese_recipe/MapoTofu',
-                    'http://127.0.0.1:8887/api/chinese_recipe/VeganKungPaoTofu',
-                    'http://127.0.0.1:8887/api/chinese_recipe/VeganSweetAndSourTofu',
-                    'http://127.0.0.1:8887/api/chinese_recipe/VeganHotAndSourSoup',
-                    'http://127.0.0.1:8887/api/chinese_recipe/VeganFriedRice',
-                    'http://127.0.0.1:8887/api/chinese_recipe/VeganStirFryWithTofu'
+                    `${pythonURI}/api/chinese_recipe/MapoTofu`,
+                    `${pythonURI}/api/chinese_recipe/VeganKungPaoTofu`,
+                    `${pythonURI}/api/chinese_recipe/VeganSweetAndSourTofu`,
+                    `${pythonURI}/api/chinese_recipe/VeganHotAndSourSoup`,
+                    `${pythonURI}/api/chinese_recipe/VeganFriedRice`,
+                    `${pythonURI}/api/chinese_recipe/VeganStirFryWithTofu`
                 ],
                 fish: [
-                    'http://127.0.0.1:8887/api/chinese_recipe/FishInBlackBeanSauce',
-                    'http://127.0.0.1:8887/api/chinese_recipe/SteamedFishWithGingerAndSoySauce',
-                    'http://127.0.0.1:8887/api/chinese_recipe/FishTofuSoup',
-                    'http://127.0.0.1:8887/api/chinese_recipe/CrispyFishFillets',
-                    'http://127.0.0.1:8887/api/chinese_recipe/FishWithSoyAndGarlicSauce',
-                    'http://127.0.0.1:8887/api/chinese_recipe/FishAndEggplantStirFry'
+                    `${pythonURI}/api/chinese_recipe/FishInBlackBeanSauce`,
+                    `${pythonURI}/api/chinese_recipe/SteamedFishWithGingerAndSoySauce`,
+                    `${pythonURI}/api/chinese_recipe/FishTofuSoup`,
+                    `${pythonURI}/api/chinese_recipe/CrispyFishFillets`,
+                    `${pythonURI}/api/chinese_recipe/FishWithSoyAndGarlicSauce`,
+                    `${pythonURI}/api/chinese_recipe/FishAndEggplantStirFry`
                 ],
                 lamb: [
-                    'http://127.0.0.1:8887/api/chinese_recipe/BraisedLambWithSoySauce',
-                    'http://127.0.0.1:8887/api/chinese_recipe/LambStirFryWithPeppers',
-                    'http://127.0.0.1:8887/api/chinese_recipe/LambWithBlackBeanSauce',
-                    'http://127.0.0.1:8887/api/chinese_recipe/SzechuanLamb',
-                    'http://127.0.0.1:8887/api/chinese_recipe/LambWithVegetablesStirFry',
-                    'http://127.0.0.1:8887/api/chinese_recipe/LambCurry'
+                    `${pythonURI}/api/chinese_recipe/BraisedLambWithSoySauce`,
+                    `${pythonURI}/api/chinese_recipe/LambStirFryWithPeppers`,
+                    `${pythonURI}/api/chinese_recipe/LambWithBlackBeanSauce`,
+                    `${pythonURI}/api/chinese_recipe/SzechuanLamb`,
+                    `${pythonURI}/api/chinese_recipe/LambWithVegetablesStirFry`,
+                    `${pythonURI}/api/chinese_recipe/LambCurry`
                 ]
             };
+
 
             const selectedUrls = {
                 chicken: apiUrls.chicken[Math.floor(Math.random() * apiUrls.chicken.length)],
@@ -284,7 +285,7 @@ permalink: /navigation/cuisine/chinese
 
            async function saveRecipe(recipe) {
             try {
-                const response = await fetch('http://127.0.0.1:8887/save_recipe', {
+                const response = await fetch(`${pythonURI}/save_recipe`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -307,7 +308,7 @@ permalink: /navigation/cuisine/chinese
 
         async function viewStoredRecipes() {
     try {
-        const response = await fetch('http://127.0.0.1:8887/get_recipes');
+        const response = await fetch(`${pythonURI}/get_recipes`);
         const contentType = response.headers.get("content-type");
 
         if (contentType && contentType.indexOf("application/json") !== -1) {
@@ -367,7 +368,7 @@ async function submitEdit(recipeId) {
     };
 
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/chinese_recipe/edit_recipe/${recipeId}`, { 
+        const response = await fetch(`${pythonURI}/api/chinese_recipe/edit_recipe/${recipeId}`, { 
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -387,7 +388,7 @@ async function submitEdit(recipeId) {
 }
       async function deleteRecipe(recipeId) {
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/chinese_recipe/delete_recipe/${recipeId}`, {
+        const response = await fetch(`${pythonURI}/api/chinese_recipe/delete_recipe/${recipeId}`, {
             method: 'DELETE',
         });
 
