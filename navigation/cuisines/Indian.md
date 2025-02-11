@@ -7,6 +7,91 @@ permalink: /navigation/cuisine/indian
 ---
 
 <style>
+    #recipe-data {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: flex-start;  
+    gap: 20px;  
+    padding: 20px;
+}
+
+
+.recipe-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 350px;
+    width: 250px; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px;  
+}
+
+
+#recipe-data .recipe-card:nth-child(3n+1) {
+    margin-left: 30px;
+}
+
+
+#recipe-data .recipe-card:nth-child(3n+2) {
+    margin-left: auto;
+    margin-right: auto; 
+}
+
+
+#recipe-data .recipe-card:nth-child(3n+3) {
+    margin-left: auto;
+}
+
+
+#recipe-data .recipe-card:nth-child(4) {
+    margin-left: 120px; 
+}
+
+
+.recipe-card:hover {
+    transform: translateY(-10px);  
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+.recipe-card h3 {
+    margin-top: 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+
+.recipe-card p {
+    margin: 5px 0;
+    font-size: 1em;
+    line-height: 1.5;
+    flex-grow: 1;  
+}
+
+
+.recipe-card button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.recipe-card button:hover {
+    background-color: #45a049;
+}
+
+  
     body {
         font-family: Arial, sans-serif;
         margin: 0;
@@ -97,40 +182,40 @@ permalink: /navigation/cuisine/indian
     async function fetchRandomRecipes() {
         const apiUrls = {
                 chicken: [
-                    'http://127.0.0.1:8887/api/indian_recipe/ButterChicken',
-                    'http://127.0.0.1:8887/api/indian_recipe/ChickenTikkaMasala',
-                    'http://127.0.0.1:8887/api/indian_recipe/ChickenKorma',
-                    'http://127.0.0.1:8887/api/indian_recipe/ChickenVindaloo',
-                    'http://127.0.0.1:8887/api/indian_recipe/ChickenSaag',
-                    'http://127.0.0.1:8887/api/indian_recipe/ChickenBiryani'
+                    `${pythonURI}/api/indian_recipe/ButterChicken`,
+                    `${pythonURI}/api/indian_recipe/ChickenTikkaMasala`,
+                    `${pythonURI}/api/indian_recipe/ChickenKorma`,
+                    `${pythonURI}/api/indian_recipe/ChickenVindaloo`,
+                    `${pythonURI}/api/indian_recipe/ChickenSaag`,
+                    `${pythonURI}/api/indian_recipe/ChickenBiryani`
                 ],
                 beef: [
-                    'http://127.0.0.1:8887/api/indian_recipe/BeefCurry',
-                    'http://127.0.0.1:8887/api/indian_recipe/BeefVindaloo',
-                    'http://127.0.0.1:8887/api/indian_recipe/BeefKeema',
-                    'http://127.0.0.1:8887/api/indian_recipe/BeefRoganJosh',
-                    'http://127.0.0.1:8887/api/indian_recipe/BeefBiryani'
+                    `${pythonURI}/api/indian_recipe/BeefCurry`,
+                    `${pythonURI}/api/indian_recipe/BeefVindaloo`,
+                    `${pythonURI}/api/indian_recipe/BeefKeema`,
+                    `${pythonURI}/api/indian_recipe/BeefRoganJosh`,
+                    `${pythonURI}/api/indian_recipe/BeefBiryani`
                 ],
                 vegan: [
-                    'http://127.0.0.1:8887/api/indian_recipe/ChanaMasala',
-                    'http://127.0.0.1:8887/api/indian_recipe/AlooGobi',
-                    'http://127.0.0.1:8887/api/indian_recipe/BainganBharta',
-                    'http://127.0.0.1:8887/api/indian_recipe/VeganTikkaMasala',
-                    'http://127.0.0.1:8887/api/indian_recipe/VeganBiryani'
+                    `${pythonURI}/api/indian_recipe/ChanaMasala`,
+                    `${pythonURI}/api/indian_recipe/AlooGobi`,
+                    `${pythonURI}/api/indian_recipe/BainganBharta`,
+                    `${pythonURI}/api/indian_recipe/VeganTikkaMasala`,
+                    `${pythonURI}/api/indian_recipe/VeganBiryani`
                 ],
                 fish: [
-                    'http://127.0.0.1:8887/api/indian_recipe/FishCurry',
-                    'http://127.0.0.1:8887/api/indian_recipe/GoanFishCurry',
-                    'http://127.0.0.1:8887/api/indian_recipe/FishTikka',
-                    'http://127.0.0.1:8887/api/indian_recipe/FishFry',
-                    'http://127.0.0.1:8887/api/indian_recipe/MasalaFish'
+                    `${pythonURI}/api/indian_recipe/FishCurry`,
+                    `${pythonURI}/api/indian_recipe/GoanFishCurry`,
+                    `${pythonURI}/api/indian_recipe/FishTikka`,
+                    `${pythonURI}/api/indian_recipe/FishFry`,
+                    `${pythonURI}/api/indian_recipe/MasalaFish`
                 ],
                 lamb: [
-                    'http://127.0.0.1:8887/api/indian_recipe/LambCurry',
-                    'http://127.0.0.1:8887/api/indian_recipe/LambRoganJosh',
-                    'http://127.0.0.1:8887/api/indian_recipe/LambKorma',
-                    'http://127.0.0.1:8887/api/indian_recipe/LambKeema',
-                    'http://127.0.0.1:8887/api/indian_recipe/LambBiryani'
+                    `${pythonURI}/api/indian_recipe/LambCurry`,
+                    `${pythonURI}/api/indian_recipe/LambRoganJosh`,
+                    `${pythonURI}/api/indian_recipe/LambKorma`,
+                    `${pythonURI}/api/indian_recipe/LambKeema`,
+                    `${pythonURI}/api/indian_recipe/LambBiryani`
                 ]
             };
 
@@ -175,16 +260,22 @@ permalink: /navigation/cuisine/indian
                 document.getElementById('recipe-data').innerText = `Error: ${error.message}`;
             }
         }
-
-        async function saveRecipe(recipe) {
+            async function saveRecipe(recipe) {
             try {
-                const response = await fetch('http://127.0.0.1:8887/save_recipe', {
+                const response = await fetch(`${pythonURI}/save_recipe`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(recipe)
+                    body: JSON.stringify({
+                        "name": recipe.dish,
+                        "dish": recipe.dish,
+                        "time": recipe.time,
+                        "ingredients": recipe.ingredients,
+                        "instructions": recipe.instructions
+                    })
                 });
+
                 const result = await response.json();
                 alert(result.message);
             } catch (error) {
@@ -193,32 +284,113 @@ permalink: /navigation/cuisine/indian
         }
 
         async function viewStoredRecipes() {
-            try {
-                const response = await fetch('http://127.0.0.1:8887/get_recipes');
-                const contentType = response.headers.get("content-type");
+    try {
+        const response = await fetch(`${pythonURI}/get_recipes`);
+        const contentType = response.headers.get("content-type");
 
-                if (contentType && contentType.indexOf("application/json") !== -1) {
-                    const recipes = await response.json();
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+            const recipes = await response.json();
 
-                    const recipeDataDiv = document.getElementById('recipe-data');
-                    recipeDataDiv.innerHTML = ''; // Clear previous recipes
+            const recipeDataDiv = document.getElementById('recipe-data');
+            recipeDataDiv.innerHTML = ''; // Clear previous recipes
 
-                    recipes.forEach(recipe => {
-                        const recipeDiv = document.createElement('div');
-                        recipeDiv.classList.add('recipe-card');
-                        recipeDiv.innerHTML = `
-                            <h3>${recipe.title}</h3>
-                            <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
-                            <p><strong>Instructions:</strong> ${recipe.instructions}</p>
-                        `;
-                        recipeDataDiv.appendChild(recipeDiv);
-                    });
-                } else {
-                    throw new Error('Invalid response from server');
-                }
-            } catch (error) {
-                document.getElementById('recipe-data').innerText = `Error: ${error.message}`;
-            }
+            recipes.forEach(recipe => {
+                const recipeDiv = document.createElement('div');
+                recipeDiv.classList.add('recipe-card');
+                recipeDiv.innerHTML = `
+                    <h3>${recipe.dish}</h3>
+                    <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
+                    <p><strong>Instructions:</strong> ${recipe.instructions}</p>
+                    <button onclick='deleteRecipe(${recipe.id})'>Delete Recipe</button>
+                    <button onclick='editRecipe(${JSON.stringify(recipe)})'>Edit Recipe</button>
+
+                `;
+                recipeDataDiv.appendChild(recipeDiv);
+            });
+        } else {
+            throw new Error('Invalid response from server');
         }
+    } catch (error) {
+        document.getElementById('recipe-data').innerText = `Error: ${error.message}`;
+    }
+}
+
+async function editRecipe(recipe) {
+    const formHTML = `
+        <h3>Edit Recipe</h3>
+        <label for="name">Recipe Name:</label>
+        <input type="text" id="name" value="${recipe.dish}" required readonly>
+        <label for="ingredients">Ingredients:</label>
+        <textarea id="ingredients" required>${recipe.ingredients}</textarea>
+        <label for="instructions">Instructions:</label>
+        <textarea id="instructions" required readonly>${recipe.instructions}</textarea>
+        <button onclick="submitEdit(${recipe.id})">Submit Changes</button>
+        <button onclick="closeEditForm()">Cancel</button>
+    `;
+    
+    let formContainer = document.getElementById('stored-recipes');
+    
+    // If #stored-recipes doesn't exist, create it dynamically
+    if (!formContainer) {
+        formContainer = document.createElement('div');
+        formContainer.id = 'stored-recipes'; // Ensure we set the ID
+        document.body.appendChild(formContainer); // Append it to the body (or any other container you'd like)
+    }
+
+    formContainer.innerHTML = formHTML;
+}
+
+
+function closeEditForm() {
+    const formContainer = document.getElementById('stored-recipes');
+    formContainer.innerHTML = '';  // Close the form
+}
+
+async function submitEdit(recipeId) {
+    const updatedRecipe = {
+        name: document.getElementById('name').value,
+        ingredients: document.getElementById('ingredients').value,
+        instructions: document.getElementById('instructions').value
+    };
+
+    try {
+        const response = await fetch(`${pythonURI}/api/chinese_recipe/edit_recipe/${recipeId}`, { 
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedRecipe)
+        });
+
+        if (response.ok) {
+            alert('Recipe updated successfully');
+            viewStoredRecipes();  // Refresh stored recipes
+        } else {
+            alert('Failed to update recipe');
+        }
+    } catch (error) {
+        alert(`Error: ${error.message}`);
+    }
+}
+
+        async function deleteRecipe(recipeId) {
+    try {
+        const response = await fetch(`${pythonURI}/api/chinese_recipe/delete_recipe/${recipeId}`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            alert('Recipe deleted successfully');
+            // Optionally, refresh the list of recipes
+            viewStoredRecipes();
+        } else {
+            const data = await response.json();
+            alert(data.error || 'Error deleting recipe');
+        }
+    } catch (error) {
+        alert(`Error: ${error.message}`);
+    }
+}
+        
     </script>
 </body>
