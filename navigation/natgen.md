@@ -88,7 +88,7 @@ search_exclude: true
     } else if (location.hostname === "127.0.0.1") {
         pythonURI = "http://127.0.0.1:8887";
     } else {
-        pythonURI = "https://flocker.nighthawkcodingsociety.com";
+        pythonURI = "https://takeabyte.stu.nighthawkcodingsociety.com";
     }
 
     const fetchOptions = {
