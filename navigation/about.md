@@ -9,7 +9,7 @@ search_exclude: true
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fridge API</title>
+    <title>Fridge</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -62,7 +62,7 @@ search_exclude: true
 </head>
 <body>
 <div class="container">
-    <h1>Fridge API</h1>
+    <h1>Fridge</h1>
     <div class="form-group">
         <label for="grocery">Grocery:</label>
         <input type="text" id="grocery" placeholder="e.g., chicken, garlic, lemon">
@@ -72,7 +72,6 @@ search_exclude: true
         <input type="number" id="quantity" placeholder="Enter quantity">
     </div>
     <button id="addFridgeBtn">Add Grocery to Fridge</button>
-
     <div id="fridgeTableWrapper">
         <h2>Your Fridge</h2>
         <table>
