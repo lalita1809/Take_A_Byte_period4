@@ -122,8 +122,6 @@ async function fetchPosts() {
                     <p><strong>Comments:</strong> ${post.comments}</p>
                     <button class="edit-button" onclick="editPost('${post.name}')">Edit</button>
                     <button class="delete-button" onclick="deletePost('${post.name}')">Delete</button>
-                    <button class="edit-button" onclick="editPost('${post.name}')">Edit</button>
-                    <button class="delete-button" onclick="deletePost('${post.name}')">Delete</button>
                 `;
                 postsContainer.appendChild(postElement);
             });
