@@ -92,7 +92,16 @@ search_exclude: true
 </div>
 
 <script>
-const API_URL = "http://localhost:8887/api/fridge";
+    var pythonURI;
+    if (location.hostname === "localhost") {
+        pythonURI = "http://localhost:8887";
+    } else if (location.hostname === "127.0.0.1") {
+        pythonURI = "http://127.0.0.1:8887";
+    } else {
+        pythonURI = "https://takeabyte.stu.nighthawkcodingsociety.com";
+    }
+
+const API_URL = (pythonURI + "/api/fridge");
 
 // Add grocery
 document.getElementById('addFridgeBtn').addEventListener('click', async () => {

@@ -7,7 +7,9 @@ permalink: /navigation/buttons/posting
 ---
 
 
+
 <head>
+    <title>Recipe Posts</title>
     <title>Recipe Posts</title>
     <style>
         body { font-family: Arial, sans-serif; background: #fdfdfd; margin: 20px; }
@@ -21,8 +23,20 @@ permalink: /navigation/buttons/posting
         .edit-button { background-color: #28a745; }
         .edit-button:hover { background-color: #218838; }
         #all-posts-section { margin-top: 30px; }
+        body { font-family: Arial, sans-serif; background: #fdfdfd; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .post { border-bottom: 1px solid #ddd; padding: 10px 0; }
+        h1, h2 { text-align: center; color: #333; }
+        button { background-color: #007BFF; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        .delete-button { background-color: #dc3545; }
+        .delete-button:hover { background-color: #a71d2a; }
+        .edit-button { background-color: #28a745; }
+        .edit-button:hover { background-color: #218838; }
+        #all-posts-section { margin-top: 30px; }
     </style>
 </head>
+
 
 <body>
 <div class="container">
@@ -108,6 +122,8 @@ async function fetchPosts() {
                     <p><strong>Comments:</strong> ${post.comments}</p>
                     <button class="edit-button" onclick="editPost('${post.name}')">Edit</button>
                     <button class="delete-button" onclick="deletePost('${post.name}')">Delete</button>
+                    <button class="edit-button" onclick="editPost('${post.name}')">Edit</button>
+                    <button class="delete-button" onclick="deletePost('${post.name}')">Delete</button>
                 `;
                 postsContainer.appendChild(postElement);
             });
@@ -173,6 +189,7 @@ fetchPosts();
 
 
 
+
 <br><br>
 <head>
     <title>Fetch Post Data</title>
@@ -210,6 +227,8 @@ fetchPosts();
         }
     </style>
 </head>
+
+
 
 
 <body>
@@ -250,6 +269,47 @@ fetchPosts();
         }
     </script>
 </body>
+
+
+<!-- Testing static data:
+<body>
+    <h4>From database</h4>
+    <button onclick="fetchDBPosting('Martha', event)">Martha (DB)</button>
+    <button onclick="fetchDBPosting('Wayne', event)">Wayne (DB)</button>
+    <div id="posting-data">Click a button to see recipes</div>
+    <script>
+        async function fetchDBPosting(posterName, event) {
+            const apiUrl = `http://127.0.0.1:8887/api/posting/read/${posterName}`; // Ensure correct API port
+            await fetchData(apiUrl, posterName, event);
+        }
+        async function fetchData(apiUrl, posterName, event) {
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error(`Could not fetch data for ${posterName}`);
+                }
+                const data = await response.json();
+                const postingDataDiv = document.getElementById('posting-data');
+                postingDataDiv.innerHTML = `
+                    <h2>${data.name}</h2>
+                    <p><strong>Dish:</strong> ${data.dish}</p>
+                    <p><strong>Cuisine:</strong> ${data.cuisine}</p>
+                    <p><strong>Link:</strong> <a href="${data.link}" target="_blank">${data.link}</a></p>
+                    <p><strong>Comments:</strong> ${data.comments}</p>
+                `;
+                const buttonRect = event.target.getBoundingClientRect();
+                postingDataDiv.style.position = 'absolute';
+                postingDataDiv.style.top = `${buttonRect.bottom + window.scrollY}px`;
+                postingDataDiv.style.left = `${buttonRect.left + window.scrollX}px`;
+                postingDataDiv.style.display = 'block';
+            } catch (error) {
+                document.getElementById('posting-data').innerText = `Error: ${error.message}`;
+                document.getElementById('posting-data').style.display = 'block';
+            }
+        }
+    </script>
+</body> -->
+
 
 
 <!-- Testing static data:
