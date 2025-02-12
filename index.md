@@ -621,3 +621,43 @@ hide: true
     border: 2px solid #ffcc00;  /* Add a cool yellow border when focused */
   }
 </style>
+
+<h3>
+  <a class="Fridge" href="{{site.baseurl}}/navigation/buttons/posting" style="font-family: 'Roboto', sans-serif; font-size: 24px; font-weight: bold; text-transform: uppercase; text-decoration: none; background-color: #00aaff; color: white; padding: 12px 24px; border-radius: 8px; transition: all 0.3s ease-in-out; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); display: inline-block;">
+    Posting
+  </a>
+  
+</h3>
+
+<style>
+  .Fridge:hover {
+    background-color: #0077cc;  /* Darker blue on hover */
+    transform: scale(1.05);  /* Slight zoom effect on hover */
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);  /* Stronger shadow on hover */
+  }
+
+  .Fridge:focus {
+    outline: none;  /* Remove outline on focus */
+    border: 2px solid #ffcc00;  /* Add a cool yellow border when focused */
+  }
+</style>
+
+<h3>
+  <a class="Fridge" href="{{site.baseurl}}/navigation/feedback" style="font-family: 'Roboto', sans-serif; font-size: 24px; font-weight: bold; text-transform: uppercase; text-decoration: none; background-color: #00aaff; color: white; padding: 12px 24px; border-radius: 8px; transition: all 0.3s ease-in-out; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); display: inline-block;">
+    Feedback
+  </a>
+  
+</h3>
+
+<style>
+  .Fridge:hover {
+    background-color: #0077cc;  /* Darker blue on hover */
+    transform: scale(1.05);  /* Slight zoom effect on hover */
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);  /* Stronger shadow on hover */
+  }
+
+  .Fridge:focus {
+    outline: none;  /* Remove outline on focus */
+    border: 2px solid #ffcc00;  /* Add a cool yellow border when focused */
+  }
+</style>
