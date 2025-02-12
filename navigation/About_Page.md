@@ -239,7 +239,7 @@ async function deleteStudent() {
 
     if (!deleteResponse.ok) {
       const errorData = await deleteResponse.json();
-      // throw new Error(`Error: ${errorData.message}`);
+      throw new Error(`Error: ${errorData.message}`);
     }
 
     const responseData = await deleteResponse.json();
