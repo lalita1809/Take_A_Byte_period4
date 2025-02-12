@@ -219,10 +219,10 @@ async function deleteStudent() {
     // Find the student by name
     const student = data.find((student) => student.name.toLowerCase() === name.toLowerCase());
 
-  //  if (!student) {
-    //  alert(`Student with name "${name}" not found.`);
-    //  return;
-   // }
+   if (!student) {
+     alert(`Student with name "${name}" not found.`);
+     return;
+   }
 
     // Check if the data matches
     if (student.age !== age || student.grade !== grade || student.favorite_color !== favorite_color) {
@@ -239,7 +239,7 @@ async function deleteStudent() {
 
     if (!deleteResponse.ok) {
       const errorData = await deleteResponse.json();
-      throw new Error(`Error: ${errorData.message}`);
+      // throw new Error(`Error: ${errorData.message}`);
     }
 
     const responseData = await deleteResponse.json();
