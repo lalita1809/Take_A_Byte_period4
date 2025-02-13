@@ -108,7 +108,8 @@ document.getElementById('addFridgeBtn').addEventListener('click', async () => {
     const quantity = parseInt(document.getElementById('quantity').value);
 
     try {
-        const response = await fetch(`${API_URL}/add`, {
+        // const response = await fetch(`${API_URL}/add`, { 
+        const response = await fetch(pythonURI + `/add`, { 
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ grocery, quantity })
