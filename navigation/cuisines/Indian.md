@@ -179,87 +179,96 @@ permalink: /navigation/cuisine/indian
     <div id="recipe-data"></div>
 
 <script>
+    var pythonURI;
+    if (location.hostname === "localhost") {
+        pythonURI = "http://localhost:8887";
+    } else if (location.hostname === "127.0.0.1") {
+        pythonURI = "http://127.0.0.1:8887";
+    } else {
+        pythonURI = "https://takeabyte.stu.nighthawkcodingsociety.com";
+    }
+    
     async function fetchRandomRecipes() {
-        const apiUrls = {
-                chicken: [
-                    `${pythonURI}/api/indian_recipe/ButterChicken`,
-                    `${pythonURI}/api/indian_recipe/ChickenTikkaMasala`,
-                    `${pythonURI}/api/indian_recipe/ChickenKorma`,
-                    `${pythonURI}/api/indian_recipe/ChickenVindaloo`,
-                    `${pythonURI}/api/indian_recipe/ChickenSaag`,
-                    `${pythonURI}/api/indian_recipe/ChickenBiryani`
-                ],
-                beef: [
-                    `${pythonURI}/api/indian_recipe/BeefCurry`,
-                    `${pythonURI}/api/indian_recipe/BeefVindaloo`,
-                    `${pythonURI}/api/indian_recipe/BeefKeema`,
-                    `${pythonURI}/api/indian_recipe/BeefRoganJosh`,
-                    `${pythonURI}/api/indian_recipe/BeefBiryani`
-                ],
-                vegan: [
-                    `${pythonURI}/api/indian_recipe/ChanaMasala`,
-                    `${pythonURI}/api/indian_recipe/AlooGobi`,
-                    `${pythonURI}/api/indian_recipe/BainganBharta`,
-                    `${pythonURI}/api/indian_recipe/VeganTikkaMasala`,
-                    `${pythonURI}/api/indian_recipe/VeganBiryani`
-                ],
-                fish: [
-                    `${pythonURI}/api/indian_recipe/FishCurry`,
-                    `${pythonURI}/api/indian_recipe/GoanFishCurry`,
-                    `${pythonURI}/api/indian_recipe/FishTikka`,
-                    `${pythonURI}/api/indian_recipe/FishFry`,
-                    `${pythonURI}/api/indian_recipe/MasalaFish`
-                ],
-                lamb: [
-                    `${pythonURI}/api/indian_recipe/LambCurry`,
-                    `${pythonURI}/api/indian_recipe/LambRoganJosh`,
-                    `${pythonURI}/api/indian_recipe/LambKorma`,
-                    `${pythonURI}/api/indian_recipe/LambKeema`,
-                    `${pythonURI}/api/indian_recipe/LambBiryani`
-                ]
-            };
+    const apiUrls = {
+        chicken: [
+            (pythonURI + `/api/indian_recipe/ButterChicken`),
+            (pythonURI + `/api/indian_recipe/ChickenTikkaMasala`),
+            (pythonURI + `/api/indian_recipe/ChickenKorma`),
+            (pythonURI + `/api/indian_recipe/ChickenVindaloo`),
+            (pythonURI + `/api/indian_recipe/ChickenSaag`),
+            (pythonURI + `/api/indian_recipe/ChickenBiryani`)
+        ],
+        beef: [
+            (pythonURI + `/api/indian_recipe/BeefCurry`),
+            (pythonURI + `/api/indian_recipe/BeefVindaloo`),
+            (pythonURI + `/api/indian_recipe/BeefKeema`),
+            (pythonURI + `/api/indian_recipe/BeefRoganJosh`),
+            (pythonURI + `/api/indian_recipe/BeefBiryani`)
+        ],
+        vegan: [
+            (pythonURI + `/api/indian_recipe/ChanaMasala`),
+            (pythonURI + `/api/indian_recipe/AlooGobi`),
+            (pythonURI + `/api/indian_recipe/BainganBharta`),
+            (pythonURI + `/api/indian_recipe/VeganTikkaMasala`),
+            (pythonURI + `/api/indian_recipe/VeganBiryani`)
+        ],
+        fish: [
+            (pythonURI + `/api/indian_recipe/FishCurry`),
+            (pythonURI + `/api/indian_recipe/GoanFishCurry`),
+            (pythonURI + `/api/indian_recipe/FishTikka`),
+            (pythonURI + `/api/indian_recipe/FishFry`),
+            (pythonURI + `/api/indian_recipe/MasalaFish`)
+        ],
+        lamb: [
+            (pythonURI + `/api/indian_recipe/LambCurry`),
+            (pythonURI + `/api/indian_recipe/LambRoganJosh`),
+            (pythonURI + `/api/indian_recipe/LambKorma`),
+            (pythonURI + `/api/indian_recipe/LambKeema`),
+            (pythonURI + `/api/indian_recipe/LambBiryani`)
+        ]
+    };
 
-            const selectedUrls = {
-                chicken: apiUrls.chicken[Math.floor(Math.random() * apiUrls.chicken.length)],
-                beef: apiUrls.beef[Math.floor(Math.random() * apiUrls.beef.length)],
-                vegan: apiUrls.vegan[Math.floor(Math.random() * apiUrls.vegan.length)],
-                fish: apiUrls.fish[Math.floor(Math.random() * apiUrls.fish.length)],
-                lamb: apiUrls.lamb[Math.floor(Math.random() * apiUrls.lamb.length)]
-            };
+    const selectedUrls = {
+        chicken: apiUrls.chicken[Math.floor(Math.random() * apiUrls.chicken.length)],
+        beef: apiUrls.beef[Math.floor(Math.random() * apiUrls.beef.length)],
+        vegan: apiUrls.vegan[Math.floor(Math.random() * apiUrls.vegan.length)],
+        fish: apiUrls.fish[Math.floor(Math.random() * apiUrls.fish.length)],
+        lamb: apiUrls.lamb[Math.floor(Math.random() * apiUrls.lamb.length)]
+    };
 
-            try {
-                const recipeDataDiv = document.getElementById('recipe-data');
-                recipeDataDiv.innerHTML = ''; // Clear previous recipes
+    try {
+        const recipeDataDiv = document.getElementById('recipe-data');
+        recipeDataDiv.innerHTML = ''; // Clear previous recipes
 
-                const fetchPromises = Object.values(selectedUrls).map(async (url) => {
-                    const response = await fetch(url);
-                    if (response.ok) {
-                        return await response.json();
-                    } else {
-                        throw new Error('Error fetching a recipe');
-                    }
-                });
-
-                const recipes = await Promise.all(fetchPromises);
-
-                recipes.forEach(recipe => {
-                    const recipeDiv = document.createElement('div');
-                    recipeDiv.classList.add('recipe-card');
-                    recipeDiv.innerHTML = `
-                        <h3>${recipe.dish}</h3>
-                        <p><strong>Time:</strong> ${recipe.time} minutes</p>
-                        <p><strong>Ingredients:</strong> ${Array.isArray(recipe.ingredients) ? recipe.ingredients.join(', ') : recipe.ingredients}</p>
-                        <p><strong>Instructions:</strong> ${recipe.instructions}</p>
-                        <button onclick='saveRecipe(${JSON.stringify(recipe)})'>Save Recipe</button>
-                    `;
-                    recipeDataDiv.appendChild(recipeDiv);
-                });
-
-                recipeDataDiv.style.display = 'flex';  
-            } catch (error) {
-                document.getElementById('recipe-data').innerText = `Error: ${error.message}`;
+        const fetchPromises = Object.values(selectedUrls).map(async (url) => {
+            const response = await fetch(url);
+            if (response.ok) {
+                return await response.json();
+            } else {
+                throw new Error('Error fetching a recipe');
             }
-        }
+        });
+
+        const recipes = await Promise.all(fetchPromises);
+
+        recipes.forEach(recipe => {
+            const recipeDiv = document.createElement('div');
+            recipeDiv.classList.add('recipe-card');
+            recipeDiv.innerHTML = `
+                <h3>${recipe.dish}</h3>
+                <p><strong>Time:</strong> ${recipe.time} minutes</p>
+                <p><strong>Ingredients:</strong> ${Array.isArray(recipe.ingredients) ? recipe.ingredients.join(', ') : recipe.ingredients}</p>
+                <p><strong>Instructions:</strong> ${recipe.instructions}</p>
+                <button onclick='saveRecipe(${JSON.stringify(recipe)})'>Save Recipe</button>
+            `;
+            recipeDataDiv.appendChild(recipeDiv);
+        });
+
+        recipeDataDiv.style.display = 'flex';  
+    } catch (error) {
+        document.getElementById('recipe-data').innerText = `Error: ${error.message}`;
+    }
+}
             async function saveRecipe(recipe) {
             try {
                 const response = await fetch(`${pythonURI}/save_recipe`, {
