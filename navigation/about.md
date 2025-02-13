@@ -162,7 +162,7 @@ async function updateGrocery(id, grocery, currentQuantity) {
     const newQuantity = prompt(`Update quantity for ${grocery}:`, currentQuantity);
     if (newQuantity !== null) {
         try {
-            const response = await fetch(`${API_URL}/update`, {
+            const response = await fetch(pythonURI + `/fridge/update`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id, quantity: parseInt(newQuantity) })
@@ -180,7 +180,7 @@ async function updateGrocery(id, grocery, currentQuantity) {
 // Delete Grocery
 async function deleteGrocery(id) {
     try {
-        const response = await fetch(`${API_URL}/delete`, {
+        const response = await fetch(pythonURI + `/fridge/delete`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id })
