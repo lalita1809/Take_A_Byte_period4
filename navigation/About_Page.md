@@ -41,7 +41,7 @@ permalink: /navigation/about
             padding: 10px 20px;
             font-size: 16px;
             margin: 10px;
-            background-color: #007bff;
+            background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 5px;
