@@ -79,8 +79,18 @@ permalink: /navigation/feedback
 </div>
 
 <script>
+    var pythonURI;
+    if (location.hostname === "localhost") {
+        pythonURI = "http://localhost:8887";
+    } else if (location.hostname === "127.0.0.1") {
+        pythonURI = "http://127.0.0.1:8887";
+    } else {
+        pythonURI = "https://takeabyte.stu.nighthawkcodingsociety.com";
+    }
+
+
         async function fetchFeedbackData(event) {
-            const apiUrl = `http://127.0.0.1:8887/api/feedback/getAll`;
+            const apiUrl = `pythonURI + '/api/countries/getAll'`;
             
             try {
                 const response = await fetch(apiUrl, {
@@ -125,33 +135,56 @@ permalink: /navigation/feedback
             `;
         }
 
-        async function deleteFeedback(feedbackId) {
-            try {
-                const response = await fetch(`http://127.0.0.1:8887/api/feedback/delete`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-                    },
-                    body: JSON.stringify({ id: feedbackId })
-                });
+    //  async function deleteFeedback(feedbackId) {
+    //         try {
+    //             const response = await fetch(`http://127.0.0.1:8887/api/feedback/delete`, {
+    //                 method: 'DELETE',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                     'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+    //                 },
+    //                 body: JSON.stringify({ id: feedbackId })
+    //             });
 
-                if (response.ok) {
-                    alert('Feedback deleted successfully!');
-                    fetchFeedbackData(); // Refresh the feedback list
-                } else {
-                    alert('Error deleting feedback');
-                }
-            } catch (error) {
-                alert(`Error: ${error.message}`);
+    //             if (response.ok) {
+    //                 alert('Feedback deleted successfully!');
+    //                 fetchFeedbackData(); // Refresh the feedback list
+    //             } else {
+    //                 alert('Error deleting feedback');
+    //             }
+    //         } catch (error) {
+    //             alert(`Error: ${error.message}`);
+    //         }
+    //     }
+
+        async function deleteFeedback(feedbackId) {
+        try {
+            const response = await fetch(`pythonURI + '/api/countries/delete`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+                },
+                body: JSON.stringify({ id: feedbackId })  // Ensure backend expects this
+            });
+
+            if (response.ok) {
+                alert('Feedback deleted successfully!');
+                fetchFeedbackData();
+            } else {
+                const errorMessage = await response.text();
+                alert(`Error deleting feedback: ${errorMessage}`);
             }
-        }
+        } catch (error) {
+            alert(`Error: ${error.message}`);
+        } }
+
 
         async function editFeedback(feedbackId, oldContent) {
             const newContent = prompt('Edit your feedback:', oldContent);
             if (newContent) {
                 try {
-                    const response = await fetch(`http://127.0.0.1:8887/api/feedback/update`, {
+                    const response = await fetch(`pythonURI + '/api/countries/update`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -212,7 +245,7 @@ permalink: /navigation/feedback
                 return;
             }
 
-            const apiUrl = `http://127.0.0.1:8887/api/feedback/addFeedback`;
+            const apiUrl = `pythonURI + '/api/countries/addFeedback`;
             try {
                 const response = await fetch(apiUrl, {
                     method: 'POST',
