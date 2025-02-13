@@ -247,7 +247,7 @@ async function deleteStudent() {
     form.reset();
 
   } catch (error) {
-    alert(`Error: ${error.message}`);
+    console.log(error)
   }
 }
 
