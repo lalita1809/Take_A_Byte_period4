@@ -583,21 +583,54 @@ hide: true
 </style>
 
 <h3>
-  <a class="Fridge" href="{{site.baseurl}}/about" style="font-family: 'Roboto', sans-serif; font-size: 24px; font-weight: bold; text-transform: uppercase; text-decoration: none; background-color: #00aaff; color: white; padding: 12px 24px; border-radius: 8px; transition: all 0.3s ease-in-out; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); display: inline-block;">
+  <a class="Fridge" href="{{site.baseurl}}/about">
     Fridge
+    <span class="handle"></span>
   </a>
 </h3>
 
 <style>
+  .Fridge {
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    background-color: #dfe6e9; /* Light fridge color */
+    color: black;
+    padding: 20px 40px;
+    border-radius: 10px;
+    display: inline-block;
+    position: relative;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: inset -3px -3px 8px rgba(255, 255, 255, 0.6),
+                inset 3px 3px 8px rgba(0, 0, 0, 0.2),
+                0px 5px 15px rgba(0, 0, 0, 0.1);
+    border: 2px solid #b2bec3;
+    overflow: hidden;
+  }
+
+  /* Fridge handle */
+  .Fridge .handle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    width: 8px;
+    height: 30px;
+    background-color: #636e72;
+    border-radius: 4px;
+    transform: translateY(-50%);
+  }
+
+  /* Fridge door opening effect */
   .Fridge:hover {
-    background-color: #0077cc;  /* Darker blue on hover */
-    transform: scale(1.05);  /* Slight zoom effect on hover */
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);  /* Stronger shadow on hover */
+    transform: rotateY(-10deg); /* Slight 3D door opening effect */
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
   }
 
   .Fridge:focus {
-    outline: none;  /* Remove outline on focus */
-    border: 2px solid #ffcc00;  /* Add a cool yellow border when focused */
+    outline: none;
+    border: 2px solid #ffcc00;
   }
 </style>
 
