@@ -90,7 +90,7 @@ permalink: /navigation/feedback
 
 
         async function fetchFeedbackData(event) {
-            const apiUrl = `pythonURI + '/api/countries/getAll'`;
+            const apiUrl = (pythonURI + '/api/countries/getAll');
             
             try {
                 const response = await fetch(apiUrl, {
@@ -159,7 +159,7 @@ permalink: /navigation/feedback
 
         async function deleteFeedback(feedbackId) {
         try {
-            const response = await fetch(`pythonURI + '/api/countries/delete`, {
+            const response = await fetch(pythonURI + '/api/countries/delete'), {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -184,7 +184,7 @@ permalink: /navigation/feedback
             const newContent = prompt('Edit your feedback:', oldContent);
             if (newContent) {
                 try {
-                    const response = await fetch(`pythonURI + '/api/countries/update`, {
+                    const response = await fetch    (pythonURI + '/api/countries/update'), {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -245,7 +245,7 @@ permalink: /navigation/feedback
                 return;
             }
 
-            const apiUrl = `pythonURI + '/api/countries/addFeedback`;
+            const apiUrl = ( pythonURI + '/api/countries/addFeedback' );
             try {
                 const response = await fetch(apiUrl, {
                     method: 'POST',
