@@ -437,7 +437,7 @@ hide: true
             if (link) {
                 // Create a button element
                 const button = document.createElement("button");
-                button.textContent = Go to ${selectedCuisine.charAt(0).toUpperCase() + selectedCuisine.slice(1)} Cuisine;
+                button.textContent = `Go to ${selectedCuisine.charAt(0).toUpperCase() + selectedCuisine.slice(1)} Cuisine`;
                 button.classList.add("dynamic-link");
 
                 // Add a click event to redirect to the page
@@ -452,14 +452,13 @@ hide: true
 
         // Object mapping variable values to URLs
         const cuisinePages = {
-            Chinese: "{{site.baseurl}}/navigation/cuisine/chinese",
-            Indian: "{{site.baseurl}}/navigation/cuisine/indian",
-            Japanese: "{{site.baseurl}}/navigation/cuisine/japanese",
-            Mexican: "{{site.baseurl}}/navigation/cuisine/mexican",
-            Thai: "{{site.baseurl}}/navigation/cuisine/thai",
-            Italian: "{{site.baseurl}}/navigation/cuisine/italian",
-};
-
+            "Italian food": "{{site.baseurl}}/navigation/cuisine/italian",
+            "Chinese food": "{{site.baseurl}}/navigation/cuisine/chinese",
+            "Indian food": "{{site.baseurl}}/navigation/cuisine/indian",
+            "Japanese food": "{{site.baseurl}}/navigation/cuisine/japanese",
+            "Mexican food": "{{site.baseurl}}/navigation/cuisine/mexican",
+            "Thai food": "{{site.baseurl}}/navigation/cuisine/thai"
+        };
 
         function spinWheel() {
             // Disable the spin button
@@ -471,7 +470,7 @@ hide: true
             const totalRotation = randomRotations * 360 + randomSlice; // Total rotation amount
 
             currentRotation += totalRotation; // Increment the total rotation
-            wheel.style.transform = rotate(${currentRotation}deg);
+            wheel.style.transform = `rotate(${currentRotation}deg)`;
 
             // Determine which slice is selected after the spin
             setTimeout(() => {
@@ -482,11 +481,11 @@ hide: true
                 const sliceIndex = Math.floor((360 - normalizedRotation) / 60) % 6;
 
                 // Get the selected cuisine
-                const cuisines = ["Chinese", "Indian", "Japanese", "Mexican", "Thai", "Italian"];
-                const selectedCuisine = cuisines[sliceIndex];
+                const slices = document.querySelectorAll('.slice');
+                const selectedCuisine = slices[sliceIndex].textContent;
 
                 // Display the result
-                resultDiv.textContent = The Spinner Chose: ${selectedCuisine};
+                resultDiv.textContent = `The Spinner Chose: ${selectedCuisine}`;
                 // Call the function with the variable
                 createDynamicButton(selectedCuisine);
             }, 5000); // Matches the transition duration (5s)
