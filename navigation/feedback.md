@@ -217,12 +217,12 @@ permalink: /navigation/feedback
         const name = form.name.value.trim();
         const cuisine = form.cuisine.value.trim();
         const recipe = form.recipe.value.trim();
-        const thumbs_up = form.thumbs_up.value.trim();
-        const thumbs_down = form.thumbs_down.value.trim();
+        const thumbs_up = parseInt(form.thumbs_up.value.trim());  // Convert to number
+        const thumbs_down = parseInt(form.thumbs_down.value.trim());  // Convert to number
         const written_feedback = form.written_feedback.value.trim();
 
-        if (!name || !cuisine || !recipe || !thumbs_up || !thumbs_down || !written_feedback) {
-            alert('Please fill all fields');
+        if (!name || !cuisine || !recipe || isNaN(thumbs_up) || isNaN(thumbs_down) || !written_feedback) {
+            alert('Please fill all fields correctly');
             return;
         }
 
@@ -234,15 +234,23 @@ permalink: /navigation/feedback
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('jwt')}`
                 },
-                body: JSON.stringify({ name, cuisine, recipe, thumbs_up, thumbs_down, written_feedback })
+                body: JSON.stringify({
+                    name: name,
+                    cuisine: cuisine,
+                    recipe: recipe,
+                    thumbs_up: thumbs_up,
+                    thumbs_down: thumbs_down,
+                    written_feedback: written_feedback
+                })
             });
 
             if (response.ok) {
                 alert('Feedback submitted successfully!');
                 form.reset();
-                fetchFeedbackData(); // Refresh feedback
+                fetchFeedbackData(); // Refresh feedback list
             } else {
-                alert('Failed to submit feedback');
+                const errorData = await response.text();
+                alert(`Failed to submit feedback: ${errorData}`);
             }
         } catch (error) {
             alert(`Error: ${error.message}`);
