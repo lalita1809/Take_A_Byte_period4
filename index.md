@@ -615,12 +615,12 @@ hide: true
   style="
     display: flex;
     flex-direction: column;
-    height: 100vh; /* Full page height */
+    height: 100vh;
     background: linear-gradient(
       135deg,
       #66bb6a,
       #388e3c
-    ); /* Green gradient */
+    );
     font-family: 'Arial', sans-serif;
     color: white;
   "
@@ -628,7 +628,7 @@ hide: true
   <!-- Header -->
   <div
     style=" 
-      background-color: #2e7d32; /* Darker green for header */
+      background-color: #2e7d32;
       padding: 20px;
       text-align: center;
       font-size: 2rem;
@@ -643,14 +643,14 @@ hide: true
   <div
     id="chat-box"
     style="
-      flex-grow: 1; /* Take up remaining space */
+      flex-grow: 1;
       padding: 20px;
       overflow-y: auto;
-      background-color: rgba(200, 230, 201, 0.85); /* Semi-transparent light green */
+      background-color: rgba(200, 230, 201, 0.85);
       border-top: 2px solid #2e7d32;
       border-bottom: 2px solid #2e7d32;
       box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 10px; /* Slightly rounded corners */
+      border-radius: 10px;
     "
   ></div>
 
@@ -659,7 +659,7 @@ hide: true
     style=" 
       display: flex;
       padding: 20px;
-      background-color: #2e7d32; /* Same dark green as header */
+      background-color: #2e7d32;
       box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.3);
     "
   >
@@ -668,22 +668,22 @@ hide: true
       id="question"
       placeholder="Type your question here"
       style="
-        flex-grow: 1; /* Take up as much space as possible */
+        flex-grow: 1;
         padding: 15px;
         border: none;
         border-radius: 5px;
         margin-right: 10px;
         font-size: 1rem;
-        color: #2e7d32; /* Dark text */
-        background-color: white; /* Input background */
+        color: #2e7d32;
+        background-color: white;
       "
     />
     <button
-      onclick="sendQuestion(document.getElementById('question').value)"
+      id="sendButton"
       style="
         padding: 15px 20px;
-        background-color: white; /* Contrasting button background */
-        color: #2e7d32; /* Dark green text */
+        background-color: white;
+        color: #2e7d32;
         font-size: 1rem;
         font-weight: bold;
         border: none;
@@ -705,61 +705,78 @@ hide: true
   } else if (location.hostname === "127.0.0.1") {
     pythonURI = "http://127.0.0.1:8887";
   } else {
-    pythonURI = "https://flocker.nighthawkcodingsociety.com";
+    pythonURI = "https://takeabyte.stu.nighthawkcodingsociety.com";
   }
-
-  const fetchOptions = {
-    method: "GET",
-    mode: "cors",
-    cache: "default",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Origin": "client",
-    },
-  };
 
   // Chatbot Logic
   async function sendQuestion(question) {
+    if (!question.trim()) {
+      alert("Please enter a question!");
+      return;
+    }
+
     const chatBox = document.getElementById("chat-box");
 
-    // Display the user's question
-    chatBox.innerHTML += 
-            <div style="margin-bottom: 20px; background: rgba(232, 244, 200, 0.85); padding: 15px; border-radius: 8px;">
-                <strong style="color: #2e7d32;">You:</strong> 
-                <span style="color: #2e7d32;">${question}</span>
-            </div>;
+    // Display user's question
+    chatBox.innerHTML += `
+      <div style="margin-bottom: 20px; background: rgba(232, 244, 200, 0.85); padding: 15px; border-radius: 8px;">
+        <strong style="color: #2e7d32;">You:</strong> 
+        <span style="color: #2e7d32;">${question}</span>
+      </div>`;
 
-    // Send the question to the backend
-    const response = await fetch(${pythonURI}/api/ai/help, {
-      ...fetchOptions,
-      method: "POST",
-      body: JSON.stringify({ question }),
-    });
+    try {
+      const response = await fetch(`${pythonURI}/api/ai/help`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ question: question })
+      });
 
-    // Display the AI's response
-    const data = await response.json();
-    const aiResponse = data.response || "Error: Unable to fetch response.";
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-    chatBox.innerHTML += 
-            <div style="margin-bottom: 20px; background: #388e3c; padding: 15px; border-radius: 8px; color: white;">
-                <strong>byte bot:</strong> ${aiResponse}
-            </div>;
-    document.getElementById("question").value = ""; // Clear input
-    chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll
+      const data = await response.json();
+
+      chatBox.innerHTML += `
+        <div style="margin-bottom: 20px; background: #388e3c; padding: 15px; border-radius: 8px; color: white;">
+          <strong>byte bot:</strong> ${data.response || "No response received"}
+        </div>`;
+    } catch (error) {
+      console.error('Error:', error);
+      chatBox.innerHTML += `
+        <div style="margin-bottom: 20px; background: #f44336; padding: 15px; border-radius: 8px; color: white;">
+          <strong>Error:</strong> ${error.message}
+        </div>`;
+    }
+
+    // Clear input and scroll to bottom
+    document.getElementById("question").value = "";
+    chatBox.scrollTop = chatBox.scrollHeight;
   }
 
-  // Attach the sendQuestion function to the "Ask byte bot" button
-  document
-    .querySelector('button[onclick="sendQuestion()"]')
-    .addEventListener("click", () => {
-      const question = document.getElementById("question").value.trim();
-      if (question) {
+  // Add event listeners when the document is loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    const questionInput = document.getElementById("question");
+    const sendButton = document.getElementById("sendButton");
+
+    if (questionInput && sendButton) {
+      // Enter key event listener
+      questionInput.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          sendQuestion(this.value);
+        }
+      });
+
+      // Button click event listener
+      sendButton.addEventListener("click", function() {
+        const question = questionInput.value;
         sendQuestion(question);
-      } else {
-        alert("Please enter a question!");
-      }
-    });
+      });
+    }
+  });
 </script>
 
 <!-- Optional CSS -->
@@ -771,14 +788,13 @@ hide: true
 
   #chat-box::-webkit-scrollbar-thumb {
     background: #388e3c;
-    /* Match header and footer */
     border-radius: 5px;
   }
 
   /* Button Hover Effect */
   button:hover {
-    background-color: #66bb6a;
-    color: white;
+    background-color: #66bb6a !important;
+    color: white !important;
   }
 </style>
 
