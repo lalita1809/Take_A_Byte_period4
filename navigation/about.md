@@ -302,6 +302,59 @@ search_exclude: true
     <div class="metallic-overlay"></div>
     <div class="temp-display">38°F</div>
     <h1>Fridge</h1>
+    
+    <!-- Add Byte Bot Section -->
+    <div class="form-group" style="
+        margin-bottom: 30px;
+        border: 2px solid #3498db;
+        border-radius: 15px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+    ">
+        <h2 style="
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        ">Ask for recommendations</h2>
+        <div id="chat-box" style="
+            height: 300px;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+        "></div>
+        <div style="display: flex; gap: 10px;">
+            <input 
+                type="text" 
+                id="question" 
+                placeholder="Ask byte bot a question..."
+                style="
+                    flex-grow: 1;
+                    margin: 0;
+                    border: 2px solid #3498db;
+                    transition: all 0.3s ease;
+                "
+            >
+            <button 
+                id="sendButton"
+                style="
+                    width: auto;
+                    margin: 0;
+                    background-color: #3498db;
+                    padding: 12px 25px;
+                    font-weight: bold;
+                    letter-spacing: 0.5px;
+                "
+            >Ask</button>
+        </div>
+    </div>
+
     <div class="form-group">
         <label for="grocery">Grocery:</label>
         <input type="text" id="grocery" placeholder="e.g., chicken, garlic, lemon">
@@ -547,6 +600,76 @@ async function confirmAdd() {
 
 // Fetch Grocerys on page load
 fetchGrocerys();
+
+// Byte Bot Logic
+async function sendQuestion(question) {
+    if (!question.trim()) {
+        alert("Please enter a question!");
+        return;
+    }
+
+    const chatBox = document.getElementById("chat-box");
+
+    // Display user's question
+    chatBox.innerHTML += `
+        <div style="margin-bottom: 15px; background: #f5f5f5; padding: 10px; border-radius: 8px;">
+            <strong style="color: #2c3e50;">You:</strong> 
+            <span style="color: #2c3e50;">${question}</span>
+        </div>`;
+
+    try {
+        const response = await fetch(`${pythonURI}/api/ai/help`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ question: question })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        chatBox.innerHTML += `
+            <div style="margin-bottom: 15px; background: #3498db; padding: 10px; border-radius: 8px; color: white;">
+                <strong>byte bot:</strong> ${data.response || "No response received"}
+            </div>`;
+    } catch (error) {
+        console.error('Error:', error);
+        chatBox.innerHTML += `
+            <div style="margin-bottom: 15px; background: #e74c3c; padding: 10px; border-radius: 8px; color: white;">
+                <strong>Error:</strong> ${error.message}
+            </div>`;
+    }
+
+    // Clear input and scroll to bottom
+    document.getElementById("question").value = "";
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// Add event listeners for byte bot when the document is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    const questionInput = document.getElementById("question");
+    const sendButton = document.getElementById("sendButton");
+
+    if (questionInput && sendButton) {
+        // Enter key event listener
+        questionInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                sendQuestion(this.value);
+            }
+        });
+
+        // Button click event listener
+        sendButton.addEventListener("click", function() {
+            const question = questionInput.value;
+            sendQuestion(question);
+        });
+    }
+});
 </script>
 </body>
 </html>
