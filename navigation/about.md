@@ -574,6 +574,26 @@ function closeAddModal() {
     modal.classList.remove('show');
 }
 
+// Add new sound effects for CRUD operations
+const addSound = new Audio('https://cdn.freesound.org/previews/242/242501_4414128-lq.mp3');  // Pleasant pop sound
+const deleteSound = new Audio('https://cdn.freesound.org/previews/256/256113_3263906-lq.mp3');  // Swoosh delete sound
+const updateSound = new Audio('https://cdn.freesound.org/previews/270/270404_5123851-lq.mp3');  // Click sound
+
+// Initialize sounds
+function initSounds() {
+    addSound.load();
+    deleteSound.load();
+    updateSound.load();
+    
+    // Set volumes
+    addSound.volume = 0.3;
+    deleteSound.volume = 0.2;
+    updateSound.volume = 0.3;
+}
+
+// Call initSounds when document is loaded
+document.addEventListener('DOMContentLoaded', initSounds);
+
 async function confirmAdd() {
     const grocery = document.getElementById('grocery').value;
     const quantity = parseInt(document.getElementById('quantity').value);
@@ -585,7 +605,8 @@ async function confirmAdd() {
             body: JSON.stringify({ grocery, quantity })
         });
         if (response.ok) {
-            alert("Grocery added!");
+            addSound.currentTime = 0;
+            addSound.play().catch(e => console.log('Sound play error:', e));
             fetchGrocerys();
             document.getElementById('grocery').value = '';
             document.getElementById('quantity').value = '';
@@ -596,6 +617,55 @@ async function confirmAdd() {
         console.error(err);
     }
     closeAddModal();
+}
+
+async function confirmDelete() {
+    if (deleteItemId !== null) {
+        try {
+            const response = await fetch(pythonURI + `/fridge/delete`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: deleteItemId })
+            });
+            
+            if (response.ok) {
+                deleteSound.currentTime = 0;
+                deleteSound.play().catch(e => console.log('Sound play error:', e));
+                fetchGrocerys();
+            } else {
+                alert("Failed to delete item.");
+            }
+        } catch (err) {
+            console.error("Delete error:", err);
+            alert("Error deleting item.");
+        }
+    }
+    closeModal();
+}
+
+async function confirmEdit() {
+    if (editItemId !== null) {
+        const newQuantity = parseInt(document.getElementById('editQuantityInput').value);
+        try {
+            const response = await fetch(pythonURI + `/fridge/update`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: editItemId, quantity: newQuantity })
+            });
+            
+            if (response.ok) {
+                updateSound.currentTime = 0;
+                updateSound.play().catch(e => console.log('Sound play error:', e));
+                fetchGrocerys();
+            } else {
+                alert("Failed to update item.");
+            }
+        } catch (err) {
+            console.error("Update error:", err);
+            alert("Error updating item.");
+        }
+    }
+    closeEditModal();
 }
 
 // Fetch Grocerys on page load
