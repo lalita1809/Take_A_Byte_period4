@@ -354,6 +354,19 @@ search_exclude: true
     </div>
 </div>
 
+<!-- Add the new Add Modal HTML right after the other modals -->
+<div id="addModal" class="modal">
+    <div class="modal-content">
+        <h2>Confirm Addition</h2>
+        <p>Are you sure you want to add this item to your fridge?</p>
+        <div id="addItemDetails"></div>
+        <div class="modal-buttons">
+            <button class="modal-button cancel-button" onclick="closeAddModal()">Cancel</button>
+            <button class="modal-button confirm-button" onclick="confirmAdd()">Add</button>
+        </div>
+    </div>
+</div>
+
 <script>
     var pythonURI;
     if (location.hostname === "localhost") {
@@ -366,28 +379,21 @@ search_exclude: true
 
 const API_URL = (pythonURI + "/api/fridge");
 
-// Add grocery
-document.getElementById('addFridgeBtn').addEventListener('click', async () => {
+// Add grocery - modified to use modal
+document.getElementById('addFridgeBtn').addEventListener('click', () => {
     const grocery = document.getElementById('grocery').value;
     const quantity = parseInt(document.getElementById('quantity').value);
-
-    try {
-        const response = await fetch(pythonURI + `/fridge/add`, { 
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ grocery, quantity })
-        });
-        if (response.ok) {
-            alert("Grocery added!");
-            fetchGrocerys();
-            document.getElementById('grocery').value = '';
-            document.getElementById('quantity').value = '';
-        } else {
-            alert("Failed to add Grocery.");
-        }
-    } catch (err) {
-        console.error(err);
+    
+    if (!grocery || !quantity) {
+        alert("Please fill in both fields");
+        return;
     }
+    
+    const details = document.getElementById('addItemDetails');
+    details.innerHTML = `<p>Item: ${grocery}<br>Quantity: ${quantity}</p>`;
+    
+    const modal = document.getElementById('addModal');
+    modal.classList.add('show');
 });
 
 // Fetch Grocerys
@@ -508,6 +514,35 @@ async function confirmEdit() {
         }
     }
     closeEditModal();
+}
+
+function closeAddModal() {
+    const modal = document.getElementById('addModal');
+    modal.classList.remove('show');
+}
+
+async function confirmAdd() {
+    const grocery = document.getElementById('grocery').value;
+    const quantity = parseInt(document.getElementById('quantity').value);
+
+    try {
+        const response = await fetch(pythonURI + `/fridge/add`, { 
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ grocery, quantity })
+        });
+        if (response.ok) {
+            alert("Grocery added!");
+            fetchGrocerys();
+            document.getElementById('grocery').value = '';
+            document.getElementById('quantity').value = '';
+        } else {
+            alert("Failed to add Grocery.");
+        }
+    } catch (err) {
+        console.error(err);
+    }
+    closeAddModal();
 }
 
 // Fetch Grocerys on page load
