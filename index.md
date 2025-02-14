@@ -446,7 +446,7 @@ hide: true
             setTimeout(() => {
                 spinButton.disabled = false;
                 const normalizedRotation = currentRotation % 360;
-                const sliceIndex = Math.floor((360 - normalizedRotation) / 60) % 6;
+                const sliceIndex = (6 - Math.floor(normalizedRotation / 60)) % 6;
                 const slices = document.querySelectorAll('.slice');
                 const selectedCuisine = slices[sliceIndex].textContent;
                 resultDiv.textContent = `The Spinner Chose: ${selectedCuisine}`;
