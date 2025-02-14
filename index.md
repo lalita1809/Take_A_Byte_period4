@@ -109,6 +109,19 @@ hide: true
         .results a:last-child {
             border-bottom: none;
         }
+        .aboutButton {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 18px;
+        color: white;
+        background-color: #4CAF50;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .aboutButton:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
     </style>
 </head>
 <body>
