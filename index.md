@@ -110,18 +110,25 @@ hide: true
             border-bottom: none;
         }
         .aboutButton {
-        display: inline-block;
-        padding: 10px 20px;
-        font-size: 18px;
-        color: white;
-        background-color: #4CAF50;
-        text-decoration: none;
-        border-radius: 8px;
-        transition: background 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white !important;
+            background-color: #4CAF50;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background 0.3s ease, transform 0.2s ease;
+            margin-top: -80px;
         }
         .aboutButton:hover {
-        background-color: #45a049;
-        transform: scale(1.05);
+            background-color: #45a049;
+            transform: scale(1.05);
+            color: white !important;
+        }
+        /* Add specific style for the link */
+        h3 a.aboutButton {
+            color: white !important;
+        }
     </style>
 </head>
 <body>
@@ -203,12 +210,12 @@ hide: true
     <style>
       .FridgeButton {
         display: inline-block;
-        width: 150px;
-        height: 225px;
+        width: 200px;
+        height: 300px;
         text-decoration: none;
         position: absolute;
         right: 20px;
-        top: 150px;
+        top: 250px;          /* Changed from 150px to 250px to move it down */
         transition: all 0.3s ease;
         transform-style: preserve-3d;
         perspective: 1000px;
@@ -263,10 +270,10 @@ hide: true
 
       .mini-handle {
         position: absolute;
-        right: 12px;      /* Adjusted for larger size */
+        right: 15px;          /* Adjusted from 12px */
         top: 50%;
         transform: translateY(-50%);
-        width: 10px;      /* Slightly wider handle */
+        width: 12px;          /* Increased from 10px */
         height: 60%;
         background: linear-gradient(90deg, #888, #999);
         border-radius: 4px;
@@ -277,15 +284,15 @@ hide: true
 
       .mini-display {
         position: absolute;
-        top: 15px;        /* Adjusted for larger size */
+        top: 20px;            /* Adjusted from 15px */
         left: 50%;
         transform: translateX(-50%);
         background: #000;
         color: #00ff00;
-        padding: 4px 10px;  /* Slightly larger padding */
+        padding: 6px 12px;    /* Increased from 4px 10px */
         border-radius: 4px;
         font-family: 'Digital', monospace;
-        font-size: 14px;    /* Increased font size */
+        font-size: 16px;      /* Increased from 14px */
         box-shadow: 
           inset 0 0 3px rgba(0,255,0,0.5),
           0 0 5px rgba(0,0,0,0.2);
@@ -324,7 +331,9 @@ hide: true
 </body>
 </html>
 
-<h3> <a class="aboutButton" href="{{site.baseurl}}/navigation/about">About page</a></h3>
+<h3 style="text-align: center;"> 
+    <a class="aboutButton" href="{{site.baseurl}}/navigation/about">About page</a>
+</h3>
 
 
 <head>
@@ -349,6 +358,7 @@ hide: true
             border-radius: 50%;
             border: 5px solid #000;
             overflow: hidden;
+            margin-top: 50px;  /* Added to move the wheel lower */
         }
         .wheel {
             width: 100%;
