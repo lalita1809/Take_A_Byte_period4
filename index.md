@@ -23,43 +23,91 @@ hide: true
             top: 20px;
             right: 20px;
             width: 300px;
+            transition: all 0.3s ease;
         }
         .search-container input[type="text"] {
-            width: calc(100% - 90px);
-            padding: 10px;
+            width: calc(100% - 20px);
+            padding: 15px 45px 15px 20px;
             font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .search-container input[type="text"]:focus {
+            width: calc(100% + 50px);
+            border-color: #4CAF50;
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.2);
+            outline: none;
         }
         .search-container button {
-            padding: 10px 15px;
-            font-size: 16px;
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
             border: none;
-            background-color: #4CAF50;
-            color: white;
+            padding: 10px;
             cursor: pointer;
-            border-radius: 5px;
+            transition: all 0.3s ease;
         }
         .search-container button:hover {
-            background-color: #45a049;
+            transform: translateY(-50%) scale(1.1);
+        }
+        .search-icon {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #4CAF50;
+            border-radius: 50%;
+            position: relative;
+        }
+        .search-icon::after {
+            content: '';
+            position: absolute;
+            right: -7px;
+            bottom: -7px;
+            width: 10px;
+            height: 2px;
+            background: #4CAF50;
+            transform: rotate(45deg);
         }
         .results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
             margin-top: 10px;
-            background: #f9f9f9;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-            max-height: 200px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            max-height: 300px;
             overflow-y: auto;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        .results.show {
+            opacity: 1;
+            transform: translateY(0);
         }
         .results a {
             display: block;
-            margin: 5px 0;
-            color: blue;
+            padding: 12px 20px;
+            color: #333;
             text-decoration: none;
+            border-bottom: 1px solid #eee;
+            transition: all 0.2s ease;
         }
         .results a:hover {
-            text-decoration: underline;
+            background: rgba(76, 175, 80, 0.1);
+            padding-left: 25px;
+        }
+        .results a:last-child {
+            border-bottom: none;
         }
     </style>
 </head>
@@ -73,41 +121,193 @@ hide: true
     </div>
     
 <script>
-        // List of pages with keywords
+        // List of all pages and their content
         const pages = [
-            { url: 'navigation/about', keywords: ['about', 'team', 'company'] },
-            { url: 'navigation/cuisine/thai', keywords: ['thai', 'asia', 'thia'] },
-            { url: 'navigation/cuisine/indian', keywords: ['india', 'indian', 'India'] },
-            { url: 'navigation/cuisine/italian', keywords: ['Italian', 'italy', 'Italy'] }
+            { url: '/flocker_frontend_period4/navigation/about', title: 'About', keywords: ['about', 'team', 'company', 'fridge'] },
+            { url: '/flocker_frontend_period4/navigation/cuisine/thai', title: 'Thai Cuisine', keywords: ['thai', 'food', 'asian', 'cuisine'] },
+            { url: '/flocker_frontend_period4/navigation/cuisine/indian', title: 'Indian Cuisine', keywords: ['indian', 'food', 'curry', 'cuisine'] },
+            { url: '/flocker_frontend_period4/navigation/cuisine/italian', title: 'Italian Cuisine', keywords: ['italian', 'pasta', 'pizza', 'cuisine'] },
+            { url: '/flocker_frontend_period4/navigation/buttons/posting', title: 'Post Recipe', keywords: ['post', 'recipe', 'share', 'create'] },
+            { url: '/flocker_frontend_period4/navigation/feedback', title: 'Feedback', keywords: ['feedback', 'comments', 'suggestions'] },
+            { url: '/flocker_frontend_period4/natcountrygen', title: 'NatCountryGen', keywords: ['generator', 'country', 'national'] }
+            // Add more pages as needed
         ];
 
         function performSearch() {
             const query = document.getElementById('searchInput').value.trim().toLowerCase();
             const resultsContainer = document.getElementById('results');
-            resultsContainer.innerHTML = ''; // Clear previous results
+            resultsContainer.innerHTML = '';
 
             if (!query) {
-                resultsContainer.innerHTML = '<p>Please enter a search term.</p>';
+                resultsContainer.classList.remove('show');
                 return;
             }
 
             const matchingPages = pages.filter(page => 
-                page.keywords.some(keyword => keyword.includes(query))
+                page.keywords.some(keyword => keyword.includes(query)) ||
+                page.title.toLowerCase().includes(query)
             );
 
             if (matchingPages.length === 0) {
-                resultsContainer.innerHTML = '<p>No results found.</p>';
-                return;
+                resultsContainer.innerHTML = '<div style="padding: 12px 20px; color: #666;">No results found</div>';
+            } else {
+                matchingPages.forEach(page => {
+                    const link = document.createElement('a');
+                    link.href = page.url;
+                    link.textContent = page.title;
+                    resultsContainer.appendChild(link);
+                });
             }
 
-            matchingPages.forEach(page => {
-                const link = document.createElement('a');
-                link.href = page.url;
-                link.textContent = `Visit ${page.url}`;
-                resultsContainer.appendChild(link);
-            });
+            resultsContainer.classList.add('show');
         }
+
+        // Add event listener for real-time search
+        document.getElementById('searchInput').addEventListener('input', performSearch);
+
+        // Close results when clicking outside
+        document.addEventListener('click', (e) => {
+            const resultsContainer = document.getElementById('results');
+            const searchContainer = document.querySelector('.search-container');
+            if (!searchContainer.contains(e.target)) {
+                resultsContainer.classList.remove('show');
+            }
+        });
     </script>
+
+    <!-- Add the fridge button here -->
+    <h3>
+      <a class="FridgeButton" href="{{site.baseurl}}/about">
+        <div class="mini-fridge">
+          <div class="mini-handle"></div>
+          <div class="mini-display">4°C</div>
+          <div class="mini-shelf"></div>
+          <div class="mini-shelf"></div>
+        </div>
+      </a>
+    </h3>
+
+    <style>
+      .FridgeButton {
+        display: inline-block;
+        width: 150px;
+        height: 225px;
+        text-decoration: none;
+        position: absolute;
+        right: 20px;
+        top: 150px;
+        transition: all 0.3s ease;
+        transform-style: preserve-3d;
+        perspective: 1000px;
+        z-index: 9999;
+        margin: 0;
+        padding: 0;
+        background: none;
+      }
+
+      .mini-fridge {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(145deg, #e8e8e8, #d4d4d4);
+        border-radius: 15px;
+        position: relative;
+        box-shadow: 
+          0 8px 15px rgba(0,0,0,0.2),
+          inset 0 0 0 2px rgba(255,255,255,0.1);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        transform-origin: left center;  /* Changed from right to left */
+      }
+
+      .FridgeButton:hover .mini-fridge {
+        transform: rotateY(15deg);    /* Changed from -15deg to 15deg */
+        box-shadow: 
+          -20px 8px 15px rgba(0,0,0,0.2),  /* Changed shadow direction */
+          inset 0 0 0 2px rgba(255,255,255,0.2);
+      }
+
+      /* Adjust inner shadow direction */
+      .mini-fridge::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to left,          /* Changed from right to left */
+          rgba(0,0,0,0.2) 0%,
+          transparent 20%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+      }
+
+      .FridgeButton:hover .mini-fridge::before {
+        opacity: 1;
+      }
+
+      .mini-handle {
+        position: absolute;
+        right: 12px;      /* Adjusted for larger size */
+        top: 50%;
+        transform: translateY(-50%);
+        width: 10px;      /* Slightly wider handle */
+        height: 60%;
+        background: linear-gradient(90deg, #888, #999);
+        border-radius: 4px;
+        box-shadow: 
+          inset -1px 0 3px rgba(0,0,0,0.3),
+          1px 0 2px rgba(255,255,255,0.5);
+      }
+
+      .mini-display {
+        position: absolute;
+        top: 15px;        /* Adjusted for larger size */
+        left: 50%;
+        transform: translateX(-50%);
+        background: #000;
+        color: #00ff00;
+        padding: 4px 10px;  /* Slightly larger padding */
+        border-radius: 4px;
+        font-family: 'Digital', monospace;
+        font-size: 14px;    /* Increased font size */
+        box-shadow: 
+          inset 0 0 3px rgba(0,255,0,0.5),
+          0 0 5px rgba(0,0,0,0.2);
+      }
+
+      .mini-shelf {
+        position: absolute;
+        left: 10%;
+        width: 80%;
+        height: 1px;
+        background: rgba(0,0,0,0.1);
+        box-shadow: 0 1px 2px rgba(255,255,255,0.5);
+      }
+
+      .mini-shelf:nth-child(3) { top: 40%; }
+      .mini-shelf:nth-child(4) { top: 70%; }
+
+      .mini-fridge::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+          repeating-linear-gradient(
+            45deg,
+            rgba(255,255,255,0.05) 0px,
+            rgba(255,255,255,0.05) 1px,
+            transparent 1px,
+            transparent 3px
+          );
+        pointer-events: none;
+      }
+    </style>
 </body>
 </html>
 
@@ -237,7 +437,7 @@ hide: true
             if (link) {
                 // Create a button element
                 const button = document.createElement("button");
-                button.textContent = `Go to ${selectedCuisine.charAt(0).toUpperCase() + selectedCuisine.slice(1)} Cuisine`;
+                button.textContent = Go to ${selectedCuisine.charAt(0).toUpperCase() + selectedCuisine.slice(1)} Cuisine;
                 button.classList.add("dynamic-link");
 
                 // Add a click event to redirect to the page
@@ -271,7 +471,7 @@ hide: true
             const totalRotation = randomRotations * 360 + randomSlice; // Total rotation amount
 
             currentRotation += totalRotation; // Increment the total rotation
-            wheel.style.transform = `rotate(${currentRotation}deg)`;
+            wheel.style.transform = rotate(${currentRotation}deg);
 
             // Determine which slice is selected after the spin
             setTimeout(() => {
@@ -286,7 +486,7 @@ hide: true
                 const selectedCuisine = cuisines[sliceIndex];
 
                 // Display the result
-                resultDiv.textContent = `The Spinner Chose: ${selectedCuisine}`;
+                resultDiv.textContent = The Spinner Chose: ${selectedCuisine};
                 // Call the function with the variable
                 createDynamicButton(selectedCuisine);
             }, 5000); // Matches the transition duration (5s)
@@ -402,10 +602,10 @@ hide: true
 
     // Display confirmation message
     const formContainer = document.querySelector(".container");
-    formContainer.innerHTML = `
+    formContainer.innerHTML = 
         <p>Your recipe has been posted!</p>
         <p><a href="{{site.baseurl}}/navigation/buttons/posting" class="discover-more-button">Discover More</a></p>
-    `;
+    ;
     });
   </script>
 
@@ -524,14 +724,14 @@ hide: true
     const chatBox = document.getElementById("chat-box");
 
     // Display the user's question
-    chatBox.innerHTML += `
+    chatBox.innerHTML += 
             <div style="margin-bottom: 20px; background: rgba(232, 244, 200, 0.85); padding: 15px; border-radius: 8px;">
                 <strong style="color: #2e7d32;">You:</strong> 
                 <span style="color: #2e7d32;">${question}</span>
-            </div>`;
+            </div>;
 
     // Send the question to the backend
-    const response = await fetch(`${pythonURI}/api/ai/help`, {
+    const response = await fetch(${pythonURI}/api/ai/help, {
       ...fetchOptions,
       method: "POST",
       body: JSON.stringify({ question }),
@@ -541,10 +741,10 @@ hide: true
     const data = await response.json();
     const aiResponse = data.response || "Error: Unable to fetch response.";
 
-    chatBox.innerHTML += `
+    chatBox.innerHTML += 
             <div style="margin-bottom: 20px; background: #388e3c; padding: 15px; border-radius: 8px; color: white;">
                 <strong>byte bot:</strong> ${aiResponse}
-            </div>`;
+            </div>;
     document.getElementById("question").value = ""; // Clear input
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll
   }
@@ -581,59 +781,6 @@ hide: true
     color: white;
   }
 </style>
-
-<h3>
-  <a class="Fridge" href="{{site.baseurl}}/about">
-    Fridge
-    <span class="handle"></span>
-  </a>
-</h3>
-
-<style>
-  .Fridge {
-    font-family: 'Roboto', sans-serif;
-    font-size: 24px;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-decoration: none;
-    background-color: #dfe6e9; /* Light fridge color */
-    color: black;
-    padding: 20px 40px;
-    border-radius: 10px;
-    display: inline-block;
-    position: relative;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    box-shadow: inset -3px -3px 8px rgba(255, 255, 255, 0.6),
-                inset 3px 3px 8px rgba(0, 0, 0, 0.2),
-                0px 5px 15px rgba(0, 0, 0, 0.1);
-    border: 2px solid #b2bec3;
-    overflow: hidden;
-  }
-
-  /* Fridge handle */
-  .Fridge .handle {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    width: 8px;
-    height: 30px;
-    background-color: #636e72;
-    border-radius: 4px;
-    transform: translateY(-50%);
-  }
-
-  /* Fridge door opening effect */
-  .Fridge:hover {
-    transform: rotateY(-10deg); /* Slight 3D door opening effect */
-    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
-  }
-
-  .Fridge:focus {
-    outline: none;
-    border: 2px solid #ffcc00;
-  }
-</style>
-
 
 <h3>
   <a class="Fridge" href="{{site.baseurl}}/natcountrygen" style="font-family: 'Roboto', sans-serif; font-size: 24px; font-weight: bold; text-transform: uppercase; text-decoration: none; background-color: #00aaff; color: white; padding: 12px 24px; border-radius: 8px; transition: all 0.3s ease-in-out; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); display: inline-block;">
