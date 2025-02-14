@@ -179,7 +179,7 @@ permalink: /navigation/cuisine/indian
     <div id="recipe-data"></div>
 
 <script>
-    var pythonURI;
+     var pythonURI;
     if (location.hostname === "localhost") {
         pythonURI = "http://localhost:8887";
     } else if (location.hostname === "127.0.0.1") {

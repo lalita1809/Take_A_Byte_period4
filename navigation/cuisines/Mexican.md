@@ -179,6 +179,15 @@ permalink: /navigation/cuisine/mexican
     <div id="recipe-data"></div>
 
 <script>
+    var pythonURI;
+    if (location.hostname === "localhost") {
+        pythonURI = "http://localhost:8887";
+    } else if (location.hostname === "127.0.0.1") {
+        pythonURI = "http://127.0.0.1:8887";
+    } else {
+        pythonURI = "https://takeabyte.stu.nighthawkcodingsociety.com";
+    }
+
         async function fetchRandomRecipes() {
             const apiUrls = {
                 chicken: [
