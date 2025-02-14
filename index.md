@@ -421,9 +421,38 @@ hide: true
     <div id="result"></div>
 
 <script>
-        let currentRotation = 0; // Track the current rotation of the wheel
+        let currentRotation = 0;
         const spinButton = document.getElementById('spinButton');
         const resultDiv = document.getElementById('result');
+
+        // Add single wheel sound effect
+        const spinSound = new Audio('https://cdn.freesound.org/previews/242/242501_4414128-lq.mp3');  // Click sound for spin
+
+        function spinWheel() {
+            spinButton.disabled = true;
+            
+            // Play spin sound
+            spinSound.volume = 0.3;
+            spinSound.play();
+
+            const wheel = document.getElementById('wheel');
+            const randomRotations = Math.floor(Math.random() * 4) + 5;
+            const randomSlice = Math.floor(Math.random() * 360);
+            const totalRotation = randomRotations * 360 + randomSlice;
+
+            currentRotation += totalRotation;
+            wheel.style.transform = `rotate(${currentRotation}deg)`;
+
+            setTimeout(() => {
+                spinButton.disabled = false;
+                const normalizedRotation = currentRotation % 360;
+                const sliceIndex = Math.floor((360 - normalizedRotation) / 60) % 6;
+                const slices = document.querySelectorAll('.slice');
+                const selectedCuisine = slices[sliceIndex].textContent;
+                resultDiv.textContent = `The Spinner Chose: ${selectedCuisine}`;
+                createDynamicButton(selectedCuisine);
+            }, 5000);
+        }
 
         // Function to create a button and set its link based on the selected cuisine
         function createDynamicButton(selectedCuisine) {
@@ -459,39 +488,6 @@ hide: true
             "Mexican food": "{{site.baseurl}}/navigation/cuisine/mexican",
             "Thai food": "{{site.baseurl}}/navigation/cuisine/thai"
         };
-
-        function spinWheel() {
-            // Disable the spin button
-            spinButton.disabled = true;
-
-            const wheel = document.getElementById('wheel');
-            const randomRotations = Math.floor(Math.random() * 4) + 5; // Random number of rotations (5 to 8)
-            const randomSlice = Math.floor(Math.random() * 360); // Random degree for the final position
-            const totalRotation = randomRotations * 360 + randomSlice; // Total rotation amount
-
-            currentRotation += totalRotation; // Increment the total rotation
-            wheel.style.transform = `rotate(${currentRotation}deg)`;
-
-            // Determine which slice is selected after the spin
-            setTimeout(() => {
-                spinButton.disabled = false;
-
-                // Calculate the final rotation position
-                const normalizedRotation = currentRotation % 360;
-                const sliceIndex = Math.floor((360 - normalizedRotation) / 60) % 6;
-
-                // Get the selected cuisine
-                const slices = document.querySelectorAll('.slice');
-                const selectedCuisine = slices[sliceIndex].textContent;
-
-                // Display the result
-                resultDiv.textContent = `The Spinner Chose: ${selectedCuisine}`;
-                // Call the function with the variable
-                createDynamicButton(selectedCuisine);
-            }, 5000); // Matches the transition duration (5s)
-        }
-
-
     </script>
 </body>
 
