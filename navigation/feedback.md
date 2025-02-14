@@ -15,7 +15,7 @@ permalink: /navigation/feedback
         border: 10px solid black;
         border-radius: 50px;
         border-color: #F5E1E7;
-        background-color: pink;
+        background-color: green;
         text-align: center;
         padding: 5px 0 3px 0;
         height: 200px;
@@ -42,7 +42,7 @@ permalink: /navigation/feedback
             padding: 10px 20px;
             font-size: 16px;
             margin: 10px;
-            background-color: #007bff;
+            background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 5px;
