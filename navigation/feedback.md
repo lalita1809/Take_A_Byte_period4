@@ -130,50 +130,53 @@ permalink: /navigation/feedback
                 <p><strong>Cuisine:</strong> ${feedback.cuisine}</p>
                 <p><strong>Thumbs Up:</strong> ${feedback.thumbs_up}</p>
                 <p><strong>Thumbs Down:</strong> ${feedback.thumbs_down}</p>
-                <button onclick="deleteFeedback(${feedback.id})">Delete Feedback</button>
-                <button onclick="editFeedback(${feedback.id}, '${feedback.written_feedback}')">Edit Feedback</button>
+                <button onclick="deleteFeedback('${feedback.name}')">Delete Feedback</button>
+                <button onclick="editFeedback('${feedback.name}', '${feedback.written_feedback}')">Edit Feedback</button>
             `;
         }
 
         async function deleteFeedback(feedbackId) {
-        try {
-            const response = await fetch (pythonURI + '/api/feedback/delete', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-                },
-                body: JSON.stringify({ id: feedbackId })  // Ensure backend expects this
-            });
+            try {
+                const response = await fetch(pythonURI + '/api/feedback/delete', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+                    },
+                    body: JSON.stringify({ name: feedbackId })  // Changed to send name instead of id
+                });
 
-            if (response.ok) {
-                alert('Feedback deleted successfully!');
-                fetchFeedbackData();
-            } else {
-                const errorMessage = await response.text();
-                alert(`Error deleting feedback: ${errorMessage}`);
+                if (response.ok) {
+                    alert('Feedback deleted successfully!');
+                    fetchFeedbackData();
+                } else {
+                    const errorMessage = await response.text();
+                    alert(`Error deleting feedback: ${errorMessage}`);
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
             }
-        } catch (error) {
-            alert(`Error: ${error.message}`);
-        } }
-
+        }
 
         async function editFeedback(feedbackId, oldContent) {
             const newContent = prompt('Edit your feedback:', oldContent);
             if (newContent) {
                 try {
-                    const response = await fetch (pythonURI + '/api/feedback/update', {
+                    const response = await fetch(pythonURI + '/api/feedback/update', {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${localStorage.getItem('jwt')}`
                         },
-                        body: JSON.stringify({ id: feedbackId, written_feedback: newContent })
+                        body: JSON.stringify({ 
+                            name: feedbackId,  // Changed to send name instead of id
+                            written_feedback: newContent 
+                        })
                     });
 
                     if (response.ok) {
                         alert('Feedback updated successfully!');
-                        fetchFeedbackData(); // Refresh the feedback list
+                        fetchFeedbackData();
                     } else {
                         alert('Error updating feedback');
                     }
