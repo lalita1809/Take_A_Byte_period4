@@ -15,7 +15,7 @@ permalink: /navigation/about
 .header {
         border: 10px solid black;
         border-radius: 50px;
-        border-color: #F5E1E7;
+        border-color: #62c466;
         background-color: #4CAF50;
         text-align: center;
         padding: 5px 0 3px 0;
