@@ -79,7 +79,7 @@ permalink: /navigation/feedback
 </div>
 
 <script>
-        var pythonURI;
+    var pythonURI;
         if (location.hostname === "localhost") {
             pythonURI = "http://localhost:8887";
         } else if (location.hostname === "127.0.0.1") {
@@ -88,11 +88,11 @@ permalink: /navigation/feedback
             pythonURI = "https://takeabyte.stu.nighthawkcodingsociety.com";
         }
 
-
         async function fetchFeedbackData(event) {
-            const apiUrl = (pythonURI + '/api/feedback/getAll');
+          ;
             
             try {
+                const apiUrl = (pythonURI + '/api/feedback/getAll')
                 const response = await fetch(apiUrl, {
                     method: 'GET', 
                     headers: {
@@ -135,38 +135,16 @@ permalink: /navigation/feedback
             `;
         }
 
-    //  async function deleteFeedback(feedbackId) {
-    //         try {
-    //             const response = await fetch(`http://127.0.0.1:8887/api/feedback/delete`, {
-    //                 method: 'DELETE',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                     'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-    //                 },
-    //                 body: JSON.stringify({ id: feedbackId })
-    //             });
-
-    //             if (response.ok) {
-    //                 alert('Feedback deleted successfully!');
-    //                 fetchFeedbackData(); // Refresh the feedback list
-    //             } else {
-    //                 alert('Error deleting feedback');
-    //             }
-    //         } catch (error) {
-    //             alert(`Error: ${error.message}`);
-    //         }
-    //     }
-
         async function deleteFeedback(feedbackId) {
         try {
-            const response = await fetch(pythonURI + '/api/feedback/delete'), {
+            const response = await fetch (pythonURI + '/api/feedback/delete', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('jwt')}`
                 },
                 body: JSON.stringify({ id: feedbackId })  // Ensure backend expects this
-            };
+            });
 
             if (response.ok) {
                 alert('Feedback deleted successfully!');
@@ -184,14 +162,14 @@ permalink: /navigation/feedback
             const newContent = prompt('Edit your feedback:', oldContent);
             if (newContent) {
                 try {
-                    const response = await fetch    (pythonURI + '/api/feedback/update'), {
+                    const response = await fetch (pythonURI + '/api/feedback/update', {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${localStorage.getItem('jwt')}`
                         },
                         body: JSON.stringify({ id: feedbackId, written_feedback: newContent })
-                    };
+                    });
 
                     if (response.ok) {
                         alert('Feedback updated successfully!');
@@ -204,7 +182,7 @@ permalink: /navigation/feedback
                 }
             }
         }
-    </script>
+</script>
 
  <!-- Form to Add New Feedback -->
 <form id="add-feedback-form">
@@ -231,42 +209,47 @@ permalink: /navigation/feedback
     </form>
 
 <script>
-        async function addFeedback() {
-            const form = document.getElementById('add-feedback-form');
-            const name = form.name.value.trim();
-            const cuisine = form.cuisine.value.trim();
-            const recipe = form.recipe.value.trim();
-            const thumbs_up = form.thumbs_up.value.trim();
-            const thumbs_down = form.thumbs_down.value.trim();
-            const written_feedback = form.written_feedback.value.trim();
+    async function addFeedback() {
+        const form = document.getElementById('add-feedback-form');
+        const name = form.name.value.trim();
+        const cuisine = form.cuisine.value.trim();
+        const recipe = form.recipe.value.trim();
+        const thumbs_up = form.thumbs_up.value.trim();
+        const thumbs_down = form.thumbs_down.value.trim();
+        const written_feedback = form.written_feedback.value.trim();
 
-            if (!name || !cuisine || !recipe || !thumbs_up || !thumbs_down || !written_feedback) {
-                alert('Please fill all fields');
-                return;
-            }
-
-            const apiUrl = ( pythonURI + '/api/feedback/addFeedback' );
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-                    },
-                    body: JSON.stringify({ name, cuisine, recipe, thumbs_up, thumbs_down, written_feedback })
-                });
-
-                if (response.ok) {
-                    alert('Feedback submitted successfully!');
-                    form.reset();
-                    fetchFeedbackData(); // Refresh feedback
-                } else {
-                    alert('Failed to submit feedback');
-                }
-            } catch (error) {
-                alert(`Error: ${error.message}`);
-            }
+        if (!name || !cuisine || !recipe || !thumbs_up || !thumbs_down || !written_feedback) {
+            alert('Please fill all fields');
+            return;
         }
-    </script>
+
+        try {
+            const apiUrl = pythonURI + '/api/feedback/addFeedback';
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+                },
+                body: JSON.stringify({ name, cuisine, recipe, thumbs_up, thumbs_down, written_feedback })
+            });
+
+            if (response.ok) {
+                alert('Feedback submitted successfully!');
+                form.reset();
+                fetchFeedbackData(); // Refresh feedback
+            } else {
+                alert('Failed to submit feedback');
+            }
+        } catch (error) {
+            alert(`Error: ${error.message}`);
+        }
+    }
+
+    // Ensure function is available globally
+    window.addEventListener("load", function() {
+        window.addFeedback = addFeedback;
+    });
+</script>
 </body>
 </html>
