@@ -306,18 +306,18 @@ search_exclude: true
     <!-- Add Byte Bot Section -->
     <div class="form-group" style="
         margin-bottom: 30px;
-        border: 2px solid #3498db;
+        border: 2px solid #4CAF50;
         border-radius: 15px;
         padding: 20px;
         background: rgba(255, 255, 255, 0.8);
-        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.2);
     ">
         <h2 style="
             color: #2c3e50;
             margin-top: 0;
             margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 2px solid #3498db;
+            border-bottom: 2px solid #4CAF50;
         ">Ask for recommendations</h2>
         <div id="chat-box" style="
             height: 300px;
@@ -327,7 +327,7 @@ search_exclude: true
             border-radius: 10px;
             margin-bottom: 15px;
             border: 1px solid #e0e0e0;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: inset 0 2px 8px rgba(76, 175, 80, 0.05);
         "></div>
         <div style="display: flex; gap: 10px;">
             <input 
@@ -337,7 +337,7 @@ search_exclude: true
                 style="
                     flex-grow: 1;
                     margin: 0;
-                    border: 2px solid #3498db;
+                    border: 2px solid #4CAF50;
                     transition: all 0.3s ease;
                 "
             >
@@ -346,7 +346,7 @@ search_exclude: true
                 style="
                     width: auto;
                     margin: 0;
-                    background-color: #3498db;
+                    background-color: #4CAF50;
                     padding: 12px 25px;
                     font-weight: bold;
                     letter-spacing: 0.5px;
@@ -703,7 +703,7 @@ async function sendQuestion(question) {
         const data = await response.json();
 
         chatBox.innerHTML += `
-            <div style="margin-bottom: 15px; background: #3498db; padding: 10px; border-radius: 8px; color: white;">
+            <div style="margin-bottom: 15px; background: #4CAF50; padding: 10px; border-radius: 8px; color: white;">
                 <strong>byte bot:</strong> ${data.response || "No response received"}
             </div>`;
     } catch (error) {
