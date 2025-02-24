@@ -109,6 +109,8 @@ permalink: /navigation/about
                 <p><strong>Age:</strong> ${data.age}</p>
                 <p><strong>Grade:</strong> ${data.grade}</p>
                 <p><strong>Favorite Color:</strong> ${data.favorite_color}</p>
+                <button onclick='editChef(${JSON.stringify(chef)})'>✏️ Edit</button>
+                <button onclick="confirmDeleteChef('${chef.name}')">🗑️ Delete</button>
             `;
 
         // Position the div under the clicked button
@@ -123,6 +125,11 @@ permalink: /navigation/about
         }
     }
 
+        function confirmDeleteChef(name) {
+            const confirmation = prompt(`Are you sure? Type 'delete' to confirm deletion of ${name}.`);
+            if (confirmation === "delete") deleteChef(name);
+        }
+        
         async function fetchStudentData(studentName, event) {
     // const apiUrl = `http://127.0.0.1:8887/api/studentGet/${studentName}`;
     const apiUrl = `${pythonURI}/api/studentGet/`;
