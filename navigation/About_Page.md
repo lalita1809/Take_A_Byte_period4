@@ -131,13 +131,31 @@ permalink: /navigation/about
         }
 
         function editChef(chef) {
-            document.getElementById("form-title").textContent = "Edit Chef";
-            document.getElementById("editing-chef-id").value = chef.name;
-            document.getElementById("name").value = chef.name;
-            document.getElementById("age").value = chef.age;
-            document.getElementById("grade").value = chef.grade;
-            document.getElementById("favorite_color").value = chef.favorite_color;
-        }
+    const form = document.getElementById("add-student-form");
+
+    // Change title to indicate editing mode
+    document.getElementById("form-title").textContent = "Edit Chef";
+
+    // Populate form fields with existing data
+    form.name.value = chef.name;
+    form.age.value = chef.age;
+    form.grade.value = chef.grade;
+    form.favorite_color.value = chef.favorite_color;
+
+    // Store editing mode using a hidden field
+    if (!document.getElementById("editing-chef-id")) {
+        const hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.id = "editing-chef-id";
+        hiddenInput.name = "editing-chef-id";
+        form.appendChild(hiddenInput);
+    }
+    document.getElementById("editing-chef-id").value = chef.name;
+
+    // Make the form visible (if it's hidden)
+    form.style.display = "block";
+}
+
         
         async function fetchStudentData(studentName, event) {
     // const apiUrl = `http://127.0.0.1:8887/api/studentGet/${studentName}`;
@@ -202,49 +220,38 @@ permalink: /navigation/about
 
 
 async function addOrUpdateStudent() {
-  const form = document.getElementById('add-student-form');
-  const name = form.name.value.trim(); // Trim spaces to avoid mismatches
-  const age = form.age.value;
-  const grade = form.grade.value;
-  const favorite_color = form.favorite_color.value;
+    const form = document.getElementById('add-student-form');
+    const name = form.name.value.trim();
+    const age = form.age.value;
+    const grade = form.grade.value;
+    const favorite_color = form.favorite_color.value;
 
-  const getApiUrl = (pythonURI + `/api/studentGet/`); // API to fetch existing students
-  const addApiUrl = (pythonURI + `/api/student/add`); // API to add a new student
-  const updateApiUrl = (pythonURI + `/api/student/update`); // API to update an existing student
+    const isEditing = document.getElementById("editing-chef-id");
+    const editingName = isEditing ? isEditing.value : null;
 
-  try {
-    // Fetch existing students
-    const response = await fetch(getApiUrl);
-    if (!response.ok) throw new Error('Failed to fetch student data.');
+    const apiUrl = editingName ? `${pythonURI}/api/student/update` : `${pythonURI}/api/student/add`;
+    const method = editingName ? "PUT" : "POST";
 
-    const data = await response.json();
+    try {
+        const response = await fetch(apiUrl, {
+            method: method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, age, grade, favorite_color }),
+        });
 
-    // Check if the student already exists
-    const existingStudent = data.find((student) => student.name.toLowerCase() === name.toLowerCase());
+        if (!response.ok) {
+            throw new Error(`Error saving chef.`);
+        }
 
-    const apiUrl = existingStudent ? updateApiUrl : addApiUrl; // Determine API endpoint
-    const method = existingStudent ? 'PUT' : 'POST'; // Use PUT for updates, POST for new entries
+        alert(`Chef ${editingName ? 'updated' : 'added'} successfully!`);
+        form.reset();
+        form.style.display = "none";  // Hide form after submission
 
-    // Send request to add or update the student
-    const saveResponse = await fetch(apiUrl, {
-      method: method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, age, grade, favorite_color }),
-    });
-
-    if (!saveResponse.ok) {
-      const errorData = await saveResponse.json();
-      throw new Error(`Error: ${errorData.message}`);
+    } catch (error) {
+        alert(error.message);
     }
-
-    const responseData = await saveResponse.json();
-    alert(`Student ${responseData.name} ${existingStudent ? 'updated' : 'added'} successfully!`);
-    form.reset();
-
-  } catch (error) {
-    alert(`Error: ${error.message}`);
-  }
 }
+
 
 
 //   async function addStudent() {
