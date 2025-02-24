@@ -138,9 +138,9 @@ permalink: /navigation/about
             const grade = document.getElementById("grade").value;
             const favorite_color = document.getElementById("favorite_color").value;
             const editingChefId = document.getElementById("editing-chef-id").value;
-            const getApiUrl = `${pythonURI}/api/studentGet/`;
-            const addApiUrl = `${pythonURI}/api/student/add`;
-            const updateApiUrl = `${pythonURI}/api/student/update`;
+            
+            const apiUrl = editingChefId ? `${pythonURI}/api/student/update` : `${pythonURI}/api/student/add`;
+            const method = editingChefId ? "PUT" : "POST";
             
             try {
                 const response = await fetch(getApiUrl);
