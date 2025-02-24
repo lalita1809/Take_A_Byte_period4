@@ -130,11 +130,21 @@ permalink: /navigation/about
             if (confirmation === "delete") deleteChef(name);
         }
 
-        function editChef(chef) {
+       function editChef(chef) {
     const form = document.getElementById("add-student-form");
+    const formTitle = document.getElementById("form-title");
+    const saveButton = form.querySelector("button");  // Get the save button
+
+    if (!form || !formTitle || !saveButton) {
+        console.error("Form, title, or save button not found.");
+        return;
+    }
 
     // Change title to indicate editing mode
-    document.getElementById("form-title").textContent = "Edit Chef";
+    formTitle.textContent = "Edit Chef";
+
+    // Update button text to "Save Chef" when editing
+    saveButton.textContent = "Save Chef";
 
     // Populate form fields with existing data
     form.name.value = chef.name;
@@ -143,18 +153,20 @@ permalink: /navigation/about
     form.favorite_color.value = chef.favorite_color;
 
     // Store editing mode using a hidden field
-    if (!document.getElementById("editing-chef-id")) {
-        const hiddenInput = document.createElement("input");
+    let hiddenInput = document.getElementById("editing-chef-id");
+    if (!hiddenInput) {
+        hiddenInput = document.createElement("input");
         hiddenInput.type = "hidden";
         hiddenInput.id = "editing-chef-id";
         hiddenInput.name = "editing-chef-id";
         form.appendChild(hiddenInput);
     }
-    document.getElementById("editing-chef-id").value = chef.name;
+    hiddenInput.value = chef.name;
 
     // Make the form visible (if it's hidden)
     form.style.display = "block";
 }
+
 
         
         async function fetchStudentData(studentName, event) {
@@ -244,13 +256,18 @@ async function addOrUpdateStudent() {
         }
 
         alert(`Chef ${editingName ? 'updated' : 'added'} successfully!`);
-        form.reset();
-        form.style.display = "none";  // Hide form after submission
+
+        // Do NOT reset the form here as it's already filled
+        // form.reset();  // This would clear out the inputs!
+
+        // Hide the form after submission (only if you want it hidden after submission)
+        form.style.display = "none";
 
     } catch (error) {
         alert(error.message);
     }
 }
+
 
 
  </script>
