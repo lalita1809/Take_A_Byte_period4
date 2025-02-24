@@ -98,19 +98,22 @@ permalink: /navigation/about
                 <p><strong>Age:</strong> ${chef.age}</p>
                 <p><strong>Grade:</strong> ${chef.grade}</p>
                 <p><strong>Favorite Color:</strong> ${chef.favorite_color}</p>
-                <button onclick="editChef(${JSON.stringify(chef)})">✏️ Edit</button>
+                <button onclick='editChef(${encodeURIComponent(JSON.stringify(chef))})'>✏️ Edit</button>
                 <button onclick="confirmDeleteChef('${chef.name}')">🗑️ Delete</button>
             `;
             chefDataDiv.style.display = "block";
         }
 
-        function editChef(chef) {
+        function editChef(chefString) {
+            const chef = JSON.parse(decodeURIComponent(chefString));
             document.getElementById("form-title").textContent = "Edit Chef";
+            document.getElementById("editing-chef-id").value = chef.name;
             document.getElementById("name").value = chef.name;
             document.getElementById("age").value = chef.age;
             document.getElementById("grade").value = chef.grade;
             document.getElementById("favorite_color").value = chef.favorite_color;
         }
+
 
         function confirmDeleteChef(name) {
             const confirmation = prompt(`Are you sure? Type 'delete' to confirm deletion of ${name}.`);
