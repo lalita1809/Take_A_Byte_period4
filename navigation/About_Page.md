@@ -1,3 +1,11 @@
+---
+layout: post
+title: About TAB!
+search_exclude: true
+hide: true
+permalink: /navigation/about
+---
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
