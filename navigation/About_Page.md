@@ -198,7 +198,7 @@ permalink: /navigation/about
 
 <!-- Form to Add New Student -->
 <form id="add-student-form">
-    <h2>Add a New Chef</h2>
+    <h2 id="form-title">Add a New Chef</h2>
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" placeholder="Enter Name" required>
 
@@ -252,64 +252,6 @@ async function addOrUpdateStudent() {
     }
 }
 
-
-
-//   async function addStudent() {
-//   const form = document.getElementById('add-student-form');
-//   const name = form.name.value.trim(); // Trim spaces to avoid mismatches
-//   const age = form.age.value;
-//   const grade = form.grade.value;
-//   const favorite_color = form.favorite_color.value;
-
-//   const getApiUrl = `http://127.0.0.1:8887/api/studentGet/`; // API to fetch existing students
-//   const addApiUrl = `http://127.0.0.1:8887/api/student/add`; // API to add a new student
-//   const updateApiUrl = `http://127.0.0.1:8887/api/student/update`; // API to update an existing student
-
-//   let data = [];
-
-//   // Fetch existing students
-//   try {
-//     const response = await fetch(getApiUrl);
-//     if (response.ok) {
-//       data = await response.json(); // Assign the fetched data to the `data` variable
-//     } else {
-//       alert('Failed to fetch student data.');
-//       return;
-//     }
-//   } catch (error) {
-//     alert(`Error fetching student data: ${error.message}`);
-//     return; // Exit early if fetching data fails
-//   }
-
-//   // Check if the student already exists
-//   const existingStudent = data.find((student) => student.name.toLowerCase() === name.toLowerCase());
-
-//   const apiUrl = existingStudent ? updateApiUrl : addApiUrl; // Determine the correct API URL
-//   const method = existingStudent ? 'PUT' : 'POST'; // Use PUT for updates, POST for new entries
-
-//   try {
-//     const response = await fetch(apiUrl, {
-//       method: method,
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({ name, age, grade, favorite_color }),
-//     });
-
-//     if (response.ok) {
-//       const responseData = await response.json();
-//       alert(
-//         `Student ${responseData.name} ${existingStudent ? 'updated' : 'added'} successfully!`
-//       );
-//       form.reset();
-//     } else {
-//       const errorData = await response.json();
-//       alert(`Error: ${errorData.message}`);
-//     }
-//   } catch (error) {
-//     alert(`Error: ${error.message}`);
-//   }
-// }
 
  </script>
  </body>
