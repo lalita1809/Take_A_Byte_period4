@@ -186,78 +186,10 @@ permalink: /navigation/about
 
     <button type="button" onclick="addOrUpdateStudent()">Add Chef</button>
 </form>
-<h2>Delete a Chef</h2>
-<form id="delete-student-form">
-  <label for="name">Name:</label>
-  <input type="text" id="name" name="name" placeholder="Enter Name" required />
 
-  <label for="age">Age:</label>
-  <input type="number" id="age" name="age" placeholder="Enter Age" required />
-
-  <label for="grade">Grade:</label>
-  <input type="text" id="grade" name="grade" placeholder="Enter Grade" required />
-
-  <label for="favorite_color">Favorite Color:</label>
-  <input type="text" id="favorite_color" name="favorite_color" placeholder="Enter Favorite Color" required />
-
-  <button type="button" onclick="deleteStudent()">Delete Student</button>
-</form>
 
 
 <script>
-
-async function deleteStudent() {
-  const form = document.getElementById('delete-student-form');
-  const name = form.name.value.trim(); // Trim spaces to avoid mismatches
-  const age = parseInt(form.age.value); // Convert age to number
-  const grade = form.grade.value;
-  const favorite_color = form.favorite_color.value;
-
-  const getApiUrl = (pythonURI + `/api/studentGet/`); // API to fetch existing students
-  const deleteApiUrl = (pythonURI + `/api/student/delete`); // API to delete a student
-
-  try {
-    // Fetch existing students
-    const response = await fetch(getApiUrl);
-    if (!response.ok) throw new Error('Failed to fetch student data.');
-
-    const data = await response.json();
-
-    // Find the student by name
-    const student = data.find((student) => student.name.toLowerCase() === name.toLowerCase());
-
-   if (!student) {
-     alert(`Student with name "${name}" not found.`);
-     return;
-   }
-
-    // Check if the data matches
-    if (student.age !== age || student.grade !== grade || student.favorite_color !== favorite_color) {
-      alert(`Data mismatch. Please ensure the data matches the student information.`);
-      return;
-    }
-
-    // Send DELETE request to delete the student
-    const deleteResponse = await fetch(deleteApiUrl, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, age, grade, favorite_color }),
-    });
-
-    if (!deleteResponse.ok) {
-      const errorData = await deleteResponse.json();
-      throw new Error(`Error: ${errorData.message}`);
-    }
-
-    const responseData = await deleteResponse.json();
-    alert(`Student ${responseData.name} deleted successfully!`);
-    form.reset();
-
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 
 
 async function addOrUpdateStudent() {
