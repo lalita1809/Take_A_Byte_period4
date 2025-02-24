@@ -137,7 +137,7 @@ permalink: /navigation/about
             const age = document.getElementById("age").value;
             const grade = document.getElementById("grade").value;
             const favorite_color = document.getElementById("favorite_color").value;
-            
+            const editingChefId = document.getElementById("editing-chef-id").value;
             const getApiUrl = `${pythonURI}/api/studentGet/`;
             const addApiUrl = `${pythonURI}/api/student/add`;
             const updateApiUrl = `${pythonURI}/api/student/update`;
@@ -165,6 +165,5 @@ permalink: /navigation/about
         }
     </script>
 </body>
-</html>
 
 
