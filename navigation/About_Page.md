@@ -129,6 +129,15 @@ permalink: /navigation/about
             const confirmation = prompt(`Are you sure? Type 'delete' to confirm deletion of ${name}.`);
             if (confirmation === "delete") deleteChef(name);
         }
+
+        function editChef(chef) {
+            document.getElementById("form-title").textContent = "Edit Chef";
+            document.getElementById("editing-chef-id").value = chef.name;
+            document.getElementById("name").value = chef.name;
+            document.getElementById("age").value = chef.age;
+            document.getElementById("grade").value = chef.grade;
+            document.getElementById("favorite_color").value = chef.favorite_color;
+        }
         
         async function fetchStudentData(studentName, event) {
     // const apiUrl = `http://127.0.0.1:8887/api/studentGet/${studentName}`;
