@@ -6,6 +6,10 @@ hide: true
 permalink: /navigation/about
 ---
 
+<div style="text-align: center;" class="header">
+<h3>Need a bite? Take A Byte! We are an online cookbook with recipies from different cuisines around the world 🌍️ </h3>
+
+<br>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,145 +24,136 @@ permalink: /navigation/about
             margin-top: 50px;
         }
         button {
-            padding: 10px 15px;
+            padding: 10px 20px;
             font-size: 16px;
-            margin: 5px;
+            margin: 10px;
+            background-color: #4CAF50;
+            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
-        .edit-btn {
-            background-color: #ffc107;
+        button:hover {
+            background-color: #0056b3;
         }
-        .delete-btn {
-            background-color: #dc3545;
-            color: white;
-        }
-        #chef-list {
-            margin-top: 20px;
-            width: 300px;
-        }
-        .chef-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
+        #chef-data {
+            position: absolute;
+            display: none;
             border: 1px solid #ddd;
             border-radius: 5px;
-            margin: 5px 0;
-        }
-        #delete-confirmation {
-            display: none;
-            position: fixed;
-            background: white;
-            padding: 20px;
-            border: 2px solid black;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            background: #f9f9f9;
+            padding: 10px;
             text-align: center;
+            max-width: 400px;
+            z-index: 10;
         }
     </style>
 </head>
 <body>
-    <h1>Chef Management</h1>
-    
+    <h1>About The Chefs</h1>
+    <button onclick="fetchChefData()">Generate Chef List</button>
+    <div id="button-container"></div>
+    <div id="chef-data">Click a button to learn about each chef.</div>
+
     <form id="chef-form">
         <h2 id="form-title">Add a New Chef</h2>
-        <input type="hidden" id="edit-mode" value="">
+        <input type="hidden" id="editing-chef" value="">
         <label for="name">Name:</label>
-        <input type="text" id="name" required>
+        <input type="text" id="name" name="name" required>
         <label for="age">Age:</label>
-        <input type="number" id="age" required>
+        <input type="number" id="age" name="age" required>
         <label for="grade">Grade:</label>
-        <input type="text" id="grade" required>
+        <input type="text" id="grade" name="grade" required>
         <label for="favorite_color">Favorite Color:</label>
-        <input type="text" id="favorite_color" required>
-        <button type="button" onclick="addOrUpdateChef()">Submit</button>
+        <input type="text" id="favorite_color" name="favorite_color" required>
+        <button type="button" onclick="addOrUpdateChef()">Add Chef</button>
     </form>
-    
-    <div id="chef-list"></div>
-    
-    <div id="delete-confirmation">
-        <p>Are you sure? Type "delete" to confirm:</p>
-        <input type="text" id="delete-input">
-        <button onclick="confirmDelete()">Confirm</button>
-        <button onclick="closeDeletePopup()">Cancel</button>
-    </div>
-    
+
     <script>
-        let chefs = [];
-        let chefToDelete = null;
-
-        function addOrUpdateChef() {
-            const name = document.getElementById('name').value;
-            const age = document.getElementById('age').value;
-            const grade = document.getElementById('grade').value;
-            const favoriteColor = document.getElementById('favorite_color').value;
-            const editMode = document.getElementById('edit-mode').value;
-
-            if (editMode) {
-                const chef = chefs.find(c => c.name === editMode);
-                chef.age = age;
-                chef.grade = grade;
-                chef.favoriteColor = favoriteColor;
-                document.getElementById('form-title').textContent = 'Add a New Chef';
-                document.getElementById('edit-mode').value = '';
-            } else {
-                chefs.push({ name, age, grade, favoriteColor });
-            }
-
-            document.getElementById('chef-form').reset();
-            renderChefs();
-        }
-
-        function renderChefs() {
-            const list = document.getElementById('chef-list');
-            list.innerHTML = '';
-            chefs.forEach(chef => {
-                const div = document.createElement('div');
-                div.classList.add('chef-item');
-                div.innerHTML = `
-                    <span>${chef.name}</span>
-                    <button class="edit-btn" onclick="editChef('${chef.name}')">✏️</button>
-                    <button class="delete-btn" onclick="showDeletePopup('${chef.name}')">🗑️</button>
-                `;
-                list.appendChild(div);
-            });
-        }
-
-        function editChef(name) {
-            const chef = chefs.find(c => c.name === name);
-            document.getElementById('name').value = chef.name;
-            document.getElementById('age').value = chef.age;
-            document.getElementById('grade').value = chef.grade;
-            document.getElementById('favorite_color').value = chef.favoriteColor;
-            document.getElementById('form-title').textContent = 'Edit a Chef';
-            document.getElementById('edit-mode').value = chef.name;
-        }
-
-        function showDeletePopup(name) {
-            chefToDelete = name;
-            document.getElementById('delete-confirmation').style.display = 'block';
-        }
-
-        function confirmDelete() {
-            const input = document.getElementById('delete-input').value;
-            if (input.toLowerCase() === 'delete') {
-                chefs = chefs.filter(c => c.name !== chefToDelete);
-                chefToDelete = null;
-                document.getElementById('delete-confirmation').style.display = 'none';
-                document.getElementById('delete-input').value = '';
-                renderChefs();
-            } else {
-                alert('Incorrect input. Type "delete" to confirm.');
+        var pythonURI = location.hostname.includes("localhost") || location.hostname.includes("127.0.0.1") ? "http://127.0.0.1:8887" : "https://takeabyte.stu.nighthawkcodingsociety.com";
+        
+        async function fetchChefData() {
+            const apiUrl = `${pythonURI}/api/studentGet/`;
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error("Failed to fetch data");
+                const data = await response.json();
+                const container = document.getElementById('button-container');
+                container.innerHTML = '';
+                data.forEach(chef => {
+                    const chefDiv = document.createElement('div');
+                    chefDiv.innerHTML = `
+                        <button onclick="displayChef(${chef.id})">${chef.name}</button>
+                        <button onclick="editChef(${chef.id})">✏️</button>
+                        <button onclick="confirmDeleteChef(${chef.id})">🗑️</button>
+                    `;
+                    container.appendChild(chefDiv);
+                });
+            } catch (error) {
+                alert(`Error: ${error.message}`);
             }
         }
 
-        function closeDeletePopup() {
-            document.getElementById('delete-confirmation').style.display = 'none';
-            chefToDelete = null;
+        function editChef(chefId) {
+            fetch(`${pythonURI}/api/studentGet/${chefId}`)
+                .then(res => res.json())
+                .then(chef => {
+                    document.getElementById("name").value = chef.name;
+                    document.getElementById("age").value = chef.age;
+                    document.getElementById("grade").value = chef.grade;
+                    document.getElementById("favorite_color").value = chef.favorite_color;
+                    document.getElementById("editing-chef").value = chef.id;
+                    document.getElementById("form-title").textContent = "Edit Chef";
+                });
+        }
+
+        function confirmDeleteChef(chefId) {
+            const confirmation = prompt("Are you sure? Type 'delete' to confirm.");
+            if (confirmation === "delete") deleteChef(chefId);
+        }
+
+        async function deleteChef(chefId) {
+            try {
+                await fetch(`${pythonURI}/api/student/delete`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: chefId })
+                });
+                alert("Chef deleted successfully");
+                fetchChefData();
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        async function addOrUpdateChef() {
+            const form = document.getElementById('chef-form');
+            const chefId = document.getElementById("editing-chef").value;
+            const chefData = {
+                name: form.name.value,
+                age: form.age.value,
+                grade: form.grade.value,
+                favorite_color: form.favorite_color.value
+            };
+            const method = chefId ? 'PUT' : 'POST';
+            const apiUrl = chefId ? `${pythonURI}/api/student/update` : `${pythonURI}/api/student/add`;
+            if (chefId) chefData.id = chefId;
+            
+            try {
+                await fetch(apiUrl, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(chefData)
+                });
+                alert(`Chef ${chefId ? 'updated' : 'added'} successfully!`);
+                form.reset();
+                document.getElementById("form-title").textContent = "Add a New Chef";
+                fetchChefData();
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
         }
     </script>
 </body>
 </html>
+
