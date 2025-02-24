@@ -109,8 +109,8 @@ permalink: /navigation/about
                 <p><strong>Age:</strong> ${data.age}</p>
                 <p><strong>Grade:</strong> ${data.grade}</p>
                 <p><strong>Favorite Color:</strong> ${data.favorite_color}</p>
-                <button onclick='editChef(${JSON.stringify(chef)})'>✏️ Edit</button>
-                <button onclick="confirmDeleteChef('${chef.name}')">🗑️ Delete</button>
+                <button onclick='editChef(${JSON.stringify(data)})'>✏️ Edit</button>
+                <button onclick="confirmDeleteChef('${data.name}')">🗑️ Delete</button>
             `;
 
         // Position the div under the clicked button
