@@ -357,7 +357,7 @@ async function editRecipe(recipe) {
         <label for="instructions">Instructions:</label>
         <textarea id="instructions" required readonly>${recipe.instructions}</textarea>
         <button onclick="submitEdit(${recipe.id})">Submit Changes</button>
-        <button onclick="closeEditForm()">Cancel</button>
+        <button onclick="closeEditForm()">Close</button>
     `;
     
     const formContainer = document.getElementById('stored-recipes');
