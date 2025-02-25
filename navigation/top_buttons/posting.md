@@ -12,7 +12,7 @@ permalink: /navigation/buttons/posting
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background:rgb(146, 160, 219);
+            background:rgb(244, 246, 255);
             margin: 20px;
             color: #333;
             display: flex;
@@ -22,19 +22,19 @@ permalink: /navigation/buttons/posting
             max-width: 700px;
             width: 100%;
             padding: 20px;
-            background:rgb(184, 204, 235);
+            background:rgb(224, 229, 237);
             border-radius: 20px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             text-align: center;
         }
         .post { border-bottom: 1px solid #ddd; padding: 10px 0; }
         h1, h2 {
-            color:rgb(45, 53, 110);
+            color:rgb(26, 26, 28);
             font-family: 'Pacifico', cursive;
             margin-bottom: 15px;
         }
         button {
-            background-color:rgb(72, 70, 135);
+            background-color:rgb(109, 107, 147);
             color: white;
             padding: 12px 18px;
             border: none;
@@ -67,7 +67,7 @@ permalink: /navigation/buttons/posting
             display: none; 
         }
         .post a {
-            color:rgb(38, 34, 87); /* Change to any color you prefer */
+            color:rgb(44, 41, 84); /* Change to any color you prefer */
             font-size: 18px; /* Adjust size as needed */
             text-decoration: none;
             font-weight: bold;
