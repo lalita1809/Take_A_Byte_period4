@@ -185,7 +185,7 @@ permalink: /navigation/about
             <input type="text" id="edit-grade" name="edit-grade" value="${chef.grade}" required>
 
             <label for="edit-favorite-dish">Favorite Dish:</label>
-            <input type="text" id="edit-favorite-color" name="edit-favorite-color" value="${chef.favorite_color}" required>
+            <input type="text" id="edit-favorite-dish" name="edit-favorite-dish" value="${chef.favorite_dish}" required>
 
             <button type="button" onclick="updateChef('${chef.name}')">Save Changes</button>
         </form>
