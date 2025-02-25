@@ -600,6 +600,19 @@ hide: true
         .recipe-wrapper .container {
             padding: 10px;
         }
+        .discover-more-button {
+          display: inline-block;
+          margin-top: 10px;
+          padding: 10px 15px;
+          background-color: #007BFF;
+          color: white;
+          text-decoration: none;
+          border-radius: 5px;
+          font-size: 1rem;
+      }
+      .discover-more-button:hover {
+          background-color: #0056b3;
+      }
     </style>
 </head>
 
@@ -619,57 +632,51 @@ hide: true
         <label for="comments">Comments:</label>
         <textarea id="comments" placeholder="Enter your comments" required></textarea>
         <button type="submit">Post Recipe</button>
+        <button type="button" onclick="window.location.href='/flocker_frontend_period4/navigation/buttons/posting';">Go to Posts</button>
         </form>
         <div id="postsContainer">
         </div>
     </div>
 
 
-<style>
-    .discover-more-button {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 15px;
-    background-color: #007BFF;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 1rem;
-}
+  <script>
+      var pythonURI;
+      if (location.hostname === "localhost") {
+        pythonURI = "http://localhost:8887";
+      } else if (location.hostname === "127.0.0.1") {
+        pythonURI = "http://127.0.0.1:8887";
+      } else {
+        pythonURI = "https://takeabyte.stu.nighthawkcodingsociety.com";
+      }
 
-.discover-more-button:hover {
-    background-color: #0056b3;
-}
-</style>
+      document.getElementById("recipeForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
 
-<script>
-    document.getElementById("recipeForm").addEventListener("submit", function (e) {
-    e.preventDefault();
+        const name = document.getElementById("name").value;
+        const dish = document.getElementById("dish").value;
+        const cuisine = document.getElementById("cuisine").value;
+        const link = document.getElementById("link").value;
+        const comments = document.getElementById("comments").value;
 
-    // Get form inputs
-    const name = document.getElementById("name").value;
-    const dish = document.getElementById("dish").value;
-    const cuisine = document.getElementById("cuisine").value;
-    const link = document.getElementById("link").value;
-    const comments = document.getElementById("comments").value;
+        const post = { name, dish, cuisine, link, comments };
 
-    // Create a post object
-    const post = { name, dish, cuisine, link, comments };
+        try {
+          const response = await fetch(pythonURI + "/api/posting/create", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(post)
+          });
 
-    // Retrieve existing posts from localStorage
-    const posts = JSON.parse(localStorage.getItem("posts")) || [];
-
-    // Add the new post
-    posts.push(post);
-
-    // Save back to localStorage
-    localStorage.setItem("posts", JSON.stringify(posts));
-
-    // Display confirmation message
-    const formContainer = document.querySelector(".container");
-    formContainer.innerHTML = 
-        <p>Your recipe has been posted!</p>
-        <p><a href="{{site.baseurl}}/navigation/buttons/posting" class="discover-more-button">Discover More</a></p>
-    ;
-    });
-  </script>
+          if (response.ok) {
+            document.querySelector(".container").innerHTML = `
+              <p>Your recipe has been posted!</p>
+              <p><a href="/flocker_frontend_period4/navigation/buttons/posting" class="discover-more-button">Discover More</a></p>
+            `;
+          } else {
+            alert("Error posting recipe.");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      });
+    </script>

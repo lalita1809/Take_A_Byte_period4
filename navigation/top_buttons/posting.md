@@ -7,57 +7,93 @@ permalink: /navigation/buttons/posting
 ---
 
 
-
 <head>
     <title>Recipe Posts</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #fdfdfd; margin: 20px; }
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background:rgb(146, 160, 219);
+            margin: 20px;
+            color: #333;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 700px;
+            width: 100%;
+            padding: 20px;
+            background:rgb(184, 204, 235);
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
         .post { border-bottom: 1px solid #ddd; padding: 10px 0; }
-        h1, h2 { text-align: center; color: #333; }
-        button { background-color: #007BFF; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; }
-        button:hover { background-color: #0056b3; }
-        .delete-button { background-color: #dc3545; }
-        .delete-button:hover { background-color: #a71d2a; }
-        .edit-button { background-color: #28a745; }
-        .edit-button:hover { background-color: #218838; }
-        #all-posts-section { margin-top: 30px; }
-        body { font-family: Arial, sans-serif; background: #fdfdfd; margin: 20px; }
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .post { border-bottom: 1px solid #ddd; padding: 10px 0; }
-        h1, h2 { text-align: center; color: #333; }
-        button { background-color: #007BFF; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; }
-        button:hover { background-color: #0056b3; }
-        .delete-button { background-color: #dc3545; }
-        .delete-button:hover { background-color: #a71d2a; }
-        .edit-button { background-color: #28a745; }
-        .edit-button:hover { background-color: #218838; }
-        #all-posts-section { margin-top: 30px; }
+        h1, h2 {
+            color:rgb(45, 53, 110);
+            font-family: 'Pacifico', cursive;
+            margin-bottom: 15px;
+        }
+        button {
+            background-color:rgb(72, 70, 135);
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        button:hover {
+            transform: scale(1.05);
+            background-color:rgb(169, 172, 230);
+        }
+        .delete-button {
+            background-color:rgb(186, 108, 94);
+        }
+        .delete-button:hover {
+            background-color:rgb(137, 60, 27);
+        }
+        .edit-button {
+            background-color:rgb(168, 225, 168);
+        }
+        .edit-button:hover {
+            background-color:rgb(103, 164, 133);
+        }
+        #all-posts-section {
+            margin-top: 30px;
+        }
+        .edit-fields {
+            display: none; 
+        }
+        .post a {
+            color:rgb(38, 34, 87); /* Change to any color you prefer */
+            font-size: 18px; /* Adjust size as needed */
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            margin-top: 5px;
+        }
+        .post a:hover {
+            text-decoration: underline;
+            color:rgb(173, 173, 229); /* Change hover color */
+        }
     </style>
 </head>
 
-
 <body>
+
 <div class="container">
-    <h1>Post a Recipe</h1>
-    <form id="recipeForm">
-        <p><label>Name: <input type="text" id="name" required></label></p>
-        <p><label>Dish: <input type="text" id="dish" required></label></p>
-        <p><label>Cuisine: <input type="text" id="cuisine" required></label></p>
-        <p><label>Link: <input type="url" id="link" required></label></p>
-        <p><label>Comments: <textarea id="comments" required></textarea></label></p>
-        <p><button type="submit">Submit Recipe</button></p>
-    </form>
-    <div id="posting-data">Click a button to see recipes</div>
-</div>
-<!-- All Posts Section -->
-<div id="all-posts-section">
-    <h2>All Posts</h2>
-    <div id="postsContainer"></div>
-</div>
+    <h1>All Posts</h1>
+    <div id="all-posts-section">
+        <h2>Recipes</h2>
+        <div id="postsContainer"></div>
+    </div>
+<br>
+<button onclick="window.location.href='https://lalita1809.github.io/flocker_frontend_period4/'">Back to Home</button>
+
 
 <script>
-
     var pythonURI;
     if (location.hostname === "localhost") {
         pythonURI = "http://localhost:8887";
@@ -67,126 +103,117 @@ permalink: /navigation/buttons/posting
         pythonURI = "https://takeabyte.stu.nighthawkcodingsociety.com";
     }
 
-document.getElementById("recipeForm").addEventListener("submit", async function (event) {
-    event.preventDefault();
+    async function fetchPosts() {
+        try {
+            const response = await fetch(pythonURI + "/api/posting/reading");
+            const posts = await response.json();
+            const postsContainer = document.getElementById("postsContainer");
+            postsContainer.innerHTML = "";
 
-    const newPost = {
-        name: document.getElementById("name").value,
-        dish: document.getElementById("dish").value,
-        cuisine: document.getElementById("cuisine").value,
-        link: document.getElementById("link").value,
-        comments: document.getElementById("comments").value
-    };
+            if (!posts || posts.length === 0) {
+                postsContainer.innerHTML = "<p>No recipes posted yet.</p>";
+                return;
+            }
 
-    try {
-        const response = await fetch(pythonURI + "/api/posting/create", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newPost)
-        });
-
-        if (response.ok) {
-            alert("Recipe Posted Successfully!");
-            document.getElementById("recipeForm").reset();
-            fetchPosts();
-        } else {
-            alert("Error Posting Recipe.");
-        }
-    } catch (error) {
-        console.error("Error:", error);
-    }
-});
-
-async function fetchPosts() {
-    try {
-        const response = await fetch(pythonURI + "/api/posting/reading");
-        const posts = await response.json();
-        console.log(posts);  // Log the response to verify its structure
-        const postsContainer = document.getElementById("postsContainer");
-        postsContainer.innerHTML = ""; // Clear the current content
-
-        if (!posts || posts.length === 0) {
-            postsContainer.innerHTML = "<p>No recipes posted yet.</p>";
-            return;
-        }
-        else {
             posts.forEach(post => {
                 const postElement = document.createElement("div");
                 postElement.classList.add("post");
                 postElement.innerHTML = `
                     <p><strong>Name:</strong> ${post.name}</p>
-                    <p><strong>Dish:</strong> ${post.dish}</p>
-                    <p><strong>Cuisine:</strong> ${post.cuisine}</p>
-                    <p><strong>Link:</strong> <a href="${post.link}" target="_blank">${post.link}</a></p>
-                    <p><strong>Comments:</strong> ${post.comments}</p>
-                    <button class="edit-button" onclick="editPost('${post.name}')">Edit</button>
+                    <p><strong>Dish:</strong> <span class="post-dish">${post.dish}</span></p>
+                    <p><strong>Cuisine:</strong> <span class="post-cuisine">${post.cuisine}</span></p>
+                    <p><strong>Link:</strong> <a class="post-link" href="${post.link}" target="_blank">${post.link}</a></p>
+                    <p><strong>Comments:</strong> <span class="post-comments">${post.comments}</span></p>
+                    <div class="edit-fields">
+                        <input type="text" class="edit-dish" value="${post.dish}">
+                        <input type="text" class="edit-cuisine" value="${post.cuisine}">
+                        <input type="url" class="edit-link" value="${post.link}">
+                        <textarea class="edit-comments">${post.comments}</textarea>
+                        <button onclick="saveEdit('${post.name}', this)">Save</button>
+                    </div>
+                    <button class="edit-button" onclick="toggleEdit(this)">Edit</button>
                     <button class="delete-button" onclick="deletePost('${post.name}')">Delete</button>
                 `;
                 postsContainer.appendChild(postElement);
             });
+        } catch (error) {
+            console.error("Error fetching posts:", error);
         }
-    } catch (error) {
-        console.error("Error fetching posts:", error);
     }
-}
 
-// Edit a post
-async function editPost(name) {
-    const dish = prompt("Enter new dish:");
-    const cuisine = prompt("Enter new cuisine:");
-    const link = prompt("Enter new link:");
-    const comments = prompt("Enter new comments:");
-
-    const updatedPost = { name, dish, cuisine, link, comments };
-
-    try {
-        const response = await fetch(pythonURI + `/api/posting/update/`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updatedPost)
-        });
-
-        if (response.ok) {
-            alert("Recipe updated successfully!");
-            fetchPosts(); // Reload posts after updating
-        } else {
-            alert("Error updating recipe.");
-        }
-    } catch (error) {
-        console.error("Error:", error);
+    function toggleEdit(button) {
+        const postElement = button.parentElement;
+        const displayFields = postElement.querySelectorAll(".post-dish, .post-cuisine, .post-link, .post-comments");
+        const editFields = postElement.querySelector(".edit-fields");
+        
+        displayFields.forEach(field => field.style.display = "none");
+        editFields.style.display = "block";
     }
-}
 
-// Delete a post
-async function deletePost(name) {
-    if (confirm("Are you sure you want to delete this post?")) {
+    async function saveEdit(name, button) {
+        const postElement = button.parentElement.parentElement;
+        const updatedPost = {
+            name: name,
+            dish: postElement.querySelector(".edit-dish").value,
+            cuisine: postElement.querySelector(".edit-cuisine").value,
+            link: postElement.querySelector(".edit-link").value,
+            comments: postElement.querySelector(".edit-comments").value
+        };
+
         try {
-            const response = await fetch(pythonURI + `/api/posting/delete`, {
-                method: "DELETE",
+            const response = await fetch(pythonURI + `/api/posting/update/`, {
+                method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name: name }) // Pass the name in the body
+                body: JSON.stringify(updatedPost)
             });
 
             if (response.ok) {
-                alert("Recipe deleted!");
-                fetchPosts(); // Reload posts after deletion
+                alert("Recipe updated successfully!");
+                fetchPosts();
             } else {
-                alert("Error deleting recipe.");
+                alert("Error updating recipe.");
             }
         } catch (error) {
             console.error("Error:", error);
         }
     }
-}
 
-// Load posts initially
-fetchPosts();
+    async function deletePost(name) {
+        if (confirm("Are you sure you want to delete this post?")) {
+            try {
+                const response = await fetch(pythonURI + `/api/posting/delete`, {
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name: name }) // Pass the name in the body
+                });
+
+                if (response.ok) {
+                    alert("Recipe deleted!");
+                    fetchPosts(); // Reload posts after deletion
+                } else {
+                    alert("Error deleting recipe.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+    }
+    fetchPosts();
 </script>
-</body>
 
 
 
 
+
+
+
+
+
+
+
+
+
+<!-- 
 <br><br>
 <head>
     <title>Fetch Post Data</title>
@@ -223,17 +250,17 @@ fetchPosts();
             z-index: 10;
         }
     </style>
-</head>
+</head> -->
 
 
 
-
+<!-- 
 <body>
     <h4>Static users</h4>
     <button onclick="fetchStaticPosting('martha', event)">Martha</button>
     <button onclick="fetchStaticPosting('wayne', event)">Wayne</button>
     <!-- <div id="posting-data" style="display: none;">
-    </div>-->
+    </div>
     <script>
         console.log("Script loaded! fetchPostingData function should be available.");
         async function fetchStaticPosting(posterName, event) {
@@ -265,48 +292,7 @@ fetchPosts();
             }
         }
     </script>
-</body>
-
-
-<!-- Testing static data:
-<body>
-    <h4>From database</h4>
-    <button onclick="fetchDBPosting('Martha', event)">Martha (DB)</button>
-    <button onclick="fetchDBPosting('Wayne', event)">Wayne (DB)</button>
-    <div id="posting-data">Click a button to see recipes</div>
-    <script>
-        async function fetchDBPosting(posterName, event) {
-            const apiUrl = `http://127.0.0.1:8887/api/posting/read/${posterName}`; // Ensure correct API port
-            await fetchData(apiUrl, posterName, event);
-        }
-        async function fetchData(apiUrl, posterName, event) {
-            try {
-                const response = await fetch(apiUrl);
-                if (!response.ok) {
-                    throw new Error(`Could not fetch data for ${posterName}`);
-                }
-                const data = await response.json();
-                const postingDataDiv = document.getElementById('posting-data');
-                postingDataDiv.innerHTML = `
-                    <h2>${data.name}</h2>
-                    <p><strong>Dish:</strong> ${data.dish}</p>
-                    <p><strong>Cuisine:</strong> ${data.cuisine}</p>
-                    <p><strong>Link:</strong> <a href="${data.link}" target="_blank">${data.link}</a></p>
-                    <p><strong>Comments:</strong> ${data.comments}</p>
-                `;
-                const buttonRect = event.target.getBoundingClientRect();
-                postingDataDiv.style.position = 'absolute';
-                postingDataDiv.style.top = `${buttonRect.bottom + window.scrollY}px`;
-                postingDataDiv.style.left = `${buttonRect.left + window.scrollX}px`;
-                postingDataDiv.style.display = 'block';
-            } catch (error) {
-                document.getElementById('posting-data').innerText = `Error: ${error.message}`;
-                document.getElementById('posting-data').style.display = 'block';
-            }
-        }
-    </script>
 </body> -->
-
 
 
 <!-- Testing static data:
