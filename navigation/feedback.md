@@ -6,7 +6,7 @@ hide: true
 permalink: /navigation/feedback
 ---
 <div style="text-align: center;" class="header">
-<h3>Give us your feedback! 💬 Share your thoughts about the recipes and post reviews! 🍴</h3>
+<h3 style="margin-top: 50px;">Give us your feedback! 💬 Share your thoughts about the recipes and post reviews! 🍴</h3>
 
 <br>
 
@@ -69,7 +69,7 @@ permalink: /navigation/feedback
     </style>
 </head>
 <body>
-    <h1>Feedback Page</h1>
+    <h1 style="margin-top: 100px;">Feedback Page</h1>
     <button onclick="fetchFeedbackData(event)">Show Feedback</button>
     
 <div id="feedback-container"></div>
