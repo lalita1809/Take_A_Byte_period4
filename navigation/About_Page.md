@@ -108,7 +108,7 @@ permalink: /navigation/about
                 <h2>${data.name}</h2>
                 <p><strong>Age:</strong> ${data.age}</p>
                 <p><strong>Grade:</strong> ${data.grade}</p>
-                <p><strong>Favorite Color:</strong> ${data.favorite_color}</p>
+                <p><strong>Favorite Dish:</strong> ${data.favorite_dish}</p>
                 <button onclick='showEditForm(${JSON.stringify(data)})'>✏️ Edit</button>
                 <button onclick="confirmDeleteChef('${data.name}')">🗑️ Delete</button>
             `;
@@ -150,7 +150,7 @@ permalink: /navigation/about
     form.name.value = chef.name;
     form.age.value = chef.age;
     form.grade.value = chef.grade;
-    form.favorite_color.value = chef.favorite_color;
+    form.favorite_dish.value = chef.favorite_dish;
 
     // Store editing mode using a hidden field
     let hiddenInput = document.getElementById("editing-chef-id");
@@ -184,7 +184,7 @@ permalink: /navigation/about
             <label for="edit-grade">Grade:</label>
             <input type="text" id="edit-grade" name="edit-grade" value="${chef.grade}" required>
 
-            <label for="edit-favorite-color">Favorite Color:</label>
+            <label for="edit-favorite-dish">Favorite Dish:</label>
             <input type="text" id="edit-favorite-color" name="edit-favorite-color" value="${chef.favorite_color}" required>
 
             <button type="button" onclick="updateChef('${chef.name}')">Save Changes</button>
@@ -248,8 +248,8 @@ permalink: /navigation/about
     <label for="grade">Grade:</label>
     <input type="text" id="grade" name="grade" placeholder="Enter Grade" required>
 
-    <label for="favorite_color">Favorite Color:</label>
-    <input type="text" id="favorite_color" name="favorite_color" placeholder="Enter Favorite Color" required>
+    <label for="favorite_dish">Favorite Dish:</label>
+    <input type="text" id="favorite_dish" name="favorite_dish" placeholder="Enter Favorite Dish" required>
 
     <button type="button" onclick="addOrUpdateStudent()">Add Chef</button>
 </form>
@@ -268,7 +268,7 @@ async function addOrUpdateStudent() {
     const name = form.name.value.trim();
     const age = form.age.value;
     const grade = form.grade.value;
-    const favorite_color = form.favorite_color.value;
+    const favorite_dish = form.favorite_dish.value;
 
     const isEditing = document.getElementById("editing-chef-id");
     const editingName = isEditing ? isEditing.value : null;
@@ -280,7 +280,7 @@ async function addOrUpdateStudent() {
         const response = await fetch(apiUrl, {
             method: method,
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, age, grade, favorite_color }),
+            body: JSON.stringify({ name, age, grade, favorite_dish }),
         });
 
         if (!response.ok) {
@@ -305,7 +305,7 @@ async function addOrUpdateStudent() {
     const name = form["edit-name"].value.trim();
     const age = form["edit-age"].value;
     const grade = form["edit-grade"].value;
-    const favorite_color = form["edit-favorite-color"].value;
+    const favorite_dish = form["edit-favorite-dish"].value;
 
     const apiUrl = `${pythonURI}/api/student/update`;
 
@@ -313,7 +313,7 @@ async function addOrUpdateStudent() {
         const response = await fetch(apiUrl, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, age, grade, favorite_color }),
+            body: JSON.stringify({ name, age, grade, favorite_dish }),
         });
 
         if (!response.ok) {
