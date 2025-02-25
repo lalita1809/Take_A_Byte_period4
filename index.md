@@ -329,21 +329,45 @@ hide: true
       }
     </style>
 </body>
+
+
 </html>
 
-<h3 style="text-align: center;"> 
-    <a class="aboutButton" href="{{site.baseurl}}/navigation/about">About page</a>
+<style>
+    .nav-links {
+        display: grid;
+        grid-template-columns: repeat(2, auto); /* Two columns */
+        grid-template-rows: repeat(2, auto); /* Two rows */
+        gap: 10px;
+        justify-content: center;
+        margin: 20px 0;
+    }
 
-    
-<h3 style="text-align: center;"> 
-    <a class="aboutButton" href="{{site.baseurl}}/natcountrygen">Regional Dishes Generator</a>
+    .nav-links h3 {
+        margin: 0;
+    }
 
-<h3 style="text-align: center;"> 
-    <a class="aboutButton" href="{{site.baseurl}}/navigation/buttons/posting">User Posts</a>
+    .nav-links a {
+        font-size: 12px;
+        padding: 6px 12px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        display: inline-block;
+    }
 
-<h3 style="text-align: center;"> 
-    <a class="aboutButton" href="{{site.baseurl}}/navigation/feedback">User Experience</a>
+    .nav-links a:hover {
+        background-color: #45a049;
+    }
+</style>
 
+<div class="nav-links">
+    <h3><a href="{{site.baseurl}}/navigation/about">About page</a></h3>
+    <h3><a href="{{site.baseurl}}/natcountrygen">Regional Dishes Generator</a></h3>
+    <h3><a href="{{site.baseurl}}/navigation/buttons/posting">User Posts</a></h3>
+    <h3><a href="{{site.baseurl}}/navigation/feedback">User Experience</a></h3>
+</div>
 
 <head>
     <meta charset="UTF-8">
@@ -534,16 +558,17 @@ hide: true
   <style>
         /* Wrapper to isolate the container */
         .recipe-wrapper {
-        position: absolute; /* Position the container */
-        top: 50%; /* Center vertically */
-        left: 20px; 
-        transform: translateY(-50%); /* Adjust for vertical centering */
-        padding: 30px;
-        max-width: 700px;
+        position: absolute;
+        top: 65%; /* Reduced from 70% to move it higher */
+        left: 20px;
+        transform: translateY(-50%);
+        padding: 15px;
+        max-width: 400px;
         background-color: #f4f4f9;
         border: 1px solid #ddd;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-size: 12px;
         }
         body {
         margin: 0;
@@ -562,7 +587,20 @@ hide: true
         font-weight: bold;
         color: #333;
         }
-  </style>
+        .recipe-wrapper h1 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .recipe-wrapper input,
+        .recipe-wrapper textarea {
+            width: 90%;
+            padding: 5px;
+            margin-bottom: 8px;
+        }
+        .recipe-wrapper .container {
+            padding: 10px;
+        }
+    </style>
 </head>
 
 <body>
