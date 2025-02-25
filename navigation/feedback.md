@@ -70,7 +70,7 @@ permalink: /navigation/feedback
 </head>
 <body>
     <h1>Feedback Page</h1>
-    <button onclick="fetchFeedbackData(event)"> POST </button>
+    <button onclick="fetchFeedbackData(event)">Show Feedback</button>
     
 <div id="feedback-container"></div>
 
@@ -108,7 +108,7 @@ permalink: /navigation/feedback
                     // Create feedback buttons dynamically
                     data.forEach((feedback) => {
                         const button = document.createElement('button');
-                        button.textContent = `${feedback.name}: ${feedback.written_feedback.substring(0, 30)}...`;
+                        button.textContent = `${feedback.recipe}: ${feedback.written_feedback.substring(0, 30)}...`;
                         button.onclick = () => displayFeedbackDetails(feedback);
                         container.appendChild(button);
                     });
@@ -123,17 +123,18 @@ permalink: /navigation/feedback
         function displayFeedbackDetails(feedback) {
             const feedbackDataDiv = document.getElementById('feedback-data');
             feedbackDataDiv.style.display = 'block';
-            const stars = (feedback.stars !== undefined && feedback.stars !== null) ? feedback.stars : "No Rating";
-
             feedbackDataDiv.innerHTML = `
-                <h3>${feedback.name}</h3>
+                <h3>${feedback.recipe}</h3>
                 <p><strong>Feedback:</strong> ${feedback.written_feedback}</p>
                 <p><strong>Name:</strong> ${feedback.name}</p>
-                <p><strong>Stars:</strong> ${stars} ⭐</p>
+                <p><strong>Cuisine:</strong> ${feedback.cuisine}</p>
+                <p><strong>Thumbs Up:</strong> ${feedback.thumbs_up}</p>
+                <p><strong>Thumbs Down:</strong> ${feedback.thumbs_down}</p>
                 <button onclick="deleteFeedback('${feedback.name}')">Delete Feedback</button>
                 <button onclick="editFeedback('${feedback.name}', '${feedback.written_feedback}')">Edit Feedback</button>
             `;
         }
+
         async function deleteFeedback(feedbackId) {
             try {
                 const response = await fetch(pythonURI + '/api/feedback/delete', {
@@ -192,8 +193,17 @@ permalink: /navigation/feedback
         <label for="name">Your Name:</label>
         <input type="text" id="name" name="name" placeholder="Enter your name" required>
 
-<label for="stars">Stars:</label>
-        <input type="number" id="stars" name="stars" placeholder="Stars" required>
+<label for="cuisine">Cuisine:</label>
+        <input type="text" id="cuisine" name="cuisine" placeholder="Enter the cuisine" required>
+
+<label for="recipe">Recipe Name:</label>
+        <input type="text" id="recipe" name="recipe" placeholder="Enter the recipe name" required>
+
+<label for="thumbs_up">Thumbs Up:</label>
+        <input type="number" id="thumbs_up" name="thumbs_up" placeholder="Thumbs up" required>
+
+<label for="thumbs_down">Thumbs Down:</label>
+        <input type="number" id="thumbs_down" name="thumbs_down" placeholder="Thumbs down" required>
 
 <label for="written_feedback">Written Feedback:</label>
         <textarea id="written_feedback" name="written_feedback" placeholder="Enter your feedback" required></textarea>
@@ -205,10 +215,13 @@ permalink: /navigation/feedback
     async function addFeedback() {
         const form = document.getElementById('add-feedback-form');
         const name = form.name.value.trim();
-        const stars = parseInt(form.stars.value.trim());  // Convert to number
+        const cuisine = form.cuisine.value.trim();
+        const recipe = form.recipe.value.trim();
+        const thumbs_up = parseInt(form.thumbs_up.value.trim());  // Convert to number
+        const thumbs_down = parseInt(form.thumbs_down.value.trim());  // Convert to number
         const written_feedback = form.written_feedback.value.trim();
 
-        if (!name || isNaN(stars) || !written_feedback) {
+        if (!name || !cuisine || !recipe || isNaN(thumbs_up) || isNaN(thumbs_down) || !written_feedback) {
             alert('Please fill all fields correctly');
             return;
         }
@@ -223,7 +236,10 @@ permalink: /navigation/feedback
                 },
                 body: JSON.stringify({
                     name: name,
-                    stars: stars,
+                    cuisine: cuisine,
+                    recipe: recipe,
+                    thumbs_up: thumbs_up,
+                    thumbs_down: thumbs_down,
                     written_feedback: written_feedback
                 })
             });
