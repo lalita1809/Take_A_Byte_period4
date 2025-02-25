@@ -140,7 +140,7 @@ permalink: /navigation/about
         return;
     }
                
-         function deleteChef(name) {
+        async function deleteChef(name) {
     const apiUrl = `${pythonURI}/api/student/delete`;
 
     try {
