@@ -317,7 +317,7 @@ async function addOrUpdateStudent() {
         // form.reset();  // This would clear out the inputs!
 
         // Hide the form after submission (only if you want it hidden after submission)
-        form.style.display = "none";
+        // form.style.display = "none";
 
     } catch (error) {
         alert(error.message);
