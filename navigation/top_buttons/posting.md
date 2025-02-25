@@ -22,19 +22,32 @@ permalink: /navigation/buttons/posting
             max-width: 700px;
             width: 100%;
             padding: 20px;
-            background:rgb(224, 229, 237);
+            background:rgb(77, 171, 99);  /* Changed to green */
             border-radius: 20px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             text-align: center;
+            margin: 0 auto;  /* Center the container */
         }
-        .post { border-bottom: 1px solid #ddd; padding: 10px 0; }
+        .post { 
+            border-bottom: 1px solid #ddd; 
+            padding: 20px 0;  /* Increased padding */
+            margin: 20px 0;   /* Added margin between posts */
+            background: rgb(245, 248, 245);  /* Light green background */
+            border-radius: 10px;  /* Rounded corners */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);  /* Subtle shadow */
+        }
+        .post p {
+            font-size: 18px;  /* Increased font size */
+            margin: 12px 0;   /* Added spacing between lines */
+        }
         h1, h2 {
             color:rgb(26, 26, 28);
             font-family: 'Pacifico', cursive;
-            margin-bottom: 15px;
+            margin-bottom: 25px;  /* Increased margin */
+            font-size: 2.5em;     /* Increased font size */
         }
         button {
-            background-color:rgb(109, 107, 147);
+            background-color:rgb(4, 201, 50);
             color: white;
             padding: 12px 18px;
             border: none;
@@ -46,7 +59,7 @@ permalink: /navigation/buttons/posting
         }
         button:hover {
             transform: scale(1.05);
-            background-color:rgb(169, 172, 230);
+            background-color:rgb(5, 174, 104);
         }
         .delete-button {
             background-color:rgb(186, 108, 94);
@@ -200,15 +213,6 @@ permalink: /navigation/buttons/posting
     }
     fetchPosts();
 </script>
-
-
-
-
-
-
-
-
-
 
 
 
