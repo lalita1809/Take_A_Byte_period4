@@ -210,12 +210,12 @@ hide: true
     <style>
       .FridgeButton {
         display: inline-block;
-        width: 200px;
-        height: 300px;
+        width: 250px;    /* Reduced from 300px to 250px */
+        height: 500px;    /* Reduced from 600px to 500px */
         text-decoration: none;
         position: absolute;
         right: 20px;
-        top: 250px;          /* Changed from 150px to 250px to move it down */
+        top: 150px;
         transition: all 0.3s ease;
         transform-style: preserve-3d;
         perspective: 1000px;
@@ -563,7 +563,7 @@ hide: true
         left: 20px;
         transform: translateY(-50%);
         padding: 15px;
-        max-width: 400px;
+        max-width: 300px;  /* Reduced from 400px to 300px */
         background-color: #f4f4f9;
         border: 1px solid #ddd;
         border-radius: 10px;
