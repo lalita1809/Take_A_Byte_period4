@@ -139,7 +139,8 @@ permalink: /navigation/about
         console.error("Form, title, or save button not found.");
         return;
     }
-        async function deleteChef(name) {
+               
+         function deleteChef(name) {
     const apiUrl = `${pythonURI}/api/student/delete`;
 
     try {
