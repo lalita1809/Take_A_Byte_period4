@@ -139,6 +139,30 @@ permalink: /navigation/about
         console.error("Form, title, or save button not found.");
         return;
     }
+        async function deleteChef(name) {
+    const apiUrl = `${pythonURI}/api/student/delete`;
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name }),
+        });
+
+        if (!response.ok) {
+            throw new Error("Error deleting chef.");
+        }
+
+        alert(`Chef ${name} deleted successfully!`);
+
+        // Optionally, refresh the student list after deletion
+        fetchStudentData();
+
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
 
     // Change title to indicate editing mode
     formTitle.textContent = "Edit Chef";
