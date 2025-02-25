@@ -109,7 +109,7 @@ permalink: /navigation/about
                 <p><strong>Age:</strong> ${data.age}</p>
                 <p><strong>Grade:</strong> ${data.grade}</p>
                 <p><strong>Favorite Color:</strong> ${data.favorite_color}</p>
-                <button onclick='editChef(${JSON.stringify(data)})'>✏️ Edit</button>
+                <button onclick='showEditForm(${JSON.stringify(data)})'>✏️ Edit</button>
                 <button onclick="confirmDeleteChef('${data.name}')">🗑️ Delete</button>
             `;
 
@@ -165,6 +165,34 @@ permalink: /navigation/about
 
     // Make the form visible (if it's hidden)
     form.style.display = "block";
+}
+
+
+        function showEditForm(chef) {
+    const editContainer = document.getElementById("edit-container");
+    
+    // Create a new form for editing
+    editContainer.innerHTML = `
+        <form id="edit-chef-form">
+            <h2>Edit Chef</h2>
+            <label for="edit-name">Name:</label>
+            <input type="text" id="edit-name" name="edit-name" value="${chef.name}" required>
+
+            <label for="edit-age">Age:</label>
+            <input type="number" id="edit-age" name="edit-age" value="${chef.age}" required>
+
+            <label for="edit-grade">Grade:</label>
+            <input type="text" id="edit-grade" name="edit-grade" value="${chef.grade}" required>
+
+            <label for="edit-favorite-color">Favorite Color:</label>
+            <input type="text" id="edit-favorite-color" name="edit-favorite-color" value="${chef.favorite_color}" required>
+
+            <button type="button" onclick="updateChef('${chef.name}')">Save Changes</button>
+        </form>
+    `;
+
+    // Make sure the form is visible
+    editContainer.style.display = "block";
 }
 
 
@@ -226,6 +254,10 @@ permalink: /navigation/about
     <button type="button" onclick="addOrUpdateStudent()">Add Chef</button>
 </form>
 
+<!-- Container for Edit Form -->
+<div id="edit-container"></div>
+
+
 
 
 <script>
@@ -262,6 +294,36 @@ async function addOrUpdateStudent() {
 
         // Hide the form after submission (only if you want it hidden after submission)
         form.style.display = "none";
+
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
+        async function updateChef(originalName) {
+    const form = document.getElementById("edit-chef-form");
+    const name = form["edit-name"].value.trim();
+    const age = form["edit-age"].value;
+    const grade = form["edit-grade"].value;
+    const favorite_color = form["edit-favorite-color"].value;
+
+    const apiUrl = `${pythonURI}/api/student/update`;
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, age, grade, favorite_color }),
+        });
+
+        if (!response.ok) {
+            throw new Error("Error updating chef.");
+        }
+
+        alert("Chef updated successfully!");
+
+        // Hide edit form after updating
+        document.getElementById("edit-container").innerHTML = "";
 
     } catch (error) {
         alert(error.message);
