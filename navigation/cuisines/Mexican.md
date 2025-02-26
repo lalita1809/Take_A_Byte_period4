@@ -276,31 +276,31 @@ permalink: /navigation/cuisine/mexican
         }
 
         async function saveRecipe(recipe) {
-            try {
-                const response = await fetch(`${pythonURI}/api/save_recipe/`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                body: JSON.stringify({
-                    "name": recipe.dish,
-                    "dish": recipe.dish,
-                    "time": recipe.time,
-                    "ingredients": recipe.ingredients,
-                    "instructions": recipe.instructions
-                    })
-                });
+    try {
+        const response = await fetch(`${pythonURI}/save_recipe`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "name": recipe.dish,
+                "dish": recipe.dish,
+                "time": recipe.time,
+                "ingredients": recipe.ingredients,
+                "instructions": recipe.instructions
+            })
+        });
 
-                const result = await response.json();
-                alert(result.message);
-            } catch (error) {
-                alert(`Error: ${error.message}`);
-            }
-        }
+        const result = await response.json();
+        alert(result.message);
+    } catch (error) {
+        alert(`Error: ${error.message}`);
+    }
+}
 
         async function viewStoredRecipes() {
     try {
-        const response = await fetch(`${pythonURI}/api/get_recipes`);
+        const response = await fetch(`${pythonURI}/get_recipes`);
         const contentType = response.headers.get("content-type");
 
         if (contentType && contentType.indexOf("application/json") !== -1) {
@@ -318,7 +318,6 @@ permalink: /navigation/cuisine/mexican
                     <p><strong>Instructions:</strong> ${recipe.instructions}</p>
                     <button onclick='deleteRecipe(${recipe.id})'>Delete Recipe</button>
                     <button onclick='editRecipe(${JSON.stringify(recipe)})'>Edit Recipe</button>
-
                 `;
                 recipeDataDiv.appendChild(recipeDiv);
             });
@@ -369,19 +368,20 @@ async function submitEdit(recipeId) {
     };
 
     try {
-        const response = await fetch(`${pythonURI}/api/mexican_recipe/edit_recipe/${recipeId}`, {
-    method: 'PUT',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(updatedRecipe)
+        const response = await fetch(`${pythonURI}/api/chinese_recipe/edit_recipe/${recipeId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedRecipe)
         });
 
         if (response.ok) {
             alert('Recipe updated successfully');
-            viewStoredRecipes();  // Refresh stored recipes
+            viewStoredRecipes();
         } else {
-            alert('Failed to update recipe');
+            const errorData = await response.json();
+            alert(errorData.error || 'Failed to update recipe');
         }
     } catch (error) {
         alert(`Error: ${error.message}`);
@@ -390,13 +390,12 @@ async function submitEdit(recipeId) {
 
     async function deleteRecipe(recipeId) {
     try {
-        const response = await fetch(`${pythonURI}/api/mexican_recipe/delete_recipe/${recipeId}`, {
-    method: 'DELETE'
+        const response = await fetch(`${pythonURI}/api/chinese_recipe/delete_recipe/${recipeId}`, {
+            method: 'DELETE'
         });
 
         if (response.ok) {
             alert('Recipe deleted successfully');
-            // Optionally, refresh the list of recipes
             viewStoredRecipes();
         } else {
             const data = await response.json();
