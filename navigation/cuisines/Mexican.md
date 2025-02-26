@@ -177,6 +177,7 @@ permalink: /navigation/cuisine/mexican
 <button onclick="fetchRandomRecipes()">Shuffle Recipes</button>
 <button onclick="viewStoredRecipes()">Stored Recipes</button>
     <div id="recipe-data"></div>
+    <div id="stored-recipes" style="margin-top: 20px;"></div>
 
 <script>
     var pythonURI;
@@ -193,7 +194,7 @@ permalink: /navigation/cuisine/mexican
                 chicken: [
                     `${pythonURI}/api/mexican_recipe/ChickenEnchiladas`,
                     `${pythonURI}/api/mexican_recipe/ChickenTacos`,
-                    `${pythonURI}/api/mexican_recipe/ChickenFajitas'`
+                    `${pythonURI}/api/mexican_recipe/ChickenFajitas`,
                     `${pythonURI}/api/mexican_recipe/PolloAsado`,
                     `${pythonURI}/api/mexican_recipe/ChickenQuesadillas`,
                     `${pythonURI}/api/mexican_recipe/ChickenTamales`
@@ -276,17 +277,17 @@ permalink: /navigation/cuisine/mexican
 
         async function saveRecipe(recipe) {
             try {
-                const response = await fetch(`${pythonURI}/api/save_recipe/`;, {
+                const response = await fetch(`${pythonURI}/api/save_recipe/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        "name": recipe.dish,
-                        "dish": recipe.dish,
-                        "time": recipe.time,
-                        "ingredients": recipe.ingredients,
-                        "instructions": recipe.instructions
+                body: JSON.stringify({
+                    "name": recipe.dish,
+                    "dish": recipe.dish,
+                    "time": recipe.time,
+                    "ingredients": recipe.ingredients,
+                    "instructions": recipe.instructions
                     })
                 });
 
@@ -299,7 +300,7 @@ permalink: /navigation/cuisine/mexican
 
         async function viewStoredRecipes() {
     try {
-        const response = await fetch(`${pythonURI}/api/get_recipes/`;);
+        const response = await fetch(`${pythonURI}/api/get_recipes`);
         const contentType = response.headers.get("content-type");
 
         if (contentType && contentType.indexOf("application/json") !== -1) {
@@ -368,12 +369,12 @@ async function submitEdit(recipeId) {
     };
 
     try {
-        const response = await fetch(`/api/chinese_recipe/edit_recipe/${recipeId}`, { 
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedRecipe)
+        const response = await fetch(`${pythonURI}/api/mexican_recipe/edit_recipe/${recipeId}`, {
+    method: 'PUT',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(updatedRecipe)
         });
 
         if (response.ok) {
@@ -389,8 +390,8 @@ async function submitEdit(recipeId) {
 
     async function deleteRecipe(recipeId) {
     try {
-        const response = await fetch(`${pythonURI}/api/chinese_recipe/delete_recipe/${recipeId}`, {
-            method: 'DELETE',
+        const response = await fetch(`${pythonURI}/api/mexican_recipe/delete_recipe/${recipeId}`, {
+    method: 'DELETE'
         });
 
         if (response.ok) {
