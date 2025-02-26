@@ -139,6 +139,7 @@ permalink: /navigation/about
         console.error("Form, title, or save button not found.");
         return;
     }
+       }
                
         async function deleteChef(name) {
     const apiUrl = `${pythonURI}/api/student/delete`;
@@ -162,7 +163,7 @@ permalink: /navigation/about
     } catch (error) {
         alert(error.message);
     }
-}
+
 
 
     // Change title to indicate editing mode
