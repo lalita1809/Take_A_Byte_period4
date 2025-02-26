@@ -19,11 +19,15 @@ hide: true
             padding: 0;
         }
         .search-container {
-            position: absolute;
-            top: 20px;
-            right: 20px;
+            position: fixed;
+            top: 5px;
+            right: 5px;
             width: 300px;
             transition: all 0.3s ease;
+            z-index: 99999;
+        }
+        .search-container * {
+            z-index: 99999;
         }
         .search-container input[type="text"] {
             width: calc(100% - 20px);
@@ -31,10 +35,11 @@ hide: true
             font-size: 16px;
             border: 2px solid #e0e0e0;
             border-radius: 25px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(5px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
+            position: relative;
         }
         .search-container input[type="text"]:focus {
             width: calc(100% + 50px);
@@ -128,6 +133,13 @@ hide: true
         /* Add specific style for the link */
         h3 a.aboutButton {
             color: white !important;
+        }
+        #search-results {
+            position: fixed;
+            z-index: 99999;
+            background: white;
+            width: 300px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -387,12 +399,12 @@ hide: true
         }
         .wheel-container {
             position: relative;
-            width: 300px;
-            height: 300px;
+            width: 400px;    /* Increased from 300px */
+            height: 400px;   /* Increased from 300px */
             border-radius: 50%;
             border: 5px solid #000;
             overflow: hidden;
-            margin-top: 50px;  /* Added to move the wheel lower */
+            margin-top: 50px;
         }
         .wheel {
             width: 100%;
@@ -400,7 +412,6 @@ hide: true
             position: absolute;
             transform-origin: center;
             transition: transform 5s cubic-bezier(0.33, 1, 0.68, 1);
-            a
         }
         .slice {
             position: absolute;
@@ -411,12 +422,12 @@ hide: true
             box-sizing: border-box;
             clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
             transform-origin: 100% 100%;
-               display: flex; 
+            display: flex; 
             justify-content: center;  
             align-items: center; 
             color: white;  
-            font-size: 12px;  
-           text-align: center; 
+            font-size: 16px;   /* Increased from 12px to match larger wheel */
+            text-align: center; 
             padding: 5px;  
         }
         .slice:nth-child(1) { background: #f94144; transform: rotate(0deg); }
@@ -474,7 +485,7 @@ hide: true
             <div class="slice">Thai food</div>
         </div>
     </div>
-    <button id="spinButton" style="transform: none; margin-top: 20px;" onclick="spinWheel()">Spin the Wheel</button>
+    <button id="spinButton" style="transform: none; margin-top: 20px; padding: 15px 40px; font-size: 18px; min-width: 200px;" onclick="spinWheel()">Spin the Wheel</button>
     <div id="result"></div>
 
 <script>
@@ -560,7 +571,7 @@ hide: true
         /* Wrapper to isolate the container */
         .recipe-wrapper {
         position: absolute;
-        top: 65%; /* Reduced from 70% to move it higher */
+        top: 55%; /* Reduced from 60% to move it higher */
         left: 20px;
         transform: translateY(-50%);
         padding: 15px;
