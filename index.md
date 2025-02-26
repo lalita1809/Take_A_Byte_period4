@@ -348,8 +348,8 @@ hide: true
     }
 
     .nav-links a {
-        font-size: 12px;
-        padding: 6px 12px;
+        font-size: 14px;  /* Increased from 12px */
+        padding: 8px 16px;  /* Increased from 6px 12px */
         background-color: #4CAF50;
         color: white;
         text-decoration: none;
@@ -362,12 +362,13 @@ hide: true
     }
 </style>
 
-<div class="nav-links">
-    <h3><a href="{{site.baseurl}}/navigation/about">About page</a></h3>
-    <h3><a href="{{site.baseurl}}/natcountrygen">Regional Dishes Generator</a></h3>
-    <h3><a href="{{site.baseurl}}/navigation/buttons/posting">User Posts</a></h3>
-    <h3><a href="{{site.baseurl}}/navigation/feedback">User Experience</a></h3>
-</div>
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <div class="nav-links" style="display: flex; justify-content: center; gap: 20px; margin-left: 50px;">
+        <h3><a href="{{site.baseurl}}/navigation/about">About page</a></h3>
+        <h3><a href="{{site.baseurl}}/natcountrygen">Regional Dishes Generator</a></h3>
+        <h3><a href="{{site.baseurl}}/navigation/buttons/posting">User Posts</a></h3>
+        <h3><a href="{{site.baseurl}}/navigation/feedback">User Experience</a></h3>
+    </div>
 
 <head>
     <meta charset="UTF-8">
@@ -473,7 +474,7 @@ hide: true
             <div class="slice">Thai food</div>
         </div>
     </div>
-    <button id="spinButton" onclick="spinWheel()">Spin the Wheel</button>
+    <button id="spinButton" style="transform: none; margin-top: 20px;" onclick="spinWheel()">Spin the Wheel</button>
     <div id="result"></div>
 
 <script>
