@@ -5,6 +5,10 @@ search_exclude: true
 hide: true
 ---
 
+<div style="text-align: center; margin: 0;">
+    <h1 style="font-size: 48px; font-weight: bold; color: #4CAF50; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); background: -webkit-linear-gradient(45deg, #4CAF50, #2196F3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 2px;">Take a Byte</h1>
+</div>
+
 <!--menu: nav/home.html-->
 
 <html lang="en">
