@@ -151,10 +151,6 @@ permalink: /navigation/about
             body: JSON.stringify({ name }),
         });
 
-        if (!response.ok) {
-            throw new Error("Error deleting chef.");
-        }
-
         alert(`Chef ${name} deleted successfully!`);
 
         // Optionally, refresh the student list after deletion
