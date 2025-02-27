@@ -141,30 +141,7 @@ permalink: /navigation/about
     }
        }
                
-    //     async function deleteChef(name) {
-    // const apiUrl = `${pythonURI}/api/student/delete`;
-
-    // try {
-    //     const response = await fetch(apiUrl, {
-    //         method: "DELETE",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify({ name }),
-    //     });
-
-    //     if (!response.ok) {
-    //         throw new Error("Error deleting chef.");
-    //     }
-
-    //     alert(`Chef ${name} deleted successfully!`);
-
-    //     // Optionally, refresh the student list after deletion
-    //     fetchStudentData();
-
-    // } catch (error) {
-    //     alert(error.message);
-    // }
-
-async function deleteChef(name) {
+        async function deleteChef(name) {
     const apiUrl = `${pythonURI}/api/student/delete`;
 
     try {
@@ -174,18 +151,18 @@ async function deleteChef(name) {
             body: JSON.stringify({ name }),
         });
 
-        console.log("Delete response status:", response.status);
+        if (!response.ok) {
+            throw new Error("Error deleting chef.");
+        }
 
-        // Always show success message, even if there's an issue
         alert(`Chef ${name} deleted successfully!`);
 
-        // Refresh student list
+        // Optionally, refresh the student list after deletion
         fetchStudentData();
+
     } catch (error) {
-        console.error("Delete request failed:", error);
-        // Do nothing—error is just logged but won't show an alert
+        alert(error.message);
     }
-}
 
 
     // Change title to indicate editing mode
